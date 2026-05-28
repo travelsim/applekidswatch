@@ -9,13 +9,13 @@ interface BlogCardProps {
   featured?: boolean;
 }
 
-const categoryLabels = {
+const categoryLabels: Record<string, string> = {
   "safety-tips": "Safety Tips",
   "setup-guides": "Setup Guides",
   "parenting-tech": "Parenting Tech",
 };
 
-const categoryColors = {
+const categoryColors: Record<string, string> = {
   "safety-tips": "bg-accent text-accent-foreground",
   "setup-guides": "bg-primary text-primary-foreground",
   "parenting-tech": "bg-secondary text-secondary-foreground",

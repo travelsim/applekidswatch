@@ -168,10 +168,12 @@ export default function Cart() {
                   <span data-testid="text-total">${total.toFixed(2)}</span>
                 </div>
 
-                <Button size="lg" className="w-full" data-testid="button-checkout">
-                  Proceed to Checkout
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+                <Link href="/checkout">
+                  <Button size="lg" className="w-full" data-testid="button-checkout">
+                    Proceed to Checkout
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
 
                 <div className="space-y-3 pt-4">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">

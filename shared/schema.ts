@@ -74,3 +74,37 @@ export interface CartItem {
   productId: string;
   quantity: number;
 }
+
+export const orders = pgTable("orders", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  customerName: text("customer_name").notNull(),
+  customerEmail: text("customer_email").notNull(),
+  customerPhone: text("customer_phone"),
+  shippingAddress: text("shipping_address").notNull(),
+  city: text("city").notNull(),
+  state: text("state").notNull(),
+  zipCode: text("zip_code").notNull(),
+  items: text("items").notNull(), // JSON string of items
+  subtotal: integer("subtotal").notNull(),
+  shipping: integer("shipping").notNull().default(0),
+  total: integer("total").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertOrderSchema = z.object({
+  customerName: z.string().min(2, "Name is required"),
+  customerEmail: z.string().email("Valid email is required"),
+  customerPhone: z.string().optional(),
+  shippingAddress: z.string().min(5, "Address is required"),
+  city: z.string().min(2, "City is required"),
+  state: z.string().min(2, "State is required"),
+  zipCode: z.string().min(5, "ZIP code is required"),
+  items: z.string(),
+  subtotal: z.number(),
+  shipping: z.number().default(0),
+  total: z.number(),
+});
+
+export type InsertOrder = z.infer<typeof insertOrderSchema>;
+export type Order = typeof orders.$inferSelect;

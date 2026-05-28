@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSchema } from "@shared/schema";
+import { insertNewsletterSchema, insertOrderSchema } from "@shared/schema";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -53,6 +53,44 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Error fetching post:", error);
       res.status(500).json({ error: "Failed to fetch post" });
+    }
+  });
+
+  // Order endpoints
+  app.post("/api/orders", async (req, res) => {
+    try {
+      const result = insertOrderSchema.safeParse(req.body);
+      if (!result.success) {
+        return res.status(400).json({ error: result.error.errors[0].message });
+      }
+      const order = await storage.createOrder(result.data);
+      res.status(201).json(order);
+    } catch (error) {
+      console.error("Error creating order:", error);
+      res.status(500).json({ error: "Failed to create order" });
+    }
+  });
+
+  app.get("/api/orders", async (req, res) => {
+    try {
+      const orders = await storage.getOrders();
+      res.json(orders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      res.status(500).json({ error: "Failed to fetch orders" });
+    }
+  });
+
+  app.get("/api/orders/:id", async (req, res) => {
+    try {
+      const order = await storage.getOrder(req.params.id);
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+      res.json(order);
+    } catch (error) {
+      console.error("Error fetching order:", error);
+      res.status(500).json({ error: "Failed to fetch order" });
     }
   });
 
@@ -124,6 +162,20 @@ ${urls
     } catch (error) {
       console.error("Error subscribing to newsletter:", error);
       res.status(500).json({ error: "Failed to subscribe" });
+    }
+  });
+
+  // Page view tracking endpoint (analytics)
+  app.post("/api/analytics/pageview", async (req, res) => {
+    try {
+      const { path, referrer } = req.body;
+      // Simple console logging for now — can be extended to database storage or GA4
+      console.log(`[Analytics] Page view: ${path} | Referrer: ${referrer || "direct"} | IP: ${req.ip}`);
+      res.json({ success: true });
+    } catch (error) {
+      // Analytics failures should never break the app
+      console.error("Error recording pageview:", error);
+      res.json({ success: true });
     }
   });
 

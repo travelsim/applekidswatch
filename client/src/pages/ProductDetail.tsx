@@ -25,13 +25,13 @@ import { SiApple } from "react-icons/si";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
 
-const gradeDescriptions = {
+const gradeDescriptions: Record<string, string> = {
   excellent: "Like new condition with minimal signs of use. Battery health 90%+.",
   good: "Minor cosmetic wear. Fully functional with battery health 85%+.",
   fair: "Visible wear but works perfectly. Great value with battery health 80%+.",
 };
 
-const gradeColors = {
+const gradeColors: Record<string, string> = {
   excellent: "bg-accent text-accent-foreground",
   good: "bg-primary text-primary-foreground",
   fair: "bg-secondary text-secondary-foreground",

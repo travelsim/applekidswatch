@@ -10,13 +10,13 @@ interface ProductCardProps {
   product: Product;
 }
 
-const gradeColors = {
+const gradeColors: Record<string, string> = {
   excellent: "bg-accent text-accent-foreground",
   good: "bg-primary text-primary-foreground",
   fair: "bg-secondary text-secondary-foreground",
 };
 
-const gradeLabels = {
+const gradeLabels: Record<string, string> = {
   excellent: "Excellent",
   good: "Good",
   fair: "Fair",

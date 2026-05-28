@@ -1,6 +1,6 @@
-import { type User, type InsertUser, type Product, type InsertProduct, type BlogPost, type InsertBlogPost, products, blogPosts, users, newsletterSubscribers } from "@shared/schema";
+import { type User, type InsertUser, type Product, type InsertProduct, type BlogPost, type InsertBlogPost, type Order, type InsertOrder, products, blogPosts, users, newsletterSubscribers, orders } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -13,6 +13,9 @@ export interface IStorage {
   getPost(slug: string): Promise<BlogPost | undefined>;
   addNewsletterSubscriber(email: string): Promise<void>;
   seedData(): Promise<void>;
+  createOrder(order: InsertOrder): Promise<Order>;
+  getOrders(): Promise<Order[]>;
+  getOrder(id: string): Promise<Order | undefined>;
 }
 
 const seedProducts: InsertProduct[] = [
@@ -328,6 +331,20 @@ export class DatabaseStorage implements IStorage {
         await db.insert(blogPosts).values(seedBlogPosts);
       }
     }
+  }
+
+  async createOrder(insertOrder: InsertOrder): Promise<Order> {
+    const [order] = await db.insert(orders).values(insertOrder).returning();
+    return order;
+  }
+
+  async getOrders(): Promise<Order[]> {
+    return db.select().from(orders).orderBy(desc(orders.createdAt));
+  }
+
+  async getOrder(id: string): Promise<Order | undefined> {
+    const [order] = await db.select().from(orders).where(eq(orders.id, id));
+    return order;
   }
 }
 
