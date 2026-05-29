@@ -1,22 +1,27 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Determine __dirname in a way that works in both ESM (vite build) and CJS (esbuild server bundle)
+let dirname: string;
+try {
+  dirname = (typeof __dirname !== "undefined") ? __dirname : path.dirname(new URL(import.meta.url).pathname);
+} catch {
+  dirname = process.cwd();
+}
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client", "src"),
-      "@shared": path.resolve(__dirname, "shared"),
-      "@assets": path.resolve(__dirname, "attached_assets"),
+      "@": path.resolve(dirname, "client", "src"),
+      "@shared": path.resolve(dirname, "shared"),
+      "@assets": path.resolve(dirname, "attached_assets"),
     },
   },
-  root: path.resolve(__dirname, "client"),
+  root: path.resolve(dirname, "client"),
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
+    outDir: path.resolve(dirname, "dist/public"),
     emptyOutDir: true,
   },
 });
