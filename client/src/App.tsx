@@ -29,6 +29,7 @@ function Router() {
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/order/:id" component={OrderConfirmation} />
+      <Route path="/order/success/:sessionId" component={OrderConfirmation} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/safety" component={Safety} />

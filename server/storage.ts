@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Product, type InsertProduct, type BlogPost, type InsertBlogPost, type Order, type InsertOrder, products, blogPosts, users, newsletterSubscribers, orders } from "@shared/schema";
+import { type User, type InsertUser, type Product, type InsertProduct, type BlogPost, type InsertBlogPost, type Order, type InsertOrder, type Testimonial, products, blogPosts, users, newsletterSubscribers, orders, testimonials } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";
@@ -12,10 +12,13 @@ export interface IStorage {
   getPosts(): Promise<BlogPost[]>;
   getPost(slug: string): Promise<BlogPost | undefined>;
   addNewsletterSubscriber(email: string): Promise<void>;
+  getTestimonials(): Promise<Testimonial[]>;
   seedData(): Promise<void>;
   createOrder(order: InsertOrder): Promise<Order>;
   getOrders(): Promise<Order[]>;
   getOrder(id: string): Promise<Order | undefined>;
+  getOrderByStripeSessionId(sessionId: string): Promise<Order | undefined>;
+  updateOrderStatus(id: string, status: string): Promise<Order | undefined>;
 }
 
 const seedProducts: InsertProduct[] = [
@@ -271,6 +274,69 @@ Finally, make it a positive experience. Celebrate milestones like completing act
   }
 ];
 
+const seedTestimonials = [
+  {
+    name: "Sarah M.",
+    role: "Mom of 2",
+    quote: "Finally, a watch that gives me peace of mind! I can always check on my kids' location and they love the fun watch faces. The GPS tracking works flawlessly.",
+    rating: 5,
+    initials: "SM",
+    avatarColor: "bg-pink-500",
+    isFeatured: true,
+    sortOrder: 1,
+  },
+  {
+    name: "David K.",
+    role: "Father",
+    quote: "The refurbished quality is amazing — you'd never know it wasn't new. Great value for a premium product. My daughter wears hers every day without issues.",
+    rating: 5,
+    initials: "DK",
+    avatarColor: "bg-blue-500",
+    isFeatured: true,
+    sortOrder: 2,
+  },
+  {
+    name: "Jennifer L.",
+    role: "Working Parent",
+    quote: "Better Roaming integration means my son can call me anytime. The safety features are exactly what we needed. I finally feel comfortable letting him walk to school alone.",
+    rating: 5,
+    initials: "JL",
+    avatarColor: "bg-purple-500",
+    isFeatured: true,
+    sortOrder: 3,
+  },
+  {
+    name: "Michael R.",
+    role: "Dad of 3",
+    quote: "We bought watches for all three kids. The GPS tracking and geofencing alerts are game changers! Now we get a notification when they arrive at school.",
+    rating: 5,
+    initials: "MR",
+    avatarColor: "bg-emerald-500",
+    isFeatured: true,
+    sortOrder: 4,
+  },
+  {
+    name: "Amanda T.",
+    role: "Single Mom",
+    quote: "The 30-day guarantee gave me confidence to try it. Now I recommend KidWatch to all my parent friends. The savings compared to buying new are incredible.",
+    rating: 5,
+    initials: "AT",
+    avatarColor: "bg-amber-500",
+    isFeatured: true,
+    sortOrder: 5,
+  },
+  {
+    name: "Chris P.",
+    role: "Father of Twins",
+    quote: "Setting up Family Setup was easy with the guide they provide. Both twins have their watches and I can track them at different after-school activities. Worth every penny.",
+    rating: 5,
+    initials: "CP",
+    avatarColor: "bg-cyan-500",
+    isFeatured: true,
+    sortOrder: 6,
+  },
+];
+
 export class DatabaseStorage implements IStorage {
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
@@ -309,6 +375,10 @@ export class DatabaseStorage implements IStorage {
     await db.insert(newsletterSubscribers).values({ email }).onConflictDoNothing();
   }
 
+  async getTestimonials(): Promise<Testimonial[]> {
+    return db.select().from(testimonials).orderBy(testimonials.sortOrder);
+  }
+
   async seedData(): Promise<void> {
     const existingProducts = await db.select().from(products);
     if (existingProducts.length === 0) {
@@ -331,6 +401,11 @@ export class DatabaseStorage implements IStorage {
         await db.insert(blogPosts).values(seedBlogPosts);
       }
     }
+
+    const existingTestimonials = await db.select().from(testimonials);
+    if (existingTestimonials.length === 0) {
+      await db.insert(testimonials).values(seedTestimonials as any);
+    }
   }
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
@@ -344,6 +419,16 @@ export class DatabaseStorage implements IStorage {
 
   async getOrder(id: string): Promise<Order | undefined> {
     const [order] = await db.select().from(orders).where(eq(orders.id, id));
+    return order;
+  }
+
+  async getOrderByStripeSessionId(sessionId: string): Promise<Order | undefined> {
+    const [order] = await db.select().from(orders).where(eq(orders.stripeSessionId, sessionId));
+    return order;
+  }
+
+  async updateOrderStatus(id: string, status: string): Promise<Order | undefined> {
+    const [order] = await db.update(orders).set({ status }).where(eq(orders.id, id)).returning();
     return order;
   }
 }

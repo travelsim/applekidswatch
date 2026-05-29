@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Shield, Truck } from "lucide-react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Cart() {
   useSeo({
@@ -35,6 +36,15 @@ export default function Cart() {
   if (items.length === 0) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: breadcrumbList([
+              { name: "Home", path: "/" },
+              { name: "Cart", path: "/cart" },
+            ]),
+          }}
+        />
         <div className="text-center space-y-4">
           <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mx-auto">
             <ShoppingBag className="h-10 w-10 text-muted-foreground" />
@@ -56,6 +66,15 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen py-8 md:py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Cart", path: "/cart" },
+          ]),
+        }}
+      />
       <div className="container mx-auto px-4 md:px-6">
         <h1 className="text-2xl md:text-3xl font-bold mb-8" data-testid="text-cart-title">
           Shopping Cart ({items.length} {items.length === 1 ? "item" : "items"})

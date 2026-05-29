@@ -89,6 +89,7 @@ export const orders = pgTable("orders", {
   shipping: integer("shipping").notNull().default(0),
   total: integer("total").notNull(),
   status: text("status").notNull().default("pending"),
+  stripeSessionId: text("stripe_session_id"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
@@ -105,6 +106,27 @@ export const insertOrderSchema = z.object({
   shipping: z.number().default(0),
   total: z.number(),
 });
+
+export const testimonials = pgTable("testimonials", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  role: text("role").notNull(),
+  quote: text("quote").notNull(),
+  rating: integer("rating").notNull().default(5),
+  initials: text("initials").notNull().default(""),
+  avatarColor: text("avatar_color").notNull().default("bg-primary"),
+  isFeatured: boolean("is_featured").notNull().default(true),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertTestimonialSchema = createInsertSchema(testimonials).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;
+export type Testimonial = typeof testimonials.$inferSelect;
 
 export type InsertOrder = z.infer<typeof insertOrderSchema>;
 export type Order = typeof orders.$inferSelect;

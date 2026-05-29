@@ -8,9 +8,10 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/lib/cart";
 import { apiRequest } from "@/lib/queryClient";
-import { ArrowLeft, Shield, Truck, Lock, CheckCircle } from "lucide-react";
+import { ArrowLeft, Shield, Truck, Lock, CheckCircle, CreditCard } from "lucide-react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Checkout() {
   const [, navigate] = useLocation();
@@ -64,28 +65,41 @@ export default function Checkout() {
 
     setSubmitting(true);
     try {
-      const orderItems = cartProducts.map((p) => ({
-        id: p.id,
-        name: p.name,
-        color: p.color,
-        storage: p.storage,
-        price: p.price,
-        quantity: p.quantity,
+      const orderItems = items.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
       }));
 
-      const res = await apiRequest("POST", "/api/orders", {
-        ...form,
-        items: JSON.stringify(orderItems),
-        subtotal,
-        shipping,
-        total,
+      const res = await apiRequest("POST", "/api/create-checkout-session", {
+        items: orderItems,
+        customer: {
+          name: form.customerName,
+          email: form.customerEmail,
+          phone: form.customerPhone,
+          address: {
+            line1: form.shippingAddress,
+            city: form.city,
+            state: form.state,
+            zip: form.zipCode,
+          },
+        },
       });
 
-      const order = await res.json();
-      clearCart();
-      navigate(`/order/${order.id}`);
+      const data = await res.json();
+
+      if (data.url) {
+        // Store order ID so OrderConfirmation can find it after Stripe redirect
+        if (data.orderId) {
+          sessionStorage.setItem("pendingOrderId", data.orderId);
+        }
+        clearCart();
+        // Redirect to Stripe Checkout hosted page
+        window.location.href = data.url;
+      } else {
+        throw new Error("No checkout URL returned");
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to place order");
+      setError(err instanceof Error ? err.message : "Failed to initiate payment");
     } finally {
       setSubmitting(false);
     }
@@ -94,6 +108,16 @@ export default function Checkout() {
   if (items.length === 0) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: breadcrumbList([
+              { name: "Home", path: "/" },
+              { name: "Cart", path: "/cart" },
+              { name: "Checkout", path: "/checkout" },
+            ]),
+          }}
+        />
         <div className="text-center space-y-4">
           <CheckCircle className="h-16 w-16 text-accent mx-auto" />
           <h1 className="text-2xl font-bold">Your Cart is Empty</h1>
@@ -108,6 +132,16 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen py-8 md:py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Cart", path: "/cart" },
+            { name: "Checkout", path: "/checkout" },
+          ]),
+        }}
+      />
       <div className="container mx-auto px-4 md:px-6">
         <Link href="/cart" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
           <ArrowLeft className="h-4 w-4" />
@@ -115,6 +149,12 @@ export default function Checkout() {
         </Link>
 
         <h1 className="text-2xl md:text-3xl font-bold mb-8">Checkout</h1>
+
+        {error && (
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm rounded-lg p-4 mb-6">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-3 gap-8">
@@ -202,20 +242,20 @@ export default function Checkout() {
                 </CardContent>
               </Card>
 
-              {error && (
-                <div className="bg-destructive/10 border border-destructive/20 text-destructive text-sm rounded-lg p-4">
-                  {error}
-                </div>
-              )}
-
               <Button
                 type="submit"
                 size="lg"
                 className="w-full lg:hidden"
                 disabled={submitting}
               >
-                <Lock className="h-4 w-4 mr-2" />
-                {submitting ? "Processing..." : `Place Order — $${total}`}
+                {submitting ? (
+                  "Processing..."
+                ) : (
+                  <>
+                    <CreditCard className="h-4 w-4 mr-2" />
+                    Pay with Card — ${total}
+                  </>
+                )}
               </Button>
             </div>
 
@@ -254,8 +294,14 @@ export default function Checkout() {
                     className="w-full hidden lg:flex"
                     disabled={submitting}
                   >
-                    <Lock className="h-4 w-4 mr-2" />
-                    {submitting ? "Processing..." : `Place Order — $${total}`}
+                    {submitting ? (
+                      "Processing..."
+                    ) : (
+                      <>
+                        <CreditCard className="h-4 w-4 mr-2" />
+                        Pay with Card — ${total}
+                      </>
+                    )}
                   </Button>
 
                   <div className="space-y-3 pt-4">
@@ -269,7 +315,7 @@ export default function Checkout() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Lock className="h-4 w-4" />
-                      <span>Secure Checkout</span>
+                      <span>Secure Checkout via Stripe</span>
                     </div>
                   </div>
                 </CardContent>

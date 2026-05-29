@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProductCard } from "@/components/ProductCard";
 import { BlogCard } from "@/components/BlogCard";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -20,8 +21,9 @@ import {
   Globe,
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
-import type { Product, BlogPost } from "@shared/schema";
+import type { Product, BlogPost, Testimonial } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 import heroImage from "@assets/stock_images/apple_watch_gps_feature.png";
 import safetyImage1 from "@assets/stock_images/apple_watch_silver.png";
@@ -79,33 +81,6 @@ const howItWorks = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Sarah M.",
-    role: "Mom of 2",
-    quote: "Finally, a watch that gives me peace of mind! I can always check on my kids' location and they love the fun watch faces.",
-    rating: 5,
-  },
-  {
-    name: "David K.",
-    role: "Father",
-    quote: "The refurbished quality is amazing - you'd never know it wasn't new. Great value for a premium product.",
-    rating: 5,
-  },
-  {
-    name: "Jennifer L.",
-    role: "Working Parent",
-    quote: "Better Roaming integration means my son can call me anytime. The safety features are exactly what we needed.",
-    rating: 5,
-  },
-  {
-    name: "Michael R.",
-    role: "Dad of 3",
-    quote: "We bought watches for all three kids. The GPS tracking and geofencing alerts are game changers!",
-    rating: 5,
-  },
-];
-
 export default function Home() {
   useSeo({
     title: "Buy Refurbished Apple Watch SE for Kids | GPS & Safety | KidWatch",
@@ -120,11 +95,21 @@ export default function Home() {
     queryKey: ["/api/posts"],
   });
 
+  const { data: testimonials, isLoading: testimonialsLoading } = useQuery<Testimonial[]>({
+    queryKey: ["/api/testimonials"],
+  });
+
   const featuredProducts = products?.slice(0, 3);
   const featuredPosts = posts?.slice(0, 3);
 
   return (
     <div className="flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([{ name: "Home", path: "/" }]),
+        }}
+      />
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -363,24 +348,59 @@ export default function Home() {
               See what other families are saying about KidWatch.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="hover-elevate" data-testid={`card-testimonial-${index}`}>
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex gap-1">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-secondary text-secondary" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
-                  <div>
-                    <p className="font-semibold">{testimonial.name}</p>
-                    <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          {testimonialsLoading ? (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <Card key={i}>
+                  <CardContent className="p-6 space-y-4">
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Skeleton key={s} className="h-4 w-4 rounded" />
+                      ))}
+                    </div>
+                    <div className="space-y-2">
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-4 w-5/6" />
+                      <Skeleton className="h-4 w-4/6" />
+                    </div>
+                    <div className="flex items-center gap-3 pt-2">
+                      <Skeleton className="h-10 w-10 rounded-full" />
+                      <div className="space-y-1">
+                        <Skeleton className="h-4 w-24" />
+                        <Skeleton className="h-3 w-20" />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {testimonials?.map((testimonial) => (
+                <Card key={testimonial.id} className="hover-elevate" data-testid={`card-testimonial-${testimonial.id}`}>
+                  <CardContent className="p-6 space-y-4">
+                    <div className="flex gap-1">
+                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-secondary text-secondary" />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground italic leading-relaxed">"{testimonial.quote}"</p>
+                    <div className="flex items-center gap-3 pt-2">
+                      <Avatar className="h-10 w-10">
+                        <AvatarFallback className={`${testimonial.avatarColor || "bg-primary"} text-white text-xs font-semibold`}>
+                          {testimonial.initials || testimonial.name.split(" ").map(n => n[0]).join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-semibold text-sm">{testimonial.name}</p>
+                        <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

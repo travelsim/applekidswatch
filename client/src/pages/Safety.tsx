@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import safetyHero from "@assets/stock_images/apple_watch_safety.png";
 import safetyImage1 from "@assets/stock_images/apple_watch_silver.png";
@@ -86,6 +87,46 @@ export default function Safety() {
 
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Safety", path: "/safety" },
+          ]),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: faqPage([
+            {
+              question: "How does GPS tracking work on Apple Watch SE for kids?",
+              answer: "The Apple Watch SE uses built-in GPS, cellular, and Wi-Fi to provide real-time location tracking. Parents can view their child's location from their iPhone using Apple's Find My app or Family Setup features."
+            },
+            {
+              question: "Can I control who my child contacts on their Apple Watch?",
+              answer: "Yes. With Apple's Family Setup, parents have complete control over approved contacts. Only pre-approved family members and friends can call or message your child's watch. Unknown numbers are automatically blocked."
+            },
+            {
+              question: "What is geofencing and how does it help keep my child safe?",
+              answer: "Geofencing allows you to create virtual safe zones around locations like home, school, or a friend's house. You'll receive instant notifications on your iPhone when your child enters or leaves these areas."
+            },
+            {
+              question: "Does the Apple Watch SE have Emergency SOS for kids?",
+              answer: "Yes. Children can press and hold the side button to activate Emergency SOS. The watch will call emergency services and automatically send your child's location to their emergency contacts."
+            },
+            {
+              question: "What is Schooltime Mode on Apple Watch SE?",
+              answer: "Schooltime Mode limits the watch's features during school hours so kids can focus on learning. During this time, only the clock face and emergency calls are available."
+            },
+            {
+              question: "How does Better Roaming work with the Apple Watch SE?",
+              answer: "Better Roaming provides kid-safe cellular plans designed specifically for children's watches. Plans start at $10/month and include parental controls, data usage limits, and coverage across major US networks."
+            },
+          ]),
+        }}
+      />
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img

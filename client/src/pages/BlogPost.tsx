@@ -8,6 +8,7 @@ import { BlogCard } from "@/components/BlogCard";
 import { ArrowLeft, Clock, User, Calendar, ArrowRight } from "lucide-react";
 import type { BlogPost } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 const categoryLabels: Record<string, string> = {
   "safety-tips": "Safety Tips",
@@ -106,6 +107,18 @@ export default function BlogPostPage() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+      )}
+      {post && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: breadcrumbList([
+              { name: "Home", path: "/" },
+              { name: "Blog", path: "/blog" },
+              { name: post.title, path: `/blog/${post.slug}` },
+            ]),
+          }}
         />
       )}
       <section className="py-4 border-b">

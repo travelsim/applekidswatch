@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import aboutHero from "@assets/stock_images/apple_watch_cellular.png";
 import watchImage from "@assets/stock_images/apple_watch_starlight.png";
@@ -59,6 +60,34 @@ export default function About() {
 
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "About", path: "/about" },
+          ]),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: faqPage([
+            {
+              question: "What does \"refurbished\" mean?",
+              answer: "Our refurbished watches are pre-owned devices that have been professionally restored to like-new condition and thoroughly tested.",
+            },
+            {
+              question: "How does the guarantee work?",
+              answer: "You have 30 days to return your watch for a full refund if you're not satisfied.",
+            },
+            {
+              question: "Do I need an iPhone?",
+              answer: "Yes, setting up an Apple Watch SE for a child requires an iPhone with the Family Setup feature (iPhone 6s or later).",
+            },
+          ]),
+        }}
+      />
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img

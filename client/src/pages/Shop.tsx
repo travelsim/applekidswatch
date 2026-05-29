@@ -17,6 +17,7 @@ import { SiApple } from "react-icons/si";
 import { useState, useMemo } from "react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Shop() {
   useSeo({
@@ -66,8 +67,54 @@ export default function Shop() {
     return filtered;
   }, [products, search, gradeFilter, sortBy]);
 
+  const itemListJsonLd = products
+    ? {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": products.map((product, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "url": `https://kidwatch.com/product/${product.id}`,
+          "name": `${product.name} - ${product.color}`,
+          "image": product.image,
+          "offers": {
+            "@type": "Offer",
+            "price": product.price,
+            "priceCurrency": "USD",
+            "availability": product.inStock
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+          },
+        })),
+      }
+    : null;
+
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Shop", path: "/shop" },
+          ]),
+        }}
+      />
+      {itemListJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Shop", path: "/shop" },
+          ]),
+        }}
+      />
       <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl">

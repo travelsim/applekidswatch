@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useMemo } from "react";
 import type { BlogPost } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 const categories = [
   { value: "all", label: "All Articles" },
@@ -38,6 +39,15 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: breadcrumbList([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+          ]),
+        }}
+      />
       <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl">
