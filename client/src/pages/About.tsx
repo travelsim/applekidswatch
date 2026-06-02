@@ -7,7 +7,6 @@ import {
   Shield,
   Leaf,
   Award,
-  Users,
   Globe,
   CheckCircle,
   ArrowRight,

@@ -11,15 +11,12 @@ import {
   ShoppingCart,
   Shield,
   Truck,
-  RefreshCw,
   CheckCircle,
   ArrowLeft,
   Globe,
   MapPin,
   Users,
   Bell,
-  Smartphone,
-  Heart,
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import type { Product } from "@shared/schema";
