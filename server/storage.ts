@@ -1,7 +1,6 @@
 import { type User, type InsertUser, type Product, type InsertProduct, type BlogPost, type InsertBlogPost, type Order, type InsertOrder, type Testimonial, products, blogPosts, users, newsletterSubscribers, orders, testimonials } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
-import { randomUUID } from "crypto";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;

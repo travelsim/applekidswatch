@@ -1,7 +1,7 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
+import { type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSchema, insertOrderSchema, products, orders } from "@shared/schema";
+import { insertNewsletterSchema, insertOrderSchema, orders } from "@shared/schema";
 import Stripe from "stripe";
 import { eq } from "drizzle-orm";
 import { db } from "./db";

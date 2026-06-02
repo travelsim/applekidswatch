@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/lib/theme";
 import { useCart } from "@/lib/cart";
-import { Watch, Menu, ShoppingCart, Sun, Moon, Search, Shield } from "lucide-react";
+import { Watch, Menu, ShoppingCart, Sun, Moon, Shield } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
