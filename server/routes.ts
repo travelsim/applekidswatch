@@ -1,10 +1,11 @@
 import type { Express } from "express";
 import { type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSchema, insertOrderSchema, orders } from "@shared/schema";
+import { CartItem, insertNewsletterSchema, insertOrderSchema, orders } from "@shared/schema";
 import Stripe from "stripe";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
+import { getErrorMessage, isZodError } from "../shared/errors";
 
 // Initialize Stripe only if key is available (graceful fallback for dev)
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -26,13 +27,16 @@ export async function registerRoutes(
     res.json({ status: "ok" });
   });
 
-  app.get("/api/products", async (req, res) => {
+  app.get("/api/products", async (_req, res) => {
     try {
       const products = await storage.getProducts();
-      res.json(products);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      res.status(500).json({ error: "Failed to fetch products" });
+      return res.json(products);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching products:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch products" });
     }
   });
 
@@ -42,20 +46,26 @@ export async function registerRoutes(
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
-      res.json(product);
-    } catch (error) {
-      console.error("Error fetching product:", error);
-      res.status(500).json({ error: "Failed to fetch product" });
+      return res.json(product);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching product:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch product" });
     }
   });
 
-  app.get("/api/posts", async (req, res) => {
+  app.get("/api/posts", async (_req, res) => {
     try {
       const posts = await storage.getPosts();
-      res.json(posts);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      res.status(500).json({ error: "Failed to fetch posts" });
+      return res.json(posts);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching posts:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch posts" });
     }
   });
 
@@ -65,20 +75,26 @@ export async function registerRoutes(
       if (!post) {
         return res.status(404).json({ error: "Post not found" });
       }
-      res.json(post);
-    } catch (error) {
-      console.error("Error fetching post:", error);
-      res.status(500).json({ error: "Failed to fetch post" });
+      return res.json(post);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching post:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch post" });
     }
   });
 
-  app.get("/api/testimonials", async (req, res) => {
+  app.get("/api/testimonials", async (_req, res) => {
     try {
       const testimonials = await storage.getTestimonials();
-      res.json(testimonials);
-    } catch (error) {
-      console.error("Error fetching testimonials:", error);
-      res.status(500).json({ error: "Failed to fetch testimonials" });
+      return res.json(testimonials);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching testimonials:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch testimonials" });
     }
   });
 
@@ -89,10 +105,13 @@ export async function registerRoutes(
       if (!order) {
         return res.status(404).json({ error: "Order not found for this session" });
       }
-      res.json(order);
-    } catch (error) {
-      console.error("Error fetching order by session:", error);
-      res.status(500).json({ error: "Failed to fetch order" });
+      return res.json(order);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching order by session:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch order" });
     }
   });
 
@@ -103,20 +122,26 @@ export async function registerRoutes(
         return res.status(400).json({ error: result.error.errors[0].message });
       }
       const order = await storage.createOrder(result.data);
-      res.status(201).json(order);
-    } catch (error) {
-      console.error("Error creating order:", error);
-      res.status(500).json({ error: "Failed to create order" });
+      return res.status(201).json(order);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error creating order:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to create order" });
     }
   });
 
-  app.get("/api/orders", async (req, res) => {
+  app.get("/api/orders", async (_req, res) => {
     try {
       const orders = await storage.getOrders();
-      res.json(orders);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      res.status(500).json({ error: "Failed to fetch orders" });
+      return res.json(orders);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching orders:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch orders" });
     }
   });
 
@@ -126,10 +151,13 @@ export async function registerRoutes(
       if (!order) {
         return res.status(404).json({ error: "Order not found" });
       }
-      res.json(order);
-    } catch (error) {
-      console.error("Error fetching order:", error);
-      res.status(500).json({ error: "Failed to fetch order" });
+      return res.json(order);
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error fetching order:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to fetch order" });
     }
   });
 
@@ -216,7 +244,7 @@ export async function registerRoutes(
           customerPhone: customer.phone || "",
           shippingAddress: addressStr,
           items: JSON.stringify(
-            cartItems.map((i: any) => ({
+            cartItems.map((i: CartItem) => ({
               id: i.productId,
               name: productMap.get(i.productId)?.name || "",
               color: productMap.get(i.productId)?.color || "",
@@ -245,7 +273,7 @@ export async function registerRoutes(
         state: shippingAddress.state || "",
         zipCode: shippingAddress.zip || "",
         items: JSON.stringify(
-          cartItems.map((i: any) => ({
+          cartItems.map((i: CartItem) => ({
             id: i.productId,
             name: productMap.get(i.productId)?.name || "",
             color: productMap.get(i.productId)?.color || "",
@@ -267,10 +295,13 @@ export async function registerRoutes(
         .set({ stripeSessionId: session.id })
         .where(eq(orders.id, order.id));
 
-      res.json({ url: session.url, orderId: order.id });
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-      res.status(500).json({ error: "Failed to create checkout session" });
+      return res.json({ url: session.url, orderId: order.id });
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error creating checkout session:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to create checkout session" });
     }
   });
 
@@ -292,12 +323,12 @@ export async function registerRoutes(
 
     try {
       // The raw body is captured by express.json() verify callback
-      const rawBody = (req as any).rawBody as Buffer;
+      const rawBody = (req as import("express").Request & { rawBody: Buffer }).rawBody;
       if (!rawBody) {
         return res.status(400).json({ error: "Raw body not available" });
       }
       event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
-    } catch (err) {
+    } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Signature verification failed";
       console.error("Stripe webhook signature verification failed:", message);
       return res.status(400).json({ error: message });
@@ -308,8 +339,6 @@ export async function registerRoutes(
       switch (event.type) {
         case "checkout.session.completed": {
           const session = event.data.object as Stripe.Checkout.Session;
-          const metadata = session.metadata || {};
-          const orderId = metadata.orderId;
 
           if (session.id) {
             // Find order by Stripe session ID
@@ -339,10 +368,10 @@ export async function registerRoutes(
           console.log(`Unhandled Stripe webhook event type: ${event.type}`);
       }
 
-      res.json({ received: true });
-    } catch (error) {
-      console.error("Error processing Stripe webhook event:", error);
-      res.status(500).json({ error: "Webhook handler error" });
+      return res.json({ received: true });
+    } catch (error: unknown) {
+      console.error("Error processing Stripe webhook event:", getErrorMessage(error));
+      return res.status(500).json({ error: "Webhook handler error" });
     }
   });
 
@@ -396,10 +425,10 @@ ${urls
   .join("\n")}
 </urlset>`;
 
-      res.type("application/xml").send(sitemap);
-    } catch (error) {
-      console.error("Error generating sitemap:", error);
-      res.status(500).send("Error generating sitemap");
+      return res.type("application/xml").send(sitemap);
+    } catch (error: unknown) {
+      console.error("Error generating sitemap:", getErrorMessage(error));
+      return res.status(500).send("Error generating sitemap");
     }
   });
 
@@ -410,10 +439,13 @@ ${urls
         return res.status(400).json({ error: result.error.errors[0].message });
       }
       await storage.addNewsletterSubscriber(result.data.email);
-      res.json({ success: true, message: "Successfully subscribed!" });
-    } catch (error) {
-      console.error("Error subscribing to newsletter:", error);
-      res.status(500).json({ error: "Failed to subscribe" });
+      return res.json({ success: true, message: "Successfully subscribed!" });
+    } catch (error: unknown) {
+      if (isZodError(error)) {
+        return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
+      }
+      console.error("Error subscribing to newsletter:", getErrorMessage(error));
+      return res.status(500).json({ error: "Failed to subscribe" });
     }
   });
 
@@ -423,11 +455,11 @@ ${urls
       const { path, referrer } = req.body;
       // Simple console logging for now — can be extended to database storage or GA4
       console.log(`[Analytics] Page view: ${path} | Referrer: ${referrer || "direct"} | IP: ${req.ip}`);
-      res.json({ success: true });
-    } catch (error) {
+      return res.json({ success: true });
+    } catch (error: unknown) {
       // Analytics failures should never break the app
-      console.error("Error recording pageview:", error);
-      res.json({ success: true });
+      console.error("Error recording pageview:", getErrorMessage(error));
+      return res.json({ success: true });
     }
   });
 
