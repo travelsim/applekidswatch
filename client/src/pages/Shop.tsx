@@ -106,15 +106,6 @@ export default function Shop() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
         />
       )}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: breadcrumbList([
-            { name: "Home", path: "/" },
-            { name: "Shop", path: "/shop" },
-          ]),
-        }}
-      />
       <section className="bg-muted/50 py-12 md:py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-3xl">

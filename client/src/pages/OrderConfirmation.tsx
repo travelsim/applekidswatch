@@ -1,14 +1,113 @@
 import { useEffect, useState } from "react";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { useQuery } from "@tanstack/react-query";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { useRoute, useLocation, Link } from "wouter";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { Button } from "@/components/ui/button";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { Skeleton } from "@/components/ui/skeleton";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { Separator } from "@/components/ui/separator";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { CheckCircle, ArrowLeft, Package, Mail, MapPin, Phone, CreditCard } from "lucide-react";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import type { Order } from "@shared/schema";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { useSeo } from "@/hooks/use-seo";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 import { breadcrumbList } from "@/lib/structured-data";
+
+interface OrderItem {
+  id: string;
+  name: string;
+  color: string;
+  quantity: number;
+  price: number;
+}
+
 
 export default function OrderConfirmation() {
   const [, navigate] = useLocation();
@@ -44,7 +143,7 @@ export default function OrderConfirmation() {
         .then((order: Order) => {
           navigate(`/order/${order.id}`, { replace: true });
         })
-        .catch(() => {
+        .catch((_error: unknown) => {
           // If resolution fails, keep showing loading state then error
           setResolvedOrderId(null);
         });
@@ -108,7 +207,7 @@ export default function OrderConfirmation() {
     );
   }
 
-  const orderItems = JSON.parse(order.items);
+  const orderItems: OrderItem[] = JSON.parse(order.items);
   const formattedDate = new Date(order.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -182,7 +281,7 @@ export default function OrderConfirmation() {
 
             <div>
               <h4 className="font-semibold mb-3">Items</h4>
-              {orderItems.map((item: any, i: number) => (
+              {orderItems.map((item: OrderItem, i: number) => (
                 <div key={i} className="flex justify-between text-sm py-2">
                   <span className="text-muted-foreground">
                     {item.name} ({item.color}) x{item.quantity}

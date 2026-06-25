@@ -18,7 +18,7 @@ export function useAnalytics() {
         }),
         // Keepalive ensures the request completes even during navigation
         keepalive: true,
-      }).catch(() => {
+      }).catch((_error: unknown) => {
         // Silently ignore analytics failures
       });
     }

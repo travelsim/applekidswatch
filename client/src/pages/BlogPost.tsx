@@ -1,3 +1,13 @@
+import { useQuery } from "@tanstack/react-query";
+import { useRoute, Link } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { BlogCard } from "@/components/BlogCard";
+import { ArrowLeft, Clock, User, Calendar, ArrowRight } from "lucide-react";
+import type { BlogPost } from "@shared/schema";
+import { useSeo } from "@/hooks/use-seo";
+import { breadcrumbList } from "@/lib/structured-data";
 
 const categoryLabels: Record<string, string> = {
   "safety-tips": "Safety Tips",

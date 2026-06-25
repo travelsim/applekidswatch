@@ -14,7 +14,7 @@ import { useSeo } from "@/hooks/use-seo";
 import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Checkout() {
-  const [, navigate] = useLocation();
+  const [, _navigate] = useLocation();
   const { items, getTotal, clearCart } = useCart();
   const { data: products } = useQuery<Product[]>({
     queryKey: ["/api/products"],
@@ -98,7 +98,7 @@ export default function Checkout() {
       } else {
         throw new Error("No checkout URL returned");
       }
-    } catch (err) {
+    } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to initiate payment");
     } finally {
       setSubmitting(false);
