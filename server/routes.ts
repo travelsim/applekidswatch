@@ -1,5 +1,4 @@
 import type { Express } from "express";
-import { type Server } from "http";
 import { storage } from "./storage";
 import { CartItem, insertNewsletterSchema, insertOrderSchema, orders } from "@shared/schema";
 import Stripe from "stripe";
@@ -16,13 +15,13 @@ const stripe = stripeSecretKey
 const DOMAIN = process.env.DOMAIN || `http://localhost:${process.env.PORT || 5000}`;
 
 export async function registerRoutes(
-  httpServer: Server,
-  app: Express
-): Promise<Server> {
+  app: Express,
+  options: { seed?: boolean } = {}
+): Promise<void> {
 
-  await storage.seedData();
+  if (options.seed) await storage.seedData();
 
-  // Health check endpoint for Render
+  // Process health; does not verify database connectivity.
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok" });
   });
@@ -463,5 +462,5 @@ ${urls
     }
   });
 
-  return httpServer;
+
 }
