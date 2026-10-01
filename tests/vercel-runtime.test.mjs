@@ -39,12 +39,19 @@ for (const configured of [false, true]) {
           }
           assert.equal((await fetch(origin + '/api/missing')).status, 404);
           assert.equal((await fetch(origin + '/robots.txt')).status, 200);
+          for (const path of ['/api/orders', '/api/orders/test', '/api/orders/by-session/test']) {
+            for (const method of ['GET', 'HEAD']) {
+              const res = await fetch(origin + path, { method });
+              assert.equal(res.status, 403, method + ' ' + path);
+              assert.equal(res.headers.get('cache-control'), 'no-store');
+              if (method === 'GET') assert.deepEqual(await res.json(), { error: 'Order lookup is unavailable' });
+            }
+          }
           if (!process.env.DATABASE_URL) {
             for (const [method, path] of [
               ['GET', '/api/products'], ['GET', '/api/products/test'],
               ['GET', '/api/posts'], ['GET', '/api/posts/test'],
-              ['GET', '/api/testimonials'], ['GET', '/api/orders'],
-              ['GET', '/api/orders/test'], ['GET', '/api/orders/by-session/test'],
+              ['GET', '/api/testimonials'],
               ['POST', '/api/orders'], ['POST', '/api/create-checkout-session'],
               ['POST', '/api/stripe-webhook'], ['POST', '/api/newsletter'],
               ['GET', '/sitemap.xml'],

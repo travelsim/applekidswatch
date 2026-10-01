@@ -19,6 +19,15 @@ export async function registerRoutes(
   options: { seed?: boolean } = {}
 ): Promise<void> {
 
+  // Containment until authenticated ownership/admin checks are implemented.
+  // Neither an order ID nor a Stripe session ID proves authorization.
+  app.get([
+    "/api/orders", "/api/orders/:id", "/api/orders/by-session/:sessionId",
+  ], (_req, res) => {
+    res.setHeader("Cache-Control", "no-store");
+    res.status(403).json({ error: "Order lookup is unavailable" });
+  });
+
   if (options.seed && databaseConfigured) await storage.seedData();
 
   // Process health; does not verify database connectivity.
