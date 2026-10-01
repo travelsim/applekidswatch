@@ -3,7 +3,7 @@ import { storage } from "./storage";
 import { CartItem, insertNewsletterSchema, insertOrderSchema, orders } from "@shared/schema";
 import Stripe from "stripe";
 import { eq } from "drizzle-orm";
-import { db } from "./db";
+import { db, databaseConfigured } from "./db";
 import { getErrorMessage, isZodError } from "../shared/errors";
 
 // Initialize Stripe only if key is available (graceful fallback for dev)
@@ -19,11 +19,25 @@ export async function registerRoutes(
   options: { seed?: boolean } = {}
 ): Promise<void> {
 
-  if (options.seed) await storage.seedData();
+  if (options.seed && databaseConfigured) await storage.seedData();
 
   // Process health; does not verify database connectivity.
   app.get("/api/health", (_req, res) => {
     res.json({ status: "ok" });
+  });
+
+  // All database-backed route families, including checkout and webhooks.
+  // Keep liveness, robots, analytics and unknown-route handling independent.
+  app.use([
+    "/api/products", "/api/posts", "/api/testimonials", "/api/orders",
+    "/api/create-checkout-session", "/api/stripe-webhook",
+    "/api/newsletter", "/sitemap.xml",
+  ], (_req, res, next) => {
+    if (!databaseConfigured) {
+      res.status(503).json({ error: "Database is not configured" });
+      return;
+    }
+    next();
   });
 
   app.get("/api/products", async (_req, res) => {

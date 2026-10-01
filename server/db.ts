@@ -2,9 +2,8 @@ import { Pool } from "pg";
 import { drizzle } from "drizzle-orm/node-postgres";
 import * as schema from "@shared/schema";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL environment variable is not set");
-}
+// Pool construction does not connect. Routes must check this before DB work.
+export const databaseConfigured = Boolean(process.env.DATABASE_URL?.trim());
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
