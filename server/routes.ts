@@ -3,8 +3,25 @@ import { storage } from "./storage";
 import { CartItem, insertNewsletterSchema, insertOrderSchema, orders } from "@shared/schema";
 import Stripe from "stripe";
 import { eq } from "drizzle-orm";
-import { db, databaseConfigured } from "./db";
+import { db, databaseConfigured, ensureSchema } from "./db";
 import { getErrorMessage, isZodError } from "../shared/errors";
+import {
+  BRANDS,
+  resolveBrandFromHost,
+  APPLE_NON_AFFILIATION,
+} from "@shared/brands";
+
+/** Resolve the requesting brand once, from the Host header. */
+function brandFor(req: { headers: Record<string, unknown> }) {
+  const host = (req.headers["x-forwarded-host"] || req.headers.host) as
+    | string
+    | undefined;
+  const { brand, matched } = resolveBrandFromHost(host);
+  if (!matched && host) {
+    console.log(`[brand] unrecognised host "${host}" -> default brand ${brand.id}`);
+  }
+  return brand;
+}
 
 // Initialize Stripe only if key is available (graceful fallback for dev)
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
@@ -28,6 +45,16 @@ export async function registerRoutes(
     res.status(403).json({ error: "Order lookup is unavailable" });
   });
 
+  if (databaseConfigured) {
+    // Apply the forward-only schema migration, then seed the four-brand
+    // launch catalogue once. Seeding is guarded so a warm instance never
+    // rewrites rows, and never touches orders or testimonials.
+    const migrated = await ensureSchema();
+    if (migrated) {
+      const seeded = await storage.seedIfEmpty();
+      if (seeded) console.log("[seed] four-brand launch catalogue installed");
+    }
+  }
   if (options.seed && databaseConfigured) await storage.seedData();
 
   // Process health; does not verify database connectivity.
@@ -49,10 +76,29 @@ export async function registerRoutes(
     next();
   });
 
-  app.get("/api/products", async (_req, res) => {
+  app.get("/api/brands/current", async (req, res) => {
+    const brand = brandFor(req);
+    return res.json({
+      ...brand,
+      compliance_note: APPLE_NON_AFFILIATION,
+      brand_id: brand.id,
+      all_brand_domains: BRANDS.map((b) => b.domain),
+    });
+  });
+
+  app.get("/api/products", async (req, res) => {
     try {
-      const products = await storage.getProducts();
-      return res.json(products);
+      const brand = brandFor(req);
+      let rows = await storage.getProducts(brand.id);
+      const category = req.query.category;
+      if (typeof category === "string" && category) {
+        rows = rows.filter((p) => p.category === category);
+      }
+      const planType = req.query.plan_type;
+      if (typeof planType === "string" && planType) {
+        rows = rows.filter((p) => p.planType === planType);
+      }
+      return res.json(rows);
     } catch (error: unknown) {
       if (isZodError(error)) {
         return res.status(400).json({ error: error.issues[0]?.message || "Validation error" });
@@ -64,7 +110,8 @@ export async function registerRoutes(
 
   app.get("/api/products/:id", async (req, res) => {
     try {
-      const product = await storage.getProduct(req.params.id);
+      const brand = brandFor(req);
+      const product = await storage.getProduct(req.params.id, brand.id);
       if (!product) {
         return res.status(404).json({ error: "Product not found" });
       }
@@ -78,9 +125,10 @@ export async function registerRoutes(
     }
   });
 
-  app.get("/api/posts", async (_req, res) => {
+  app.get("/api/posts", async (req, res) => {
     try {
-      const posts = await storage.getPosts();
+      const brand = brandFor(req);
+      const posts = await storage.getPosts(brand.id);
       return res.json(posts);
     } catch (error: unknown) {
       if (isZodError(error)) {
@@ -93,7 +141,8 @@ export async function registerRoutes(
 
   app.get("/api/posts/:slug", async (req, res) => {
     try {
-      const post = await storage.getPost(req.params.slug);
+      const brand = brandFor(req);
+      const post = await storage.getPost(req.params.slug, brand.id);
       if (!post) {
         return res.status(404).json({ error: "Post not found" });
       }
@@ -107,9 +156,10 @@ export async function registerRoutes(
     }
   });
 
-  app.get("/api/testimonials", async (_req, res) => {
+  app.get("/api/testimonials", async (req, res) => {
     try {
-      const testimonials = await storage.getTestimonials();
+      const brand = brandFor(req);
+      const testimonials = await storage.getTestimonials(brand.id);
       return res.json(testimonials);
     } catch (error: unknown) {
       if (isZodError(error)) {
@@ -203,7 +253,7 @@ export async function registerRoutes(
       }
 
       // Fetch products from DB to get prices and names
-      const allProducts = await storage.getProducts();
+      const allProducts = await storage.getProducts(brandFor(req).id);
       const productMap = new Map(allProducts.map((p) => [p.id, p]));
 
       // Validate and build line items
@@ -412,8 +462,8 @@ Allow: /
 
   app.get("/sitemap.xml", async (req, res) => {
     try {
-      const products = await storage.getProducts();
-      const posts = await storage.getPosts();
+      const products = await storage.getProducts(brandFor(req).id);
+      const posts = await storage.getPosts(brandFor(req).id);
       const baseUrl = `${req.protocol}://${req.get("host")}`;
 
       const urls = [

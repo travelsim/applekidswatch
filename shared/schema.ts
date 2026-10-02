@@ -17,6 +17,25 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
+export const brands = pgTable("brands", {
+  id: varchar("id").primaryKey(),
+  domain: text("domain").notNull().unique(),
+  name: text("name").notNull(),
+  tagline: text("tagline").notNull(),
+  market: text("market").notNull(),
+  currency: text("currency").notNull(),
+  locale: text("locale").notNull(),
+  audience: text("audience").notNull(),
+  heroHeadline: text("hero_headline").notNull(),
+  heroSub: text("hero_sub").notNull(),
+  complianceNote: text("compliance_note").notNull(),
+  metaTitle: text("meta_title").notNull(),
+  metaDescription: text("meta_description").notNull(),
+  active: boolean("active").notNull().default(true),
+});
+
+export type Brand = typeof brands.$inferSelect;
+
 export const products = pgTable("products", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
@@ -25,10 +44,20 @@ export const products = pgTable("products", {
   originalPrice: integer("original_price").notNull(),
   grade: text("grade").notNull(),
   color: text("color").notNull(),
+  // Repurposed from a meaningless storage capacity to the case size / band spec.
   storage: text("storage").notNull(),
   image: text("image").notNull(),
   features: text("features").array().notNull(),
   inStock: boolean("in_stock").notNull().default(true),
+  brandId: varchar("brand_id").references(() => brands.id),
+  sku: text("sku"),
+  category: text("category"),
+  planType: text("plan_type"),
+  planTerm: text("plan_term"),
+  market: text("market"),
+  compareAtPrice: integer("compare_at_price"),
+  badge: text("badge"),
+  sortOrder: integer("sort_order").notNull().default(0),
 });
 
 export const insertProductSchema = createInsertSchema(products).omit({
@@ -49,6 +78,8 @@ export const blogPosts = pgTable("blog_posts", {
   author: text("author").notNull(),
   publishedAt: text("published_at").notNull(),
   readTime: integer("read_time").notNull(),
+  brandId: varchar("brand_id").references(() => brands.id),
+  sortOrder: integer("sort_order").notNull().default(0),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
@@ -116,6 +147,7 @@ export const testimonials = pgTable("testimonials", {
   initials: text("initials").notNull().default(""),
   avatarColor: text("avatar_color").notNull().default("bg-primary"),
   isFeatured: boolean("is_featured").notNull().default(true),
+  brandId: varchar("brand_id").references(() => brands.id),
   sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
