@@ -10,6 +10,6 @@
     { "source": "/api/:path*", "destination": "/api/index" },
     { "source": "/robots.txt", "destination": "/api/index" },
     { "source": "/sitemap.xml", "destination": "/api/index" },
-    { "source": "/:path*", "destination": "/index.html" }
+    { "source": "/:path*", "destination": "/api/index" }
   ]
 }

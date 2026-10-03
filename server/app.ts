@@ -1,6 +1,7 @@
 import express from "express";
 import { errorHandler } from "../shared/errors";
 import { registerRoutes } from "./routes";
+import { serveStatic } from "./static";
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -42,6 +43,15 @@ export async function createApp(options: { seed?: boolean } = {}) {
 
   await registerRoutes(app, options);
   app.use("/api", (_req, res) => { res.status(404).json({ error: "Not found" }); });
+
+  // HTML is rendered per request so each portfolio domain receives its own
+  // canonical and metadata. This lives here rather than in the HTTP entry
+  // point because the Vercel serverless handler builds the app directly and
+  // would otherwise never render brand-specific HTML.
+  if (process.env.NODE_ENV === "production") {
+    serveStatic(app);
+  }
+
   app.use(errorHandler);
   return app;
 }

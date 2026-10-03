@@ -69,8 +69,17 @@ function renderIndexHtml(template: string, host: string | undefined): string {
     `<meta name="apple-disclaimer" content="${escapeHtml(APPLE_NON_AFFILIATION)}" />`,
   ].join("\n    ");
 
+  // The placeholder is the single <!--BRAND_SEO--> comment plus the
+  // explanatory comment that follows it, up to the closing -->.
+  const placeholder = /<!--BRAND_SEO-->[\s\S]*?-->/;
+  if (!placeholder.test(template)) {
+    console.error(
+      "index.html is missing the BRAND_SEO placeholder; brand-specific SEO will not render"
+    );
+    return template;
+  }
   return template.replace(
-    /<!--BRAND_SEO-->[\s\S]*?<!--\/BRAND_SEO-->/,
+    placeholder,
     `<!--BRAND_SEO-->\n    ${head}\n    <!--/BRAND_SEO-->`
   );
 }
@@ -78,11 +87,25 @@ function renderIndexHtml(template: string, host: string | undefined): string {
 export function serveStatic(app: Express) {
   const distPath = path.resolve(process.cwd(), "dist", "public");
   const indexPath = path.resolve(distPath, "index.html");
-  const template = fs.existsSync(indexPath)
-    ? fs.readFileSync(indexPath, "utf8")
-    : null;
+  const indexExists = fs.existsSync(indexPath);
+  const template = indexExists ? fs.readFileSync(indexPath, "utf8") : null;
 
-  app.use(express.static(distPath));
+  if (!indexExists) {
+    // On Vercel the function bundle does not include dist/public, because
+    // hashed assets are served by the CDN before any rewrite reaches us.
+    // Falling through with a clear error beats res.sendFile on a missing
+    // file, which would surface as an opaque 500.
+    console.error("dist/public/index.html not found; static HTML serving disabled");
+    app.use("*", (_req, res) => {
+      res.status(404).type("text/plain").send("Not found");
+    });
+    return;
+  }
+
+  // index:false is required. With the default, express.static serves
+  // index.html for "/" itself, and the brand-rendered wildcard below would
+  // never run, leaving every domain with the unrendered placeholder.
+  app.use(express.static(distPath, { index: false }));
 
   // Fall through to a brand-rendered index.html.
   app.use("*", (req, res) => {
