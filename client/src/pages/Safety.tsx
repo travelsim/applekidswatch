@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import safetyHero from "@assets/stock_images/apple_watch_safety.png";
@@ -80,8 +81,9 @@ const additionalFeatures = [
 ];
 
 export default function Safety() {
+  const { brand } = useBrand();
   useSeo({
-    title: "Apple Watch SE Safety Features for Kids | GPS, SOS & Parental Controls | KidWatch",
+    title: `Safety &amp; Privacy | ${brand.name}`,
     description: "Discover how Apple Watch SE keeps your child safe with real-time GPS tracking, Emergency SOS, approved contacts, geofencing alerts & School Time mode.",
   });
 
@@ -323,7 +325,7 @@ export default function Safety() {
               Ready to Keep Your Child Safe?
             </h2>
             <p className="text-lg text-muted-foreground">
-              Browse our collection of certified refurbished Apple SE watches. 
+              Browse the refurbished Apple Watch range. 
               Every watch comes with our 30-day guarantee.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">

@@ -4,7 +4,15 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/lib/theme";
 import { useCart } from "@/lib/cart";
-import { Watch, Menu, ShoppingCart, Sun, Moon, Shield } from "lucide-react";
+import { useBrand } from "@/lib/brand";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Watch, Menu, ShoppingCart, Sun, Moon } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
@@ -18,6 +26,7 @@ export function Header() {
   const [location] = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { itemCount } = useCart();
+  const { brand, currency, setCurrency } = useBrand();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -28,7 +37,7 @@ export function Header() {
             <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
               <Watch className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold tracking-tight">KidWatch</span>
+            <span className="text-xl font-bold tracking-tight">{brand.name}</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -46,6 +55,32 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
+            {brand.displayCurrencies.length > 1 && (
+              <Select
+                value={currency}
+                onValueChange={(v) => setCurrency(v as typeof currency)}
+              >
+                <SelectTrigger
+                  className="w-[104px]"
+                  aria-label="Display currency"
+                  data-testid="select-currency"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {brand.displayCurrencies.map((c) => (
+                    <SelectItem
+                      key={c}
+                      value={c}
+                      data-testid={`option-currency-${c}`}
+                    >
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+
             <Button
               size="icon"
               variant="ghost"
@@ -85,7 +120,7 @@ export function Header() {
                     <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
                       <Watch className="h-5 w-5 text-primary-foreground" />
                     </div>
-                    <span className="text-xl font-bold">KidWatch</span>
+                    <span className="text-xl font-bold">{brand.name}</span>
                   </div>
                   <nav className="flex flex-col gap-2">
                     {navLinks.map((link) => (
@@ -102,9 +137,8 @@ export function Header() {
                     ))}
                   </nav>
                   <div className="flex items-center gap-4 pt-4 border-t">
-                    <Shield className="h-5 w-5 text-accent" />
                     <span className="text-sm text-muted-foreground">
-                      100% Secure Checkout
+                      Refurbished, not new. No telco contract.
                     </span>
                   </div>
                 </div>

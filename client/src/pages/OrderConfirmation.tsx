@@ -89,6 +89,7 @@ interface OrderItem {
 }
 
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 
 interface OrderItem {
   id: string;
@@ -110,6 +111,7 @@ interface OrderItem {
 
 
 export default function OrderConfirmation() {
+  const { brand, formatPrice } = useBrand();
   const [, navigate] = useLocation();
 
   // Try both routes — /order/:id and /order/success/:sessionId
@@ -157,9 +159,9 @@ export default function OrderConfirmation() {
 
   useSeo({
     title: order
-      ? `Order Confirmed #${order.id.slice(0, 8)} | KidWatch`
-      : "Order Confirmation | KidWatch",
-    description: "Your Apple Watch SE order has been confirmed. Thank you for choosing KidWatch.",
+      ? `Order Confirmed #${order.id.slice(0, 8)} | ${brand.name}`
+      : `Order Confirmation | ${brand.name}`,
+    description: "Your order has been confirmed.",
   });
 
   if (sessionId && !orderId) {
@@ -286,25 +288,25 @@ export default function OrderConfirmation() {
                   <span className="text-muted-foreground">
                     {item.name} ({item.color}) x{item.quantity}
                   </span>
-                  <span>${item.price * item.quantity}</span>
+                  <span>{formatPrice(item.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
             <Separator />
             <div className="flex justify-between">
               <span className="text-muted-foreground">Subtotal</span>
-              <span>${order.subtotal}</span>
+              <span>{formatPrice(order.subtotal)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Shipping</span>
               <span className="text-accent font-medium">
-                {order.shipping === 0 ? "Free" : `$${order.shipping}`}
+                {order.shipping === 0 ? "Included" : formatPrice(order.shipping)}
               </span>
             </div>
             <Separator />
             <div className="flex justify-between text-lg font-bold">
               <span>Total</span>
-              <span>${order.total}</span>
+              <span>{formatPrice(order.total)}</span>
             </div>
           </CardContent>
         </Card>

@@ -8,12 +8,14 @@ import { useCart } from "@/lib/cart";
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight, Shield, Truck } from "lucide-react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Cart() {
+  const { brand, formatPrice } = useBrand();
   useSeo({
-    title: "Your Cart | KidWatch - Refurbished Apple Watch SE",
-    description: "Review your Apple Watch SE order. Free shipping on all orders, 30-day money-back guarantee.",
+    title: `Your Cart | ${brand.name}`,
+    description: `Review your ${brand.name} order. 30-day returns.`
   });
 
   const { items, updateQuantity, removeItem, clearCart, getTotal } = useCart();
@@ -106,7 +108,7 @@ export default function Cart() {
                           </p>
                         </div>
                         <p className="font-bold text-lg" data-testid={`text-cart-item-total-${product.id}`}>
-                          ${product.price * product.quantity}
+                          {formatPrice(product.price * product.quantity)}
                         </p>
                       </div>
                       <div className="flex items-center justify-between mt-4">
@@ -175,7 +177,7 @@ export default function Cart() {
               <CardContent className="space-y-4">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span data-testid="text-subtotal">${subtotal.toFixed(2)}</span>
+                  <span data-testid="text-subtotal">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
@@ -184,7 +186,7 @@ export default function Cart() {
                 <Separator />
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span data-testid="text-total">${total.toFixed(2)}</span>
+                  <span data-testid="text-total">{formatPrice(total)}</span>
                 </div>
 
                 <Link href="/checkout">
@@ -201,7 +203,7 @@ export default function Cart() {
                   </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Truck className="h-4 w-4 text-primary" />
-                    <span>Free Shipping on All Orders</span>
+                    <span>Shipping rate shown at checkout</span>
                   </div>
                 </div>
               </CardContent>

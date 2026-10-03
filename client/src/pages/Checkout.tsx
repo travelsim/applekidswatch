@@ -11,9 +11,11 @@ import { apiRequest } from "@/lib/queryClient";
 import { ArrowLeft, Shield, Truck, Lock, CheckCircle, CreditCard } from "lucide-react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Checkout() {
+  const { brand, formatPrice } = useBrand();
   const [, _navigate] = useLocation();
   const { items, getTotal, clearCart } = useCart();
   const { data: products } = useQuery<Product[]>({
@@ -21,8 +23,8 @@ export default function Checkout() {
   });
 
   useSeo({
-    title: "Checkout | KidWatch - Refurbished Apple Watch SE",
-    description: "Complete your order for a certified refurbished Apple Watch SE for your child.",
+    title: `Checkout | ${brand.name}`,
+    description: `Complete your order from ${brand.name}.`,
   });
 
   const [form, setForm] = useState({
@@ -270,13 +272,13 @@ export default function Checkout() {
                       <span className="text-muted-foreground truncate mr-2">
                         {product.name} ({product.color}) x{product.quantity}
                       </span>
-                      <span>${product.price * product.quantity}</span>
+                      <span>{formatPrice(product.price * product.quantity)}</span>
                     </div>
                   ))}
                   <Separator />
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span>${subtotal}</span>
+                    <span>{formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Shipping</span>
@@ -285,7 +287,7 @@ export default function Checkout() {
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span>${total}</span>
+                    <span>{formatPrice(total)}</span>
                   </div>
 
                   <Button
@@ -311,7 +313,7 @@ export default function Checkout() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Truck className="h-4 w-4 text-primary" />
-                      <span>Free Shipping on All Orders</span>
+                      <span>Shipping</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Lock className="h-4 w-4" />

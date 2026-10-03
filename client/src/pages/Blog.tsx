@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useState, useMemo } from "react";
 import type { BlogPost } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 const categories = [
@@ -17,8 +18,9 @@ const categories = [
 ];
 
 export default function Blog() {
+  const { brand } = useBrand();
   useSeo({
-    title: "Apple Watch for Kids: Safety Guides & Setup Tips | KidWatch Blog",
+    title: `Guides &amp; Blog | ${brand.name}`,
     description: "Expert guides on setting up Apple Watch SE for children. GPS tracking tips, Family Setup tutorials, child safety advice and parenting tech resources.",
   });
 

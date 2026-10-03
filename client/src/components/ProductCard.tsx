@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCart } from "@/lib/cart";
+import { useBrand } from "@/lib/brand";
+
 import { ShoppingCart, Eye } from "lucide-react";
 import type { Product } from "@shared/schema";
 
@@ -24,6 +26,9 @@ const gradeLabels: Record<string, string> = {
 
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
+  
+  const { formatPrice } = useBrand();
+  const hasCompareAt = product.originalPrice > product.price;
 
   return (
     <Card className="group overflow-visible hover-elevate" data-testid={`card-product-${product.id}`}>
@@ -55,16 +60,22 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.color} &middot; {product.storage}
             </p>
           </div>
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-baseline gap-2 flex-wrap">
             <span className="text-xl font-bold" data-testid={`text-product-price-${product.id}`}>
-              ${product.price}
+              {formatPrice(product.price)}
             </span>
-            <span className="text-sm text-muted-foreground line-through">
-              ${product.originalPrice}
-            </span>
-            <Badge variant="outline" className="text-xs">
-              Save ${product.originalPrice - product.price}
-            </Badge>
+            {/* A plan or accessory has no new-hardware reference price, so a
+                strike-through and a savings figure would be a fabricated claim. */}
+            {hasCompareAt && (
+              <>
+                <span className="text-sm text-muted-foreground line-through">
+                  {formatPrice(product.originalPrice)}
+                </span>
+                <Badge variant="outline" className="text-xs">
+                  Save {formatPrice(product.originalPrice - product.price)}
+                </Badge>
+              </>
+            )}
           </div>
           <div className="flex gap-2 pt-2">
             <Link href={`/product/${product.id}`} className="flex-1">

@@ -23,6 +23,7 @@ import {
 import { SiApple } from "react-icons/si";
 import type { Product, BlogPost, Testimonial } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 import heroImage from "@assets/stock_images/apple_watch_gps_feature.png";
@@ -58,7 +59,7 @@ const howItWorks = [
   {
     step: 1,
     title: "Choose Your Watch",
-    description: "Select from our range of certified refurbished Apple SE watches in various grades and colors.",
+    description: "Every watch is graded A or B, tested before dispatch, and battery health is guaranteed at 85% or better.",
     icon: Smartphone,
   },
   {
@@ -82,9 +83,10 @@ const howItWorks = [
 ];
 
 export default function Home() {
+  const { brand } = useBrand();
   useSeo({
-    title: "Buy Refurbished Apple Watch SE for Kids | GPS & Safety | KidWatch",
-    description: "Shop certified refurbished Apple Watch SE from $99. GPS tracking, Emergency SOS, Family Setup & kid-safe cellular plans. 30-day guarantee & free shipping.",
+    title: brand.metaTitle,
+    description: brand.metaDescription,
   });
 
   const { data: products, isLoading: productsLoading } = useQuery<Product[]>({
@@ -123,14 +125,14 @@ export default function Home() {
           <div className="max-w-2xl space-y-6">
             <Badge className="bg-accent text-accent-foreground" data-testid="badge-hero">
               <Zap className="h-3 w-3 mr-1" />
-              Certified Refurbished
+              Refurbished, Not New
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight" data-testid="text-hero-title">
               Buy Refurbished Apple Watch SE for Kids
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-              Certified refurbished Apple Watch SE from $99 with GPS tracking, Emergency SOS, and Family Setup. 
-              Kid-safe cellular plans included. Free shipping and 30-day guarantee.
+              Refurbished Apple Watch kits with GPS tracking, Emergency SOS and Family Setup. No telco contract. 
+              Kid-safe cellular plans included. 30-day returns, and no telco contract.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Link href="/shop">
@@ -154,7 +156,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="flex items-center gap-3">
               <SiApple className="h-8 w-8 text-foreground" />
-              <span className="font-medium">Apple Certified</span>
+              <span className="font-medium">Independently Refurbished</span>
             </div>
             <div className="flex items-center gap-3">
               <Shield className="h-8 w-8 text-accent" />
@@ -166,7 +168,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-3">
               <Zap className="h-8 w-8 text-secondary" />
-              <span className="font-medium">Free Shipping</span>
+              <span className="font-medium">30-Day Returns</span>
             </div>
           </div>
         </div>
@@ -342,10 +344,10 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="outline" className="mb-4">Reviews</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Trusted by 10,000+ Parents
+              Customer reviews
             </h2>
             <p className="text-lg text-muted-foreground">
-              See what other families are saying about KidWatch.
+              We publish reviews only when they are real.
             </p>
           </div>
           {testimonialsLoading ? (
@@ -374,9 +376,9 @@ export default function Home() {
                 </Card>
               ))}
             </div>
-          ) : (
+          ) : testimonials && testimonials.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {testimonials?.map((testimonial) => (
+              {testimonials.map((testimonial) => (
                 <Card key={testimonial.id} className="hover-elevate" data-testid={`card-testimonial-${testimonial.id}`}>
                   <CardContent className="p-6 space-y-4">
                     <div className="flex gap-1">
@@ -400,6 +402,27 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+          ) : (
+            /* Honest empty state. Inventing quotes to fill this section is a
+               truth-in-advertising problem, so it ships empty instead. */
+            <Card className="max-w-2xl mx-auto" data-testid="testimonials-empty-state">
+              <CardContent className="p-8 text-center space-y-3">
+                <p className="font-semibold">No reviews published yet</p>
+                <p className="text-sm text-muted-foreground">
+                  We have not published customer reviews because we do not have
+                  enough real ones to be worth reading. When we do, they will be
+                  real. If you have bought from us and would like to leave a
+                  review, email{" "}
+                  <a
+                    href={`mailto:hello@${brand.domain}`}
+                    className="underline underline-offset-4"
+                  >
+                    hello@{brand.domain}
+                  </a>
+                  .
+                </p>
+              </CardContent>
+            </Card>
           )}
         </div>
       </section>
@@ -497,7 +520,7 @@ export default function Home() {
               Ready to Buy an Apple Watch SE for Your Child?
             </h2>
             <p className="text-lg text-muted-foreground">
-              Shop certified refurbished Apple Watch SE from $99. GPS tracking, safety features, and free shipping on every order.
+              Refurbished Apple Watch kits with GPS tracking and safety features. 30-day returns, and no telco contract.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
               <Link href="/shop">

@@ -1,16 +1,18 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Watch, Mail, Phone, MapPin, Shield, Truck, RefreshCw, Loader2 } from "lucide-react";
-import { SiApple, SiFacebook, SiInstagram, SiX } from "react-icons/si";
+import { Watch, Mail, Shield, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { useBrand } from "@/lib/brand";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const { toast } = useToast();
+  const { brand, complianceNote } = useBrand();
+  const contactEmail = `hello@${brand.domain}`;
 
   const subscribeMutation = useMutation({
     mutationFn: async (email: string) => {
@@ -19,8 +21,8 @@ export function Footer() {
     },
     onSuccess: () => {
       toast({
-        title: "Subscribed!",
-        description: "You'll receive updates on kids' safety and new products.",
+        title: "Subscribed",
+        description: "You'll receive setup guides and new product notices.",
       });
       setEmail("");
     },
@@ -44,72 +46,75 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2" data-testid="footer-link-home">
               <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
                 <Watch className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">KidWatch</span>
+              <span className="text-xl font-bold">{brand.name}</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Keeping families connected with refurbished Apple SE watches and Better Roaming connectivity. Safety and value, combined.
+              {brand.audience}
             </p>
-            <div className="flex items-center gap-3">
-              <Button size="icon" variant="ghost" data-testid="link-facebook">
-                <SiFacebook className="h-5 w-5" />
-              </Button>
-              <Button size="icon" variant="ghost" data-testid="link-instagram">
-                <SiInstagram className="h-5 w-5" />
-              </Button>
-              <Button size="icon" variant="ghost" data-testid="link-twitter">
-                <SiX className="h-5 w-5" />
-              </Button>
-            </div>
+            <p className="text-sm text-muted-foreground">
+              Shipping to: {brand.shipsTo.join(", ")}.
+            </p>
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-semibold">Quick Links</h4>
+            <h4 className="font-semibold">Shop</h4>
             <nav className="flex flex-col gap-2">
               <Link href="/shop" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-shop">
-                Shop Watches
+                All products
               </Link>
-              <Link href="/safety" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-safety">
-                Safety Features
+              <Link href="/shop?category=Kids%20watch%20kits" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Watch kits
               </Link>
-              <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-blog">
-                Blog & Guides
+              <Link href="/shop?category=Connectivity%20plans" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Watch plans
               </Link>
-              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-about">
-                About Us
+              <Link href="/shop?category=Accessories" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Accessories
+              </Link>
+              <Link href="/shop?category=Protection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Protection
               </Link>
             </nav>
           </div>
 
           <div className="space-y-4">
-            <h4 className="font-semibold">Contact</h4>
-            <div className="flex flex-col gap-3">
-              <a href="mailto:hello@kidwatch.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <h4 className="font-semibold">Help &amp; trust</h4>
+            <nav className="flex flex-col gap-2">
+              <Link href="/safety" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-safety">
+                Safety &amp; privacy
+              </Link>
+              <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-about">
+                Is it right for my child?
+              </Link>
+              <Link href="/legal" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-legal">
+                Legal, returns &amp; warranty
+              </Link>
+              <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-blog">
+                Guides &amp; blog
+              </Link>
+              <a href={`mailto:${contactEmail}`} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="h-4 w-4" />
-                hello@kidwatch.com
+                {contactEmail}
               </a>
-              <a href="tel:+1234567890" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                <Phone className="h-4 w-4" />
-                (123) 456-7890
-              </a>
-              <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                San Francisco, CA
-              </span>
-            </div>
+            </nav>
+            <p className="text-xs text-muted-foreground">
+              We reply to support email within one business day.
+            </p>
           </div>
 
           <div className="space-y-4">
             <h4 className="font-semibold">Newsletter</h4>
             <p className="text-sm text-muted-foreground">
-              Get safety tips and exclusive offers for your family.
+              Setup guides and new product notices. No third-party marketing.
             </p>
             <form onSubmit={handleSubscribe} className="flex gap-2">
               <Input
                 type="email"
+                aria-label="Email address"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -127,28 +132,38 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Claims here must be verifiable. "Apple Certified Refurbished" is
+            Apple's own programme and must never be claimed by a reseller. */}
         <div className="flex flex-wrap justify-center gap-8 mt-12 pt-8 border-t">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <SiApple className="h-5 w-5" />
-            <span>Apple Certified Refurbished</span>
+            <CheckCircle2 className="h-5 w-5" />
+            <span>Refurbished, not new &mdash; grade disclosed on every product</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Shield className="h-5 w-5" />
-            <span>30-Day Guarantee</span>
+            <span>Battery health 85% or better, guaranteed</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Truck className="h-5 w-5" />
-            <span>Free Shipping</span>
+            <CheckCircle2 className="h-5 w-5" />
+            <span>30-day returns</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <RefreshCw className="h-5 w-5" />
-            <span>Easy Returns</span>
+            <CheckCircle2 className="h-5 w-5" />
+            <span>No telco contract</span>
           </div>
         </div>
 
-        <div className="text-center mt-8 pt-8 border-t">
+        <div className="mt-8 pt-8 border-t space-y-3">
+          <p className="text-xs text-muted-foreground leading-relaxed" data-testid="footer-compliance">
+            {complianceNote}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Watch plans are sold for their home market only and do not roam
+            across borders. Activating a plan for your destination country is
+            the only way a watch stays connected while you travel.
+          </p>
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} KidWatch. All rights reserved. Powered by Better Roaming.
+            &copy; {new Date().getFullYear()} {brand.name}.
           </p>
         </div>
       </div>

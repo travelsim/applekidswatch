@@ -17,12 +17,15 @@ import { SiApple } from "react-icons/si";
 import { useState, useMemo } from "react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Shop() {
+  const { brand } = useBrand();
+  const origin = `https://${brand.domain}`;
   useSeo({
-    title: "Shop Refurbished Apple Watch SE for Kids | From $99 | KidWatch",
-    description: "Browse certified refurbished Apple Watch SE models with GPS + Cellular. Excellent, good & fair conditions available. Free shipping, 30-day guarantee. Buy now.",
+    title: `Shop | ${brand.name}`,
+    description: brand.metaDescription,
   });
 
   const [search, setSearch] = useState("");
@@ -74,7 +77,7 @@ export default function Shop() {
         "itemListElement": products.map((product, index) => ({
           "@type": "ListItem",
           "position": index + 1,
-          "url": `https://kidwatch.com/product/${product.id}`,
+          "url": `${origin}/product/${product.id}`,
           "name": `${product.name} - ${product.color}`,
           "image": product.image,
           "offers": {
@@ -114,8 +117,8 @@ export default function Shop() {
               Buy Refurbished Apple Watch SE - From $99
             </h1>
             <p className="text-lg text-muted-foreground">
-              Shop certified refurbished Apple Watch SE with GPS + Cellular and Family Setup. 
-              Every watch is thoroughly tested and comes with free shipping and a 30-day money-back guarantee.
+              Refurbished Apple Watches with GPS + Cellular, standalone watch plans and accessories. 
+              Every watch is thoroughly tested and comes with a 30-day money-back guarantee. Shipping rates are shown before you pay.
             </p>
           </div>
         </div>
@@ -126,7 +129,7 @@ export default function Shop() {
           <div className="flex flex-wrap justify-center gap-8">
             <div className="flex items-center gap-2 text-sm">
               <SiApple className="h-5 w-5" />
-              <span>Apple Certified</span>
+              <span>Refurbished, Not New</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Shield className="h-5 w-5 text-accent" />
@@ -134,7 +137,7 @@ export default function Shop() {
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Truck className="h-5 w-5 text-primary" />
-              <span>Free Shipping</span>
+              <span>30-Day Returns</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <RefreshCw className="h-5 w-5 text-secondary" />

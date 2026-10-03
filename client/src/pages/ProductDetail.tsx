@@ -21,6 +21,7 @@ import {
 import { SiApple } from "react-icons/si";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 const gradeDescriptions: Record<string, string> = {
@@ -36,6 +37,8 @@ const gradeColors: Record<string, string> = {
 };
 
 export default function ProductDetail() {
+  const { brand, formatPrice, complianceNote } = useBrand();
+  const origin = `https://${brand.domain}`;
   const [, params] = useRoute("/product/:id");
   const productId = params?.id;
   const { addItem, items } = useCart();
@@ -47,11 +50,11 @@ export default function ProductDetail() {
 
   useSeo({
     title: product
-      ? `Buy ${product.name} ${product.color} | $${product.price} Refurbished | KidWatch`
-      : "Apple Watch SE for Kids | KidWatch",
+      ? `{product.name} {product.color} | ${formatPrice(product.price)} | ${brand.name}`
+      : `Shop | ${brand.name}`,
     description: product
-      ? `${product.description} Was $${product.originalPrice}, now $${product.price}. ${product.grade} condition. Free shipping & 30-day guarantee.`
-      : "Shop certified refurbished Apple Watch SE for kids with GPS tracking and safety features.",
+      ? `${product.description} ${product.grade} grade refurbished condition. Battery health 85% or better. 30-day returns.`
+      : brand.metaDescription,
     canonical: product ? `/product/${product.id}` : undefined,
     ogImage: product?.image,
   });
@@ -104,33 +107,14 @@ export default function ProductDetail() {
     );
   }
 
-  function deriveMpn(product: Product): string {
-    const gen = product.name.includes("1st Gen") ? "A1" : "A2";
-    const colorCode = product.color.substring(0, 3).toUpperCase();
-    const gradeCode = product.grade.substring(0, 2).toUpperCase();
-    return `AWK-${gen}-${colorCode}-${gradeCode}`;
-  }
-
-  function deriveGtin(product: Product): string {
-    // Use a deterministic numeric GTIN-14 derived from the product UUID hash
-    // Real GTINs are not available for refurbished devices; this provides
-    // a numeric identifier acceptable for Google Shopping feed submission.
-    const hash = product.id.replace(/-/g, "").replace(/[a-f]/g, (c) =>
-      String(c.charCodeAt(0) - 87)
-    ).substring(0, 13);
-    return `0${hash}`;
-  }
-
   const productJsonLd = product ? {
     "@context": "https://schema.org",
     "@type": "Product",
-    "@id": `https://kidwatch.com/product/${product.id}`,
+    "@id": `${origin}/product/${product.id}`,
     "name": `${product.name} - ${product.color}`,
     "description": product.description,
     "image": product.image,
-    "sku": product.id,
-    "mpn": deriveMpn(product),
-    "gtin": deriveGtin(product),
+    "sku": product.sku ?? product.id,
     "brand": { "@type": "Brand", "name": "Apple" },
     "category": "Electronics > Wearables > Smartwatches",
     "url": window.location.href,
@@ -145,7 +129,7 @@ export default function ProductDetail() {
       "priceCurrency": "USD",
       "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "condition": "https://schema.org/RefurbishedCondition",
-      "seller": { "@type": "Organization", "name": "KidWatch" },
+      "seller": { "@type": "Organization", "name": brand.name },
       "priceValidUntil": new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
       "shippingDetails": {
         "@type": "OfferShippingDetails",
@@ -279,7 +263,7 @@ export default function ProductDetail() {
 
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl font-bold" data-testid="text-product-price">
-                  ${product.price}
+                  {formatPrice(product.price)}
                 </span>
                 <span className="text-lg text-muted-foreground line-through">
                   ${product.originalPrice}
@@ -322,7 +306,7 @@ export default function ProductDetail() {
                 <div className="flex items-center gap-3">
                   <SiApple className="h-6 w-6" />
                   <div>
-                    <p className="text-sm font-medium">Apple Certified</p>
+                    <p className="text-sm font-medium">Independently Refurbished</p>
                     <p className="text-xs text-muted-foreground">Genuine Parts</p>
                   </div>
                 </div>
@@ -336,8 +320,10 @@ export default function ProductDetail() {
                 <div className="flex items-center gap-3">
                   <Truck className="h-6 w-6 text-primary" />
                   <div>
-                    <p className="text-sm font-medium">Free Shipping</p>
-                    <p className="text-xs text-muted-foreground">2-5 Business Days</p>
+                    <p className="text-sm font-medium">Shipping at checkout</p>
+                    <p className="text-xs text-muted-foreground">
+                      Rate and window shown before you pay
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -355,6 +341,26 @@ export default function ProductDetail() {
 
       <section className="py-8 border-t">
         <div className="container mx-auto px-4 md:px-6">
+          {/* Mandatory on every product page: non-affiliation, the
+              refurbished-condition disclosure, and the plan limitation. */}
+          <div
+            className="mb-8 rounded-lg border bg-muted/40 p-4 space-y-2 text-xs text-muted-foreground"
+            data-testid="product-compliance"
+          >
+            <p data-testid="product-non-affiliation">{complianceNote}</p>
+            <p>
+              Refurbished, not new. This is a used device we have tested and
+              repaired. Grade A shows minimal signs of use; Grade B shows light
+              cosmetic wear. Battery health is guaranteed at 85% or better.
+            </p>
+            {product.planType === "plan" && (
+              <p className="font-medium text-foreground" data-testid="product-home-country-clause">
+                This plan works in its home market only ({product.market}). It
+                does not roam across borders. To travel, purchase a plan for
+                your destination.
+              </p>
+            )}
+          </div>
           <Tabs defaultValue="features" className="w-full">
             <TabsList className="w-full justify-start" data-testid="tabs-product-details">
               <TabsTrigger value="features">Features</TabsTrigger>

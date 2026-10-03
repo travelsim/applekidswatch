@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme";
 import { CartProvider } from "@/lib/cart";
+import { BrandProvider } from "@/lib/brand";
 import { useAnalytics } from "@/hooks/use-analytics";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,6 +19,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Safety from "@/pages/Safety";
 import About from "@/pages/About";
+import Legal from "@/pages/Legal";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -34,6 +36,7 @@ function Router() {
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/safety" component={Safety} />
       <Route path="/about" component={About} />
+      <Route path="/legal" component={Legal} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -48,6 +51,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
+        <BrandProvider>
         <CartProvider>
           <TooltipProvider>
             <AnalyticsTracker />
@@ -61,6 +65,7 @@ function App() {
             <Toaster />
           </TooltipProvider>
         </CartProvider>
+        </BrandProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

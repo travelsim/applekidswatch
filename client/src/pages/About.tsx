@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import aboutHero from "@assets/stock_images/apple_watch_cellular.png";
@@ -52,9 +53,10 @@ const stats = [
 ];
 
 export default function About() {
+  const { brand } = useBrand();
   useSeo({
-    title: "About KidWatch | Certified Refurbished Apple Watch SE for Kids",
-    description: "KidWatch provides certified refurbished Apple Watch SE for children. Quality guaranteed, eco-friendly, and affordable. 10,000+ happy families trust us.",
+    title: `Is It Right for My Child? | ${brand.name}`,
+    description: `Age, wrist size and setup requirements, plus honest refurbishment standards, from ${brand.name}.`,
   });
 
   return (
@@ -106,7 +108,7 @@ export default function About() {
               Keeping Families Connected
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-              KidWatch was born from a simple idea: every child deserves to stay connected 
+              This shop started from a simple idea: every child deserves to stay connected 
               with their family, safely. We combine quality refurbished Apple watches with 
               Better Roaming's kid-safe cellular plans.
             </p>
@@ -137,7 +139,7 @@ export default function About() {
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 We believe that child safety shouldn't come with a premium price tag. 
-                By offering certified refurbished Apple SE watches at accessible prices, 
+                By offering refurbished Apple SE watches at accessible prices, 
                 we're making it possible for more families to stay connected.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -147,7 +149,7 @@ export default function About() {
               </p>
               <ul className="space-y-3">
                 {[
-                  "Certified refurbished Apple quality",
+                  "Refurbished and fully tested",
                   "Rigorous testing and quality control",
                   "Affordable pricing without compromise",
                   "Kid-safe Better Roaming connectivity",
@@ -173,7 +175,7 @@ export default function About() {
                     <SiApple className="h-6 w-6 text-accent-foreground" />
                   </div>
                   <div>
-                    <p className="font-semibold">Apple Certified</p>
+                    <p className="font-semibold">Independently Refurbished</p>
                     <p className="text-sm text-muted-foreground">Genuine refurbished</p>
                   </div>
                 </CardContent>
@@ -265,13 +267,13 @@ export default function About() {
                 Our friendly team is here to assist you.
               </p>
               <div className="space-y-4">
-                <a href="mailto:hello@kidwatch.com" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <a href="mailto:hello@{brand.domain}" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <p className="font-medium">Email Us</p>
-                    <p className="text-sm text-muted-foreground">hello@kidwatch.com</p>
+                    <p className="text-sm text-muted-foreground">hello@{brand.domain}</p>
                   </div>
                 </a>
                 <a href="tel:+1234567890" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
@@ -289,7 +291,9 @@ export default function About() {
                   </div>
                   <div>
                     <p className="font-medium">Visit Us</p>
-                    <p className="text-sm text-muted-foreground">San Francisco, CA</p>
+                    <p className="text-sm text-muted-foreground">
+                Shipping to {brand.shipsTo.join(", ")}
+              </p>
                   </div>
                 </div>
               </div>
@@ -332,7 +336,7 @@ export default function About() {
               Ready to Get Started?
             </h2>
             <p className="text-lg text-muted-foreground">
-              Browse our collection of certified refurbished Apple SE watches and keep your family connected.
+              Browse the refurbished Apple Watch range and keep your family connected.
             </p>
             <div className="flex flex-wrap justify-center gap-4 pt-4">
               <Link href="/shop">

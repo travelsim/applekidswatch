@@ -7,6 +7,7 @@ import { BlogCard } from "@/components/BlogCard";
 import { ArrowLeft, Clock, User, Calendar, ArrowRight } from "lucide-react";
 import type { BlogPost } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 const categoryLabels: Record<string, string> = {
@@ -22,6 +23,7 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function BlogPostPage() {
+  const { brand } = useBrand();
   const [, params] = useRoute("/blog/:slug");
   const slug = params?.slug;
 
@@ -34,8 +36,8 @@ export default function BlogPostPage() {
 
   useSeo({
     title: post
-      ? `${post.title} | KidWatch Blog`
-      : "Apple Watch Kids Safety Guide | KidWatch Blog",
+      ? `${post.title} | ${brand.name}`
+      : `Guides | ${brand.name}`,
     description: post
       ? post.excerpt
       : "Expert guides on Apple Watch SE setup, child safety features, and parenting technology.",
@@ -53,7 +55,7 @@ export default function BlogPostPage() {
     "datePublished": post.publishedAt,
     "publisher": {
       "@type": "Organization",
-      "name": "KidWatch",
+      "name": brand.name,
       "logo": { "@type": "ImageObject", "url": "/favicon.png" },
     },
     "mainEntityOfPage": { "@type": "WebPage", "@id": `/blog/${post.slug}` },
