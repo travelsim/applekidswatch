@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { serveStatic } from "./static";
 import { createApp, log } from "./app";
 import { createServer } from "http";
 
@@ -8,10 +9,10 @@ import { createServer } from "http";
 
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes.
-  // In production the app serves its own brand-rendered HTML (see app.ts),
-  // so static serving is not registered twice here.
-  if (process.env.NODE_ENV !== "production") {
+  // doesn't interfere with the other routes
+  if (process.env.NODE_ENV === "production") {
+    serveStatic(app);
+  } else {
     const { setupVite } = await import("./vite");
     await setupVite(httpServer, app);
   }

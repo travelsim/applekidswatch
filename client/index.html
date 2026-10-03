@@ -3,10 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <!--BRAND_SEO-->
-    <!-- Server renders the title, description, canonical, Open Graph and
-         JSON-LD from the Host header so canonicals cannot leak across the
-         four portfolio domains. Never hardcode a brand here. -->
+<!-- Baseline SEO. Correct for the flagship domain and, importantly, it
+         must never name a *different* portfolio domain: the four brands share
+         this one file, so a hardcoded canonical would leak. BrandProvider
+         rewrites every tag below to the requesting host's domain on load. -->
+    <title>Kids' Apple Watch + Standalone eSIM Plan | Apple Kids Watch Australia</title>
+    <meta name="description" content="Refurbished Apple Watch for kids with a standalone eSIM plan. Works on any Australian carrier. No telco contract, no social media." />
+    <link rel="canonical" href="https://applekidswatch.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Apple Kids Watch" />
+    <meta property="og:title" content="Kids' Apple Watch + Standalone eSIM Plan | Apple Kids Watch Australia" />
+    <meta property="og:description" content="Refurbished Apple Watch for kids with a standalone eSIM plan. No Telstra contract, no social media." />
+    <meta property="og:url" content="https://applekidswatch.com/" />
+    <meta property="og:image" content="https://applekidswatch.com/images/apple_watch_midnight.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Kids' Apple Watch + Standalone eSIM Plan | Apple Kids Watch Australia" />
+    <meta name="twitter:description" content="Refurbished Apple Watch for kids with a standalone eSIM plan. No telco contract." />
+    <meta name="twitter:image" content="https://applekidswatch.com/images/apple_watch_midnight.png" />
+    <meta name="apple-disclaimer" content="Specialist in refurbished Apple® devices. Not affiliated with, endorsed by, or sponsored by Apple Inc. Apple® and Apple Watch are trademarks of Apple Inc." />
 
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
