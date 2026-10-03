@@ -86,16 +86,22 @@ function renderIndexHtml(template: string, host: string | undefined): string {
 
 export function serveStatic(app: Express) {
   const distPath = path.resolve(process.cwd(), "dist", "public");
-  const indexPath = path.resolve(distPath, "index.html");
-  const indexExists = fs.existsSync(indexPath);
-  const template = indexExists ? fs.readFileSync(indexPath, "utf8") : null;
 
-  if (!indexExists) {
-    // On Vercel the function bundle does not include dist/public, because
-    // hashed assets are served by the CDN before any rewrite reaches us.
-    // Falling through with a clear error beats res.sendFile on a missing
-    // file, which would surface as an opaque 500.
-    console.error("dist/public/index.html not found; static HTML serving disabled");
+  // The shell is kept outside the static output by scripts/prepare-html.mjs,
+  // because a file at dist/public/index.html is matched by Vercel's
+  // filesystem check before any rewrite, which would bypass brand rendering.
+  // The second candidate keeps local development working before that step.
+  const templateCandidates = [
+    path.resolve(process.cwd(), "dist", "template.html"),
+    path.resolve(distPath, "index.html"),
+  ];
+  const templatePath = templateCandidates.find((p) => fs.existsSync(p));
+  const template = templatePath ? fs.readFileSync(templatePath, "utf8") : null;
+
+  if (!template) {
+    console.error(
+      "No HTML template found (looked for dist/template.html and dist/public/index.html); static HTML serving disabled"
+    );
     app.use("*", (_req, res) => {
       res.status(404).type("text/plain").send("Not found");
     });
@@ -103,16 +109,12 @@ export function serveStatic(app: Express) {
   }
 
   // index:false is required. With the default, express.static serves
-  // index.html for "/" itself, and the brand-rendered wildcard below would
-  // never run, leaving every domain with the unrendered placeholder.
+  // index.html for "/" itself and the brand-rendered wildcard below would
+  // never run.
   app.use(express.static(distPath, { index: false }));
 
-  // Fall through to a brand-rendered index.html.
+  // Fall through to a brand-rendered HTML shell.
   app.use("*", (req, res) => {
-    if (!template) {
-      res.sendFile(indexPath);
-      return;
-    }
     const host =
       (req.headers["x-forwarded-host"] as string | undefined) ||
       req.headers.host ||
@@ -121,6 +123,6 @@ export function serveStatic(app: Express) {
     // Vary so a cache never serves one brand's tags to another domain.
     res.setHeader("Vary", "Host");
     res.setHeader("Cache-Control", "no-cache");
-    res.send(renderIndexHtml(template, host));
+    res.send(renderIndexHtml(template as string, host));
   });
 }
