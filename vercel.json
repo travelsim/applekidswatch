@@ -5,7 +5,10 @@
   "outputDirectory": "dist/public",
   "functions": {
     "api/index.ts": {
-      "includeFiles": "dist/app.cjs, dist/template.html"
+      "includeFiles": [
+        "dist/app.cjs",
+        "dist/template.html"
+      ]
     }
   },
   "rewrites": [
