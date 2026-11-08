@@ -81,7 +81,7 @@ const additionalFeatures = [
 
 export default function Safety() {
   useSeo({
-    title: "Apple Watch SE Safety Features for Kids | GPS, SOS & Parental Controls | KidWatch",
+    title: "Apple Watch SE Safety Features for Kids | GPS, SOS & Parental Controls | Apple Kids Watch",
     description: "Discover how Apple Watch SE keeps your child safe with real-time GPS tracking, Emergency SOS, approved contacts, geofencing alerts & School Time mode.",
   });
 

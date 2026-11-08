@@ -11,11 +11,11 @@ import {
   CheckCircle,
   ArrowRight,
   Mail,
-  Phone,
   MapPin,
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
+import { BUSINESS_ADDRESS } from "@/lib/brand";
 import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import aboutHero from "@assets/stock_images/apple_watch_cellular.png";
@@ -53,8 +53,8 @@ const stats = [
 
 export default function About() {
   useSeo({
-    title: "About KidWatch | Certified Refurbished Apple Watch SE for Kids",
-    description: "KidWatch provides certified refurbished Apple Watch SE for children. Quality guaranteed, eco-friendly, and affordable. 10,000+ happy families trust us.",
+    title: "About Apple Kids Watch | Certified Refurbished Apple Watch SE for Kids",
+    description: "Apple Kids Watch provides certified refurbished Apple Watch SE for children. Quality guaranteed, eco-friendly, and affordable. 10,000+ happy families trust us.",
   });
 
   return (
@@ -106,7 +106,7 @@ export default function About() {
               Keeping Families Connected
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-              KidWatch was born from a simple idea: every child deserves to stay connected 
+              Apple Kids Watch was born from a simple idea: every child deserves to stay connected 
               with their family, safely. We combine quality refurbished Apple watches with 
               Better Roaming's kid-safe cellular plans.
             </p>
@@ -265,31 +265,22 @@ export default function About() {
                 Our friendly team is here to assist you.
               </p>
               <div className="space-y-4">
-                <a href="mailto:hello@kidwatch.com" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <Link href="/contact" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium">Email Us</p>
-                    <p className="text-sm text-muted-foreground">hello@kidwatch.com</p>
+                    <p className="font-medium">Contact Us</p>
+                    <p className="text-sm text-muted-foreground">Email and response times</p>
                   </div>
-                </a>
-                <a href="tel:+1234567890" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Phone className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Call Us</p>
-                    <p className="text-sm text-muted-foreground">(123) 456-7890</p>
-                  </div>
-                </a>
+                </Link>
                 <div className="flex items-center gap-4 p-4 rounded-lg">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <p className="font-medium">Visit Us</p>
-                    <p className="text-sm text-muted-foreground">San Francisco, CA</p>
+                    <p className="text-sm text-muted-foreground">{BUSINESS_ADDRESS}</p>
                   </div>
                 </div>
               </div>

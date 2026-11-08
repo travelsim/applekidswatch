@@ -28,7 +28,7 @@ export function Header() {
             <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
               <Watch className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold tracking-tight">KidWatch</span>
+            <span className="text-xl font-bold tracking-tight">Apple Kids Watch</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -85,7 +85,7 @@ export function Header() {
                     <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
                       <Watch className="h-5 w-5 text-primary-foreground" />
                     </div>
-                    <span className="text-xl font-bold">KidWatch</span>
+                    <span className="text-xl font-bold">Apple Kids Watch</span>
                   </div>
                   <nav className="flex flex-col gap-2">
                     {navLinks.map((link) => (

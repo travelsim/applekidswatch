@@ -18,10 +18,11 @@ import { useState, useMemo } from "react";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
 import { breadcrumbList } from "@/lib/structured-data";
+import { SITE_ORIGIN } from "@/lib/brand";
 
 export default function Shop() {
   useSeo({
-    title: "Shop Refurbished Apple Watch SE for Kids | From $99 | KidWatch",
+    title: "Shop Refurbished Apple Watch SE for Kids | From $99 | Apple Kids Watch",
     description: "Browse certified refurbished Apple Watch SE models with GPS + Cellular. Excellent, good & fair conditions available. Free shipping, 30-day guarantee. Buy now.",
   });
 
@@ -74,7 +75,7 @@ export default function Shop() {
         "itemListElement": products.map((product, index) => ({
           "@type": "ListItem",
           "position": index + 1,
-          "url": `https://kidwatch.com/product/${product.id}`,
+          "url": `${SITE_ORIGIN}/product/${product.id}`,
           "name": `${product.name} - ${product.color}`,
           "image": product.image,
           "offers": {

@@ -21,7 +21,7 @@ export default function Checkout() {
   });
 
   useSeo({
-    title: "Checkout | KidWatch - Refurbished Apple Watch SE",
+    title: "Checkout | Apple Kids Watch - Refurbished Apple Watch SE",
     description: "Complete your order for a certified refurbished Apple Watch SE for your child.",
   });
 

@@ -83,7 +83,7 @@ const howItWorks = [
 
 export default function Home() {
   useSeo({
-    title: "Buy Refurbished Apple Watch SE for Kids | GPS & Safety | KidWatch",
+    title: "Buy Refurbished Apple Watch SE for Kids | GPS & Safety | Apple Kids Watch",
     description: "Shop certified refurbished Apple Watch SE from $99. GPS tracking, Emergency SOS, Family Setup & kid-safe cellular plans. 30-day guarantee & free shipping.",
   });
 
@@ -345,7 +345,7 @@ export default function Home() {
               Trusted by 10,000+ Parents
             </h2>
             <p className="text-lg text-muted-foreground">
-              See what other families are saying about KidWatch.
+              See what other families are saying about Apple Kids Watch.
             </p>
           </div>
           {testimonialsLoading ? (

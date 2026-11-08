@@ -21,6 +21,7 @@ import {
 import { SiApple } from "react-icons/si";
 import type { Product } from "@shared/schema";
 import { useSeo } from "@/hooks/use-seo";
+import { SITE_ORIGIN } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
 const gradeDescriptions: Record<string, string> = {
@@ -47,8 +48,8 @@ export default function ProductDetail() {
 
   useSeo({
     title: product
-      ? `Buy ${product.name} ${product.color} | $${product.price} Refurbished | KidWatch`
-      : "Apple Watch SE for Kids | KidWatch",
+      ? `Buy ${product.name} ${product.color} | $${product.price} Refurbished | Apple Kids Watch`
+      : "Apple Watch SE for Kids | Apple Kids Watch",
     description: product
       ? `${product.description} Was $${product.originalPrice}, now $${product.price}. ${product.grade} condition. Free shipping & 30-day guarantee.`
       : "Shop certified refurbished Apple Watch SE for kids with GPS tracking and safety features.",
@@ -124,7 +125,7 @@ export default function ProductDetail() {
   const productJsonLd = product ? {
     "@context": "https://schema.org",
     "@type": "Product",
-    "@id": `https://kidwatch.com/product/${product.id}`,
+    "@id": `${SITE_ORIGIN}/product/${product.id}`,
     "name": `${product.name} - ${product.color}`,
     "description": product.description,
     "image": product.image,
@@ -145,7 +146,7 @@ export default function ProductDetail() {
       "priceCurrency": "USD",
       "availability": product.inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "condition": "https://schema.org/RefurbishedCondition",
-      "seller": { "@type": "Organization", "name": "KidWatch" },
+      "seller": { "@type": "Organization", "name": "Apple Kids Watch" },
       "priceValidUntil": new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
       "shippingDetails": {
         "@type": "OfferShippingDetails",

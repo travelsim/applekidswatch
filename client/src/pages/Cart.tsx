@@ -12,7 +12,7 @@ import { breadcrumbList } from "@/lib/structured-data";
 
 export default function Cart() {
   useSeo({
-    title: "Your Cart | KidWatch - Refurbished Apple Watch SE",
+    title: "Your Cart | Apple Kids Watch - Refurbished Apple Watch SE",
     description: "Review your Apple Watch SE order. Free shipping on all orders, 30-day money-back guarantee.",
   });
 

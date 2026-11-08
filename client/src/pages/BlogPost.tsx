@@ -34,8 +34,8 @@ export default function BlogPostPage() {
 
   useSeo({
     title: post
-      ? `${post.title} | KidWatch Blog`
-      : "Apple Watch Kids Safety Guide | KidWatch Blog",
+      ? `${post.title} | Apple Kids Watch Blog`
+      : "Apple Watch Kids Safety Guide | Apple Kids Watch Blog",
     description: post
       ? post.excerpt
       : "Expert guides on Apple Watch SE setup, child safety features, and parenting technology.",
@@ -53,7 +53,7 @@ export default function BlogPostPage() {
     "datePublished": post.publishedAt,
     "publisher": {
       "@type": "Organization",
-      "name": "KidWatch",
+      "name": "Apple Kids Watch",
       "logo": { "@type": "ImageObject", "url": "/favicon.png" },
     },
     "mainEntityOfPage": { "@type": "WebPage", "@id": `/blog/${post.slug}` },

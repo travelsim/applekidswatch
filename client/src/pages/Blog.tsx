@@ -18,7 +18,7 @@ const categories = [
 
 export default function Blog() {
   useSeo({
-    title: "Apple Watch for Kids: Safety Guides & Setup Tips | KidWatch Blog",
+    title: "Apple Watch for Kids: Safety Guides & Setup Tips | Apple Kids Watch Blog",
     description: "Expert guides on setting up Apple Watch SE for children. GPS tracking tips, Family Setup tutorials, child safety advice and parenting tech resources.",
   });
 

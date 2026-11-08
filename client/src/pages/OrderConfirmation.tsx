@@ -157,9 +157,9 @@ export default function OrderConfirmation() {
 
   useSeo({
     title: order
-      ? `Order Confirmed #${order.id.slice(0, 8)} | KidWatch`
-      : "Order Confirmation | KidWatch",
-    description: "Your Apple Watch SE order has been confirmed. Thank you for choosing KidWatch.",
+      ? `Order Confirmed #${order.id.slice(0, 8)} | Apple Kids Watch`
+      : "Order Confirmation | Apple Kids Watch",
+    description: "Your Apple Watch SE order has been confirmed. Thank you for choosing Apple Kids Watch.",
   });
 
   if (sessionId && !orderId) {

@@ -1,12 +1,13 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Watch, Mail, Phone, MapPin, Shield, Truck, RefreshCw, Loader2 } from "lucide-react";
-import { SiApple, SiFacebook, SiInstagram, SiX } from "react-icons/si";
+import { Watch, Mail, MapPin, Shield, Lock, RefreshCw, Loader2 } from "lucide-react";
+import { SiFacebook, SiInstagram, SiX } from "react-icons/si";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { APPLE_NOTICE, BRAND_NAME, BUSINESS_ADDRESS } from "@/lib/brand";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -48,10 +49,10 @@ export function Footer() {
               <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
                 <Watch className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">KidWatch</span>
+              <span className="text-xl font-bold">{BRAND_NAME}</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Keeping families connected with refurbished Apple SE watches and Better Roaming connectivity. Safety and value, combined.
+              Refurbished Apple Watch kids kits with a standalone BetterRoaming plan. Keep your phone plan.
             </p>
             <div className="flex items-center gap-3">
               <Button size="icon" variant="ghost" data-testid="link-facebook">
@@ -81,23 +82,31 @@ export function Footer() {
               <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-about">
                 About Us
               </Link>
+              <Link href="/is-it-right-for-my-child" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Is It Right for My Child?
+              </Link>
+              <Link href="/why-no-telstra" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Why You Don't Need Telstra
+              </Link>
+              <Link href="/setup" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Setup & Activation
+              </Link>
+              <Link href="/legal" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Terms, Returns & Trust
+              </Link>
             </nav>
           </div>
 
           <div className="space-y-4">
             <h4 className="font-semibold">Contact</h4>
             <div className="flex flex-col gap-3">
-              <a href="mailto:hello@kidwatch.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+              <Link href="/contact" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="h-4 w-4" />
-                hello@kidwatch.com
-              </a>
-              <a href="tel:+1234567890" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                <Phone className="h-4 w-4" />
-                (123) 456-7890
-              </a>
-              <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                San Francisco, CA
+                Contact us
+              </Link>
+              <span className="flex items-start gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
+                {BUSINESS_ADDRESS}
               </span>
             </div>
           </div>
@@ -129,26 +138,27 @@ export function Footer() {
 
         <div className="flex flex-wrap justify-center gap-8 mt-12 pt-8 border-t">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <SiApple className="h-5 w-5" />
-            <span>Apple Certified Refurbished</span>
+            <Watch className="h-5 w-5" />
+            <span>Refurbished, not new</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Shield className="h-5 w-5" />
-            <span>30-Day Guarantee</span>
+            <span>Battery health 85% or higher</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Truck className="h-5 w-5" />
-            <span>Free Shipping</span>
+            <Lock className="h-5 w-5" />
+            <span>No social media, no open browser</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <RefreshCw className="h-5 w-5" />
-            <span>Easy Returns</span>
+            <span>Setup in about 10 minutes</span>
           </div>
         </div>
 
-        <div className="text-center mt-8 pt-8 border-t">
+        <div className="text-center mt-8 pt-8 border-t space-y-3 max-w-3xl mx-auto">
+          <p className="text-xs text-muted-foreground leading-relaxed">{APPLE_NOTICE}</p>
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} KidWatch. All rights reserved. Powered by Better Roaming.
+            &copy; {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.
           </p>
         </div>
       </div>
