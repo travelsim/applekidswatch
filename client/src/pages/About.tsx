@@ -11,12 +11,11 @@ import {
   CheckCircle,
   ArrowRight,
   Mail,
-  Phone,
   MapPin,
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
-import { useBrand } from "@/lib/brand";
+import { useBrand, BUSINESS_ADDRESS } from "@/lib/brand";
 import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import aboutHero from "@assets/stock_images/apple_watch_cellular.png";
@@ -55,8 +54,8 @@ const stats = [
 export default function About() {
   const { brand } = useBrand();
   useSeo({
-    title: `Is It Right for My Child? | ${brand.name}`,
-    description: `Age, wrist size and setup requirements, plus honest refurbishment standards, from ${brand.name}.`,
+    title: `About ${brand.name} | Certified Refurbished Apple Watch SE for Kids`,
+    description: `${brand.name} provides certified refurbished Apple Watch SE for children. Quality guaranteed, eco-friendly, and affordable. 10,000+ happy families trust us.`,
   });
 
   return (
@@ -267,7 +266,7 @@ export default function About() {
                 Our friendly team is here to assist you.
               </p>
               <div className="space-y-4">
-                <a href="mailto:hello@{brand.domain}" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <a href={`mailto:hello@${brand.domain}`} className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
@@ -276,24 +275,22 @@ export default function About() {
                     <p className="text-sm text-muted-foreground">hello@{brand.domain}</p>
                   </div>
                 </a>
-                <a href="tel:+1234567890" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <Link href="/contact" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Phone className="h-6 w-6 text-primary" />
+                    <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium">Call Us</p>
-                    <p className="text-sm text-muted-foreground">(123) 456-7890</p>
+                    <p className="font-medium">Contact Us</p>
+                    <p className="text-sm text-muted-foreground">Email and response times</p>
                   </div>
-                </a>
+                </Link>
                 <div className="flex items-center gap-4 p-4 rounded-lg">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <MapPin className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <p className="font-medium">Visit Us</p>
-                    <p className="text-sm text-muted-foreground">
-                Shipping to {brand.shipsTo.join(", ")}
-              </p>
+                    <p className="text-sm text-muted-foreground">{BUSINESS_ADDRESS}</p>
                   </div>
                 </div>
               </div>

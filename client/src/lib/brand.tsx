@@ -160,3 +160,14 @@ export function useBrand(): BrandContextValue {
   if (!ctx) throw new Error("useBrand must be used inside BrandProvider");
   return ctx;
 }
+
+// Static single-business facts shared by the footer, contact block and content
+// pages. APPLE_NOTICE is identical text to APPLE_NON_AFFILIATION in
+// @shared/brands; aliased here so existing "@/lib/brand" imports keep working.
+export const APPLE_NOTICE = APPLE_NON_AFFILIATION;
+
+export const BUSINESS_ADDRESS = "1/114 High Street, Preston VIC 3072, Australia";
+
+// Static single-business facts shared by the footer, contact block and content
+// pages. APPLE_NOTICE is identical text to APPLE_NON_AFFILIATION in
+// @shared/brands; aliased here so existing "@/lib/brand" imports keep working.

@@ -1,12 +1,12 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Watch, Mail, Shield, Loader2, CheckCircle2 } from "lucide-react";
+import { Watch, Mail, MapPin, Shield, Lock, RefreshCw, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { useBrand } from "@/lib/brand";
+import { useBrand, BUSINESS_ADDRESS } from "@/lib/brand";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -78,6 +78,18 @@ export function Footer() {
               <Link href="/shop?category=Protection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Protection
               </Link>
+              <Link href="/is-it-right-for-my-child" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Is It Right for My Child?
+              </Link>
+              <Link href="/why-no-telstra" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Why You Don't Need Telstra
+              </Link>
+              <Link href="/setup" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Setup & Activation
+              </Link>
+              <Link href="/legal" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Terms, Returns & Trust
+              </Link>
             </nav>
           </div>
 
@@ -100,10 +112,18 @@ export function Footer() {
                 <Mail className="h-4 w-4" />
                 {contactEmail}
               </a>
+              <Link href="/contact" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-contact">
+                <Mail className="h-4 w-4" />
+                Contact us
+              </Link>
             </nav>
             <p className="text-xs text-muted-foreground">
               We reply to support email within one business day.
             </p>
+            <span className="flex items-start gap-2 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
+              {BUSINESS_ADDRESS}
+            </span>
           </div>
 
           <div className="space-y-4">
@@ -151,6 +171,14 @@ export function Footer() {
             <CheckCircle2 className="h-5 w-5" />
             <span>No telco contract</span>
           </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Lock className="h-5 w-5" />
+            <span>No social media, no open browser</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <RefreshCw className="h-5 w-5" />
+            <span>Setup in about 10 minutes</span>
+          </div>
         </div>
 
         <div className="mt-8 pt-8 border-t space-y-3">
@@ -163,7 +191,7 @@ export function Footer() {
             the only way a watch stays connected while you travel.
           </p>
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} {brand.name}.
+            &copy; {new Date().getFullYear()} {brand.name}. All rights reserved.
           </p>
         </div>
       </div>

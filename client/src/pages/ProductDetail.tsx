@@ -50,7 +50,7 @@ export default function ProductDetail() {
 
   useSeo({
     title: product
-      ? `{product.name} {product.color} | ${formatPrice(product.price)} | ${brand.name}`
+      ? `${product.name} ${product.color} | ${formatPrice(product.price)} | ${brand.name}`
       : `Shop | ${brand.name}`,
     description: product
       ? `${product.description} ${product.grade} grade refurbished condition. Battery health 85% or better. 30-day returns.`

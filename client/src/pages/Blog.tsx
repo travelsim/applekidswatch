@@ -20,7 +20,7 @@ const categories = [
 export default function Blog() {
   const { brand } = useBrand();
   useSeo({
-    title: `Guides &amp; Blog | ${brand.name}`,
+    title: `Guides & Blog | ${brand.name}`,
     description: "Expert guides on setting up Apple Watch SE for children. GPS tracking tips, Family Setup tutorials, child safety advice and parenting tech resources.",
   });
 

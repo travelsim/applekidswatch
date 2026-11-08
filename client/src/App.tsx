@@ -19,7 +19,13 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Safety from "@/pages/Safety";
 import About from "@/pages/About";
-import Legal from "@/pages/Legal";
+import {
+  LegalPage,
+  EligibilityPage,
+  NoTelstraPage,
+  SetupPage,
+  ContactPage,
+} from "@/pages/ContentPages";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -36,7 +42,11 @@ function Router() {
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/safety" component={Safety} />
       <Route path="/about" component={About} />
-      <Route path="/legal" component={Legal} />
+      <Route path="/is-it-right-for-my-child" component={EligibilityPage} />
+      <Route path="/why-no-telstra" component={NoTelstraPage} />
+      <Route path="/setup" component={SetupPage} />
+      <Route path="/legal" component={LegalPage} />
+      <Route path="/contact" component={ContactPage} />
       <Route component={NotFound} />
     </Switch>
   );

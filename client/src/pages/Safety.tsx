@@ -83,7 +83,7 @@ const additionalFeatures = [
 export default function Safety() {
   const { brand } = useBrand();
   useSeo({
-    title: `Safety &amp; Privacy | ${brand.name}`,
+    title: `Safety & Privacy | ${brand.name}`,
     description: "Discover how Apple Watch SE keeps your child safe with real-time GPS tracking, Emergency SOS, approved contacts, geofencing alerts & School Time mode.",
   });
 
