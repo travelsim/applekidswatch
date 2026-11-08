@@ -185,11 +185,6 @@ export function Footer() {
           <p className="text-xs text-muted-foreground leading-relaxed" data-testid="footer-compliance">
             {complianceNote}
           </p>
-          <p className="text-xs text-muted-foreground">
-            Watch plans are sold for their home market only and do not roam
-            across borders. Activating a plan for your destination country is
-            the only way a watch stays connected while you travel.
-          </p>
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} {brand.name}. All rights reserved.
           </p>
