@@ -11,11 +11,10 @@ import {
   CheckCircle,
   ArrowRight,
   Mail,
-  MapPin,
 } from "lucide-react";
 import { SiApple } from "react-icons/si";
 import { useSeo } from "@/hooks/use-seo";
-import { useBrand, BUSINESS_ADDRESS } from "@/lib/brand";
+import { useBrand } from "@/lib/brand";
 import { breadcrumbList, faqPage } from "@/lib/structured-data";
 
 import aboutHero from "@assets/stock_images/apple_watch_cellular.png";
@@ -266,13 +265,13 @@ export default function About() {
                 Our friendly team is here to assist you.
               </p>
               <div className="space-y-4">
-                <a href={`mailto:hello@${brand.domain}`} className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <a href={`mailto:${brand.supportEmail ?? `hello@${brand.domain}`}`} className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Mail className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <p className="font-medium">Email Us</p>
-                    <p className="text-sm text-muted-foreground">hello@{brand.domain}</p>
+                    <p className="text-sm text-muted-foreground">{brand.supportEmail ?? `hello@${brand.domain}`}</p>
                   </div>
                 </a>
                 <Link href="/contact" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
@@ -284,15 +283,6 @@ export default function About() {
                     <p className="text-sm text-muted-foreground">Email and response times</p>
                   </div>
                 </Link>
-                <div className="flex items-center gap-4 p-4 rounded-lg">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <MapPin className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Visit Us</p>
-                    <p className="text-sm text-muted-foreground">{BUSINESS_ADDRESS}</p>
-                  </div>
-                </div>
               </div>
             </div>
             <Card>

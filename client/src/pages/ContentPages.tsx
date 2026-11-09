@@ -1,5 +1,5 @@
 import { ContentPage } from "@/components/ContentPage";
-import { APPLE_NOTICE, BUSINESS_ADDRESS, useBrand } from "@/lib/brand";
+import { APPLE_NOTICE, useBrand } from "@/lib/brand";
 
 const PLAN_HOME_ONLY =
   "This plan works in its home market only. It does not roam across borders. A UK plan does not connect in France. To travel, purchase a plan for your destination.";
@@ -55,12 +55,6 @@ export function LegalPage() {
           paragraphs: [
             "[Full terms of use: pending review before launch.] Plans sold on this site are subject to the home-market limitation below.",
             PLAN_HOME_ONLY,
-          ],
-        },
-        {
-          heading: "Business details",
-          paragraphs: [
-            `${brand.name}, ${BUSINESS_ADDRESS}. [ABN: to be added.]`,
           ],
         },
       ]}
@@ -182,8 +176,8 @@ export function ContactPage() {
     <ContentPage
       path="/contact"
       title="Contact Us"
-      seoTitle={`Contact ${brand.name} | Preston, Victoria`}
-      description={`Contact ${brand.name} about refurbished Apple Watch kids kits, plans, setup or an order. Based in Preston, Victoria, Australia.`}
+      seoTitle={`Contact ${brand.name}`}
+      description={`Contact ${brand.name} about refurbished Apple Watch kids kits, plans, setup or an order.`}
       intro="Questions about a kit, a plan, setup or an order? Get in touch and we will reply."
       sections={[
         {
@@ -191,12 +185,6 @@ export function ContactPage() {
           paragraphs: [
             `Email: ${brand.supportEmail ?? `hello@${brand.domain}`}`,
             "Response time: [to be confirmed before launch]",
-          ],
-        },
-        {
-          heading: "Business address",
-          paragraphs: [
-            `${brand.name}, ${BUSINESS_ADDRESS}.`,
           ],
         },
         {

@@ -1,12 +1,12 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Watch, Mail, MapPin, Shield, Lock, RefreshCw, Loader2, CheckCircle2 } from "lucide-react";
+import { Watch, Mail, Shield, Lock, RefreshCw, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { useBrand, BUSINESS_ADDRESS } from "@/lib/brand";
+import { useBrand } from "@/lib/brand";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -120,10 +120,6 @@ export function Footer() {
             <p className="text-xs text-muted-foreground">
               We reply to support email within one business day.
             </p>
-            <span className="flex items-start gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-              {BUSINESS_ADDRESS}
-            </span>
           </div>
 
           <div className="space-y-4">
