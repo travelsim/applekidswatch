@@ -242,6 +242,64 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="py-16 md:py-24 bg-muted/50" data-testid="section-comparison">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <Badge variant="outline">Cost comparison</Badge>
+            <h2 className="text-3xl md:text-4xl font-bold mt-4">
+              What the first year actually costs
+            </h2>
+            <p className="text-lg text-muted-foreground mt-3">
+              Watch plus twelve months of the plan. Same comparison, no small print.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <Card className="border-accent border-2">
+              <CardContent className="p-6 space-y-3">
+                <p className="text-sm font-semibold text-accent">Kids Watch</p>
+                <p className="text-sm text-muted-foreground">Refurbished Apple Watch SE + kids plan</p>
+                <p className="text-3xl font-bold">A$368</p>
+                <p className="text-sm text-muted-foreground">A$269 watch + A$99 annual plan</p>
+                <ul className="text-sm space-y-1">
+                  <li>Full Apple Watch, Family Setup</li>
+                  <li>No telco contract</li>
+                  <li>30-day returns</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 space-y-3">
+                <p className="text-sm font-semibold">Spacetalk Adventurer 2</p>
+                <p className="text-sm text-muted-foreground">Dedicated kids smartwatch</p>
+                <p className="text-3xl font-bold">A$514</p>
+                <p className="text-sm text-muted-foreground">A$349 watch + A$164.99 annual plan</p>
+                <ul className="text-sm space-y-1">
+                  <li>Purpose-built kids device</li>
+                  <li>Australian support</li>
+                  <li>2–3 day battery</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6 space-y-3">
+                <p className="text-sm font-semibold">Apple Watch SE, new</p>
+                <p className="text-sm text-muted-foreground">Cellular model, plan extra</p>
+                <p className="text-3xl font-bold">A$489+</p>
+                <p className="text-sm text-muted-foreground">Watch only, before any plan</p>
+                <ul className="text-sm space-y-1">
+                  <li>New condition</li>
+                  <li>Same Family Setup</li>
+                  <li>Telco add-on needed</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+          <p className="text-xs text-muted-foreground text-center mt-6 max-w-3xl mx-auto">
+            Competitor and retail prices from published recommended prices and provider plan pages, checked November 2026. Prices can change; always confirm at checkout.
+          </p>
+        </div>
+      </section>
+
       <section className="py-16 md:py-24" data-testid="section-product-showcase">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
