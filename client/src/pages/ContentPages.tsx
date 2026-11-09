@@ -184,7 +184,7 @@ export function ContactPage() {
           heading: "Write to us",
           paragraphs: [
             `Email: ${brand.supportEmail ?? `hello@${brand.domain}`}`,
-            "Response time: [to be confirmed before launch]",
+            "Response time: within one business day.",
           ],
         },
         {
