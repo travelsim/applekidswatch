@@ -189,7 +189,7 @@ export function ContactPage() {
         {
           heading: "Write to us",
           paragraphs: [
-            "Email: [contact address: to be confirmed before launch]",
+            `Email: ${brand.supportEmail ?? `hello@${brand.domain}`}`,
             "Response time: [to be confirmed before launch]",
           ],
         },

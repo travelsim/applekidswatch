@@ -45,6 +45,11 @@ export interface BrandDefinition {
   vatInclusive: boolean;
   /** Shipping destination markets offered by this brand. */
   shipsTo: string[];
+  /**
+   * Support address shown in the footer. Defaults to hello@<domain>; set it
+   * when the host has no mail records so enquiries cannot bounce.
+   */
+  supportEmail?: string;
 }
 
 export const APPLE_NON_AFFILIATION =
@@ -158,6 +163,8 @@ export const KIDS_WATCH_APPLE_BRAND: BrandDefinition = {
   domain: "apple.kidswat.ch",
   name: "Kids Watch",
   metaTitle: "Kids' Apple Watch + Standalone eSIM Plan | Kids Watch Australia",
+  // The subdomain has no MX, so hello@apple.kidswat.ch would bounce.
+  supportEmail: "hello@kidswat.ch",
 };
 
 export const DEFAULT_BRAND_ID = "applekidswatch";

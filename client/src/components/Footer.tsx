@@ -12,7 +12,7 @@ export function Footer() {
   const [email, setEmail] = useState("");
   const { toast } = useToast();
   const { brand, complianceNote } = useBrand();
-  const contactEmail = `hello@${brand.domain}`;
+  const contactEmail = brand.supportEmail ?? `hello@${brand.domain}`;
 
   const subscribeMutation = useMutation({
     mutationFn: async (email: string) => {
