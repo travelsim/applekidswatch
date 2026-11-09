@@ -1,16 +1,17 @@
 import { ContentPage } from "@/components/ContentPage";
-import { APPLE_NOTICE, BUSINESS_ADDRESS } from "@/lib/brand";
+import { APPLE_NOTICE, BUSINESS_ADDRESS, useBrand } from "@/lib/brand";
 
 const PLAN_HOME_ONLY =
   "This plan works in its home market only. It does not roam across borders. A UK plan does not connect in France. To travel, purchase a plan for your destination.";
 
 export function LegalPage() {
+  const { brand } = useBrand();
   return (
     <ContentPage
       path="/legal"
       title="Terms, Returns & Trust"
-      seoTitle="Returns, Warranty, Shipping & Privacy | Apple Kids Watch"
-      description="Returns, warranty, shipping, privacy and terms for Apple Kids Watch refurbished Apple Watch kids kits, plus our Apple non-affiliation notice."
+      seoTitle={`Returns, Warranty, Shipping & Privacy | ${brand.name}`}
+      description={`Returns, warranty, shipping, privacy and terms for ${brand.name} refurbished Apple Watch kids kits, plus our Apple non-affiliation notice.`}
       intro="Everything you need to know before you buy: what 'refurbished' means, what is covered, and how returns and shipping work."
       sections={[
         {
@@ -59,7 +60,7 @@ export function LegalPage() {
         {
           heading: "Business details",
           paragraphs: [
-            `Apple Kids Watch, ${BUSINESS_ADDRESS}. [ABN: to be added.]`,
+            `${brand.name}, ${BUSINESS_ADDRESS}. [ABN: to be added.]`,
           ],
         },
       ]}
@@ -68,11 +69,12 @@ export function LegalPage() {
 }
 
 export function EligibilityPage() {
+  const { brand } = useBrand();
   return (
     <ContentPage
       path="/is-it-right-for-my-child"
       title="Is It Right for My Child?"
-      seoTitle="Is an Apple Watch Kids Kit Right for Your Child? | Apple Kids Watch"
+      seoTitle={`Is an Apple Watch Kids Kit Right for Your Child? | ${brand.name}`}
       description="Age guidance, band sizing and setup requirements to help you decide whether a refurbished Apple Watch kids kit suits your child."
       intro="A quick check on age, fit and what you need at home before you order."
       sections={[
@@ -103,11 +105,12 @@ export function EligibilityPage() {
 }
 
 export function NoTelstraPage() {
+  const { brand } = useBrand();
   return (
     <ContentPage
       path="/why-no-telstra"
       title="Why You Don't Need Telstra"
-      seoTitle="Apple Watch Cellular Plan Without a Telco Contract | Apple Kids Watch"
+      seoTitle={`Apple Watch Cellular Plan Without a Telco Contract | ${brand.name}`}
       description="Keep your phone plan. Apple Watch Family Setup with a BetterRoaming kids plan works on any phone carrier, with no telco contract needed."
       intro="The watch has its own cellular plan, so the phone plan in your pocket doesn't matter."
       sections={[
@@ -137,11 +140,12 @@ export function NoTelstraPage() {
 }
 
 export function SetupPage() {
+  const { brand } = useBrand();
   return (
     <ContentPage
       path="/setup"
       title="Setup & Activation"
-      seoTitle="Apple Watch Kids Setup in About 10 Minutes | Apple Kids Watch"
+      seoTitle={`Apple Watch Kids Setup in About 10 Minutes | ${brand.name}`}
       description="What setup involves for a refurbished Apple Watch kids kit: iPhone 6s or later, about 10 minutes to activate, and how the plan and approved contacts are set up."
       intro="Setup takes about 10 minutes from your iPhone. Here is what to expect."
       sections={[
@@ -173,12 +177,13 @@ export function SetupPage() {
 }
 
 export function ContactPage() {
+  const { brand } = useBrand();
   return (
     <ContentPage
       path="/contact"
       title="Contact Us"
-      seoTitle="Contact Apple Kids Watch | Preston, Victoria"
-      description="Contact Apple Kids Watch about refurbished Apple Watch kids kits, plans, setup or an order. Based in Preston, Victoria, Australia."
+      seoTitle={`Contact ${brand.name} | Preston, Victoria`}
+      description={`Contact ${brand.name} about refurbished Apple Watch kids kits, plans, setup or an order. Based in Preston, Victoria, Australia.`}
       intro="Questions about a kit, a plan, setup or an order? Get in touch and we will reply."
       sections={[
         {
@@ -191,7 +196,7 @@ export function ContactPage() {
         {
           heading: "Business address",
           paragraphs: [
-            `Apple Kids Watch, ${BUSINESS_ADDRESS}.`,
+            `${brand.name}, ${BUSINESS_ADDRESS}.`,
           ],
         },
         {

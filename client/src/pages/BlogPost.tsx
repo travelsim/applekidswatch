@@ -22,6 +22,15 @@ const categoryColors: Record<string, string> = {
   "parenting-tech": "bg-secondary text-secondary-foreground",
 };
 
+/**
+ * Seeded posts carry the legacy single-brand byline in the database. Present
+ * whatever was seeded, but name the brand that is actually serving the page so
+ * a post on apple.kidswat.ch never credits another brand.
+ */
+function byline(author: string, brandName: string): string {
+  return author === "Apple Kids Watch Editorial" ? `${brandName} Editorial` : author;
+}
+
 export default function BlogPostPage() {
   const { brand } = useBrand();
   const [, params] = useRoute("/blog/:slug");
@@ -51,7 +60,7 @@ export default function BlogPostPage() {
     "headline": post.title,
     "description": post.excerpt,
     "image": post.image,
-    "author": { "@type": "Person", "name": post.author },
+    "author": { "@type": "Person", "name": byline(post.author, brand.name) },
     "datePublished": post.publishedAt,
     "publisher": {
       "@type": "Organization",
@@ -154,7 +163,7 @@ export default function BlogPostPage() {
               <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8 pb-8 border-b">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  <span>{post.author}</span>
+                  <span>{byline(post.author, brand.name)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />

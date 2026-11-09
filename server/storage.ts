@@ -173,7 +173,7 @@ export class DatabaseStorage implements IStorage {
         content: b.content,
         category: b.category,
         image: b.image,
-        author: "Apple Kids Watch Editorial",
+        author: `${brand.name} Editorial`,
         publishedAt,
         readTime: b.readTime,
         brandId: brand.id,

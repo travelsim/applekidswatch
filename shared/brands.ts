@@ -139,9 +139,31 @@ export const BRANDS: BrandDefinition[] = [
   },
 ];
 
+/**
+ * The Apple pillar of the Kids Watch storefront, served at apple.kidswat.ch.
+ *
+ * It keeps the AU commercial definition, catalogue and plan set of the
+ * applekidswatch brand (same id, so product and order lookups are unchanged)
+ * but trades under the Kids Watch name and its own hostname. Without this,
+ * an unrecognised host falls back to the legacy "Apple Kids Watch" definition,
+ * which puts the wrong brand in the header, footer copyright, page titles and
+ * canonical URL.
+ */
+const AU_APPLE_BRAND = BRANDS.find(
+  (b) => b.id === "applekidswatch"
+) as BrandDefinition;
+
+export const KIDS_WATCH_APPLE_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "apple.kidswat.ch",
+  name: "Kids Watch",
+  metaTitle: "Kids' Apple Watch + Standalone eSIM Plan | Kids Watch Australia",
+};
+
 export const DEFAULT_BRAND_ID = "applekidswatch";
 
 const BY_DOMAIN = new Map(BRANDS.map((b) => [b.domain, b]));
+BY_DOMAIN.set("apple.kidswat.ch", KIDS_WATCH_APPLE_BRAND);
 const BY_ID = new Map(BRANDS.map((b) => [b.id, b]));
 
 export function getBrandById(id: string): BrandDefinition | undefined {
