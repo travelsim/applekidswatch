@@ -64,8 +64,8 @@ const howItWorks = [
   },
   {
     step: 2,
-    title: "Add Better Roaming",
-    description: "Get seamless connectivity with our partner Better Roaming's kid-safe cellular plans.",
+    title: "Choose Connectivity",
+    description: "Add a standalone watch plan that works on common AU networks. No phone contract needed.",
     icon: Globe,
   },
   {
@@ -103,6 +103,11 @@ export default function Home() {
 
   const featuredProducts = products?.slice(0, 3);
   const featuredPosts = posts?.slice(0, 3);
+  const isKidsWatchFamily = brand.domain === "kidswat.ch" || brand.domain === "apple.kidswat.ch" || brand.domain === "spacetalk.kidswat.ch";
+  const heroTitle = isKidsWatchFamily ? brand.heroHeadline : "Buy Refurbished Apple Watch SE for Kids";
+  const heroSub = isKidsWatchFamily ? brand.heroSub : "Refurbished Apple Watch kits with GPS tracking, Emergency SOS and Family Setup. No telco contract. Kid-safe cellular plans included. 30-day returns, and no telco contract.";
+  const safetyHeading = isKidsWatchFamily ? "Kids watch safety features" : "Apple Watch SE Safety Features for Kids";
+  const safetyIntro = isKidsWatchFamily ? "The same core safety features whether you choose the refurbished Apple Watch or the dedicated Spacetalk. Compare both below." : "Every feature is designed with your child's safety in mind. Stay connected without compromise.";
 
   return (
     <div className="flex flex-col">
@@ -128,11 +133,10 @@ export default function Home() {
               Refurbished, Not New
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight" data-testid="text-hero-title">
-              Buy Refurbished Apple Watch SE for Kids
+              {heroTitle}
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-              Refurbished Apple Watch kits with GPS tracking, Emergency SOS and Family Setup. No telco contract. 
-              Kid-safe cellular plans included. 30-day returns, and no telco contract.
+              {heroSub}
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Link href="/shop">
@@ -164,7 +168,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-3">
               <Globe className="h-8 w-8 text-primary" />
-              <span className="font-medium">Better Roaming Partner</span>
+              <span className="font-medium">Standalone plans available</span>
             </div>
             <div className="flex items-center gap-3">
               <Zap className="h-8 w-8 text-secondary" />
@@ -179,10 +183,10 @@ export default function Home() {
           <div className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="outline" className="mb-4">Safety First</Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Apple Watch SE Safety Features for Kids
+              {safetyHeading}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Every feature is designed with your child's safety in mind. Stay connected without compromise.
+              {safetyIntro}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -295,10 +299,53 @@ export default function Home() {
             </Card>
           </div>
           <p className="text-xs text-muted-foreground text-center mt-6 max-w-3xl mx-auto">
-            Competitor and retail prices from published recommended prices and provider plan pages, checked November 2026. Prices can change; always confirm at checkout.
+            Independent comparison — not affiliated with, endorsed by or sponsored by Apple Inc. or Spacetalk. Retail prices from published recommended prices and provider plan pages, checked November 2026. Prices can change; always confirm at checkout.
           </p>
         </div>
       </section>
+
+      {isKidsWatchFamily && (
+        <section className="py-16 md:py-24" data-testid="section-two-pillars">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-3xl mx-auto text-center mb-10">
+              <Badge variant="outline">Two ways to choose</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mt-4">
+                Apple Watch or Spacetalk — both covered
+              </h2>
+              <p className="text-lg text-muted-foreground mt-3">
+                We compare both options side-by-side. You decide which fits your family. Independent guidance only.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              <Card>
+                <CardContent className="p-6 space-y-3">
+                  <p className="text-sm font-semibold">Apple Watch range</p>
+                  <p className="text-sm text-muted-foreground">Refurbished Apple Watch SE kits for kids, Family Setup ready.</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>Family Setup from a parent iPhone</li>
+                    <li>Full Apple Watch features</li>
+                    <li>Greater long-term resale value</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-3">
+                  <p className="text-sm font-semibold">Spacetalk range</p>
+                  <p className="text-sm text-muted-foreground">Dedicated kids watch for GPS, calls and school-safe mode.</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>Purpose-built for 6–12 year olds</li>
+                    <li>Single-device setup, no iPhone needed</li>
+                    <li>Long battery for school days</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mt-6 max-w-3xl mx-auto">
+              Independent retailer. Not affiliated with Apple Inc. or Spacetalk. Apple and Apple Watch are trademarks of Apple Inc. Spacetalk is a trademark of Spacetalk Ltd.
+            </p>
+          </div>
+        </section>
+      )}
 
       <section className="py-16 md:py-24" data-testid="section-product-showcase">
         <div className="container mx-auto px-4 md:px-6">
@@ -317,8 +364,8 @@ export default function Home() {
                     <Globe className="h-6 w-6 text-accent-foreground" />
                   </div>
                   <div>
-                    <p className="font-semibold">Better Roaming</p>
-                    <p className="text-sm text-muted-foreground">Kid-safe cellular plans</p>
+                    <p className="font-semibold">Standalone connectivity</p>
+                    <p className="text-sm text-muted-foreground">Watch plans that work without a phone</p>
                   </div>
                 </CardContent>
               </Card>

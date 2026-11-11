@@ -167,10 +167,56 @@ export const KIDS_WATCH_APPLE_BRAND: BrandDefinition = {
   supportEmail: "hello@kidswat.ch",
 };
 
+/**
+ * Neutral umbrella for kidswat.ch — the broad, stealth-conscious front door.
+ * Presents Apple Watch alongside Spacetalk as equal, independent options
+ * without asserting a partnership with Apple or Spacetalk and without
+ * listing unlaunched plans or pricing. Keeps the AU catalogue id so
+ * product/order lookups are unchanged.
+ */
+export const KIDS_WATCH_PARENT_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "kidswat.ch",
+  name: "Kids Watch",
+  tagline: "A first phone that's only a watch.",
+  audience:
+    "Australian parents of 6-12 year olds choosing between a refurbished Apple Watch and a dedicated kids watch, without social media or an open browser.",
+  heroHeadline: "Kids smartwatches, without the phone.",
+  heroSub:
+    "Compare the refurbished Apple Watch option and the dedicated Spacetalk option side-by-side. GPS, calling and safety features, no telco contract.",
+  metaTitle: "Kids Smartwatches | Kids Watch",
+  metaDescription:
+    "A parent-focused kids smartwatch shop, with an Apple Watch range and other models as they are verified.",
+  supportEmail: "hello@kidswat.ch",
+};
+
+/**
+ * Spacetalk pillar at spacetalk.kidswat.ch — Spacetalk alongside Apple,
+ * independent-comparison only. No partnership claim, no unlaunched-plan
+ * pricing. Reuses the AU catalogue id for the same reason as the Apple pillar.
+ */
+export const KIDS_WATCH_SPACETALK_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "spacetalk.kidswat.ch",
+  name: "Kids Watch",
+  tagline: "Spacetalk, alongside Apple Watch.",
+  audience:
+    "Australian parents of 6-12 year olds evaluating the Spacetalk Adventurer family alongside the refurbished Apple Watch alternative.",
+  heroHeadline: "Spacetalk kids watch, plus the Apple Watch alternative.",
+  heroSub:
+    "The dedicated Spacetalk view, with the refurbished Apple Watch range shown for comparison. Independent comparison only.",
+  metaTitle: "Spacetalk Kids Watch | Kids Watch",
+  metaDescription:
+    "Independent Spacetalk Adventurer comparison with refurbished Apple Watch kits for kids. No telco contract.",
+  supportEmail: "hello@kidswat.ch",
+};
+
 export const DEFAULT_BRAND_ID = "applekidswatch";
 
 const BY_DOMAIN = new Map(BRANDS.map((b) => [b.domain, b]));
 BY_DOMAIN.set("apple.kidswat.ch", KIDS_WATCH_APPLE_BRAND);
+BY_DOMAIN.set("kidswat.ch", KIDS_WATCH_PARENT_BRAND);
+BY_DOMAIN.set("spacetalk.kidswat.ch", KIDS_WATCH_SPACETALK_BRAND);
 const BY_ID = new Map(BRANDS.map((b) => [b.id, b]));
 
 export function getBrandById(id: string): BrandDefinition | undefined {
