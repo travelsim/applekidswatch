@@ -117,17 +117,27 @@ export default function Home() {
           __html: breadcrumbList([{ name: "Home", path: "/" }]),
         }}
       />
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden" data-testid="hero-section">
         <div className="absolute inset-0">
           <img
             src={heroImage}
             alt="Child wearing a kids smartwatch in a playground"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover scale-[1.32] object-[68%_32%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/10" />
         </div>
         <div className="container mx-auto px-4 md:px-6 relative z-10 py-20">
           <div className="max-w-2xl space-y-6">
+            {isKidsWatchFamily && (
+              <div className="hidden md:flex items-center gap-3 rounded-2xl bg-white/95 backdrop-blur p-3 pr-5 shadow-2xl ring-1 ring-white/40 max-w-md" data-testid="hero-watch-feature">
+                <img src="/images/child_wearing_smartw_2324123a.jpg" alt="Close-up of a child wearing a kids smartwatch — watch face prominent" className="h-20 w-20 rounded-xl object-cover ring-2 ring-amber-300" />
+                <div>
+                  <div className="text-xs font-extrabold uppercase tracking-widest text-amber-600">Watch up close</div>
+                  <div className="playful-heading text-lg leading-tight text-zinc-900">Smartwatches for 6–12s</div>
+                  <div className="text-xs text-zinc-600">Six ways to choose — Apple, Spacetalk, Garmin, Pixbee, imoo, Safe Owl</div>
+                </div>
+              </div>
+            )}
             <Badge className="bg-accent text-accent-foreground" data-testid="badge-hero">
               <Zap className="h-3 w-3 mr-1" />
               {isKidsWatchFamily ? "Kids smartwatches" : "Refurbished, Not New"}
