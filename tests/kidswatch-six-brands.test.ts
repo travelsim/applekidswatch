@@ -103,12 +103,13 @@ test("shop shows all models with official nofollow links for non-Apple, no Bette
   assert.ok(shop.includes("Kids watches — Apple, Spacetalk, Garmin, Pixbee, imoo, Safe Owl"), "shop title lists six");
 });
 
-test("shop images are neutral placeholder for competitors, no Apple-for-competitor", () => {
+test("shop images are distinct lifestyle for competitors, no Apple-for-competitor", () => {
   const cat = fs.readFileSync(new URL("../shared/catalogue.ts", import.meta.url), "utf8");
-  // competitor models should use neutral placeholder, not Apple watch images
-  assert.ok(cat.includes("/images/neutral-watch-placeholder.jpg"), "neutral placeholder used");
+  // competitor models should use distinct lifestyle images, not Apple watch images
+  assert.ok(cat.includes("/images/child_wearing_smartw_") || cat.includes("/images/child_playing_park") || cat.includes("/images/parent_and_child"), "distinct lifestyle images used");
   // ensure competitor kits are not using apple_watch images
-  const gwSection = cat.slice(cat.indexOf("GW-GARMIN_KIDS"), cat.indexOf("GW-GARMIN_KIDS") + 3000);
+  const start = cat.indexOf("GW-GARMIN-KIDS-01");
+  const gwSection = cat.slice(start, start + 1800);
   assert.ok(!gwSection.includes("/images/apple_watch_"), "no apple image for competitor");
   // alt text via ProductCard uses product.name, which is correct; description notes placeholder
   const pc = fs.readFileSync(new URL("../client/src/components/ProductCard.tsx", import.meta.url), "utf8");
