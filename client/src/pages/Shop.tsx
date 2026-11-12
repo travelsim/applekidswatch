@@ -39,7 +39,14 @@ export default function Shop() {
   const filteredProducts = useMemo(() => {
     if (!products) return [];
 
-    let filtered = [...products];
+    // Remove Better Roaming plan cards from /shop entirely (Connectivity page retains them as one option among others).
+    let filtered = products.filter(
+      (p) =>
+        !p.sku?.startsWith("WR-AU-BR") &&
+        !p.sku?.startsWith("BR-") &&
+        !p.name.includes("BetterRoaming") &&
+        !p.name.includes("Better Roaming")
+    );
 
     if (search) {
       const searchLower = search.toLowerCase();

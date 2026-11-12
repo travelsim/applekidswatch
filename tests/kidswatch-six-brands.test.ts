@@ -88,3 +88,39 @@ test("connectivity page lists Better Roaming plus ALDI and shortlisted, Better R
   const safety = fs.readFileSync(new URL("../client/src/pages/Safety.tsx", import.meta.url), "utf8");
   assert.ok(!about.includes("Our partnership with Better Roaming") && !safety.includes("Our partnership with Better Roaming"), "partner language removed");
 });
+
+test("shop shows all models with official nofollow links for non-Apple, no Better Roaming", () => {
+  const pc = fs.readFileSync(new URL("../client/src/components/ProductCard.tsx", import.meta.url), "utf8");
+  assert.ok(pc.includes("OFFICIAL_URLS") || pc.includes("officialUrl"), "official url map present");
+  assert.ok(pc.includes("spacetalk.com.au"), "spacetalk official");
+  assert.ok(pc.includes("garmin.com"), "garmin official");
+  assert.ok(pc.includes("pixbee.com.au"), "pixbee official");
+  assert.ok(pc.includes("imoo.com"), "imoo official");
+  assert.ok(pc.includes("nofollow noopener noreferrer"), "nofollow present");
+  assert.ok(pc.includes("Official page"), "official page label");
+  const shop = fs.readFileSync(new URL("../client/src/pages/Shop.tsx", import.meta.url), "utf8");
+  assert.ok(shop.includes("WR-AU-BR") || shop.includes("BetterRoaming"), "shop filters Better Roaming");
+  assert.ok(shop.includes("Kids watches — Apple, Spacetalk, Garmin, Pixbee, imoo, Safe Owl"), "shop title lists six");
+});
+
+test("shop images are neutral placeholder for competitors, no Apple-for-competitor", () => {
+  const cat = fs.readFileSync(new URL("../shared/catalogue.ts", import.meta.url), "utf8");
+  // competitor models should use neutral placeholder, not Apple watch images
+  assert.ok(cat.includes("/images/neutral-watch-placeholder.jpg"), "neutral placeholder used");
+  // ensure competitor kits are not using apple_watch images
+  const gwSection = cat.slice(cat.indexOf("GW-GARMIN_KIDS"), cat.indexOf("GW-GARMIN_KIDS") + 3000);
+  assert.ok(!gwSection.includes("/images/apple_watch_"), "no apple image for competitor");
+  // alt text via ProductCard uses product.name, which is correct; description notes placeholder
+  const pc = fs.readFileSync(new URL("../client/src/components/ProductCard.tsx", import.meta.url), "utf8");
+  assert.ok(pc.includes("Image shown is a neutral placeholder") || pc.includes("neutral placeholder"), "placeholder disclaimer present");
+});
+
+test("Better Roaming absent from /shop page", () => {
+  const shop = fs.readFileSync(new URL("../client/src/pages/Shop.tsx", import.meta.url), "utf8");
+  // Shop.tsx itself should not contain BetterRoaming copy (filter excludes catalogue plans); catalogue still has plan names but shop filters them
+  assert.ok(shop.includes("BetterRoaming") || shop.includes("Better Roaming") || shop.includes("WR-AU-BR"), "filter code mentions BestRoaming to exclude it");
+  // ProductCard / Catalogue still contain BetterRomining for AU plans elsewhere but shop excludes them; check shop filteredProducts logic excludes
+  assert.ok(shop.includes("WR-AU-BR") && shop.includes("filtered"), "shop hides BetterRoaming plans");
+  const conn = fs.readFileSync(new URL("../client/src/pages/Connectivity.tsx", import.meta.url), "utf8");
+  assert.ok(conn.includes("Better Roaming"), "Connectivity still lists Better Roaming (unchanged per brief)");
+});

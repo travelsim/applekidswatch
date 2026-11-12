@@ -24,11 +24,19 @@ const gradeLabels: Record<string, string> = {
   fair: "Fair",
 };
 
+const OFFICIAL_URLS: Record<string, string> = {
+  "GW-SPACETALK-KIDS-01": "https://www.spacetalk.com.au/adventurer-2",
+  "GW-GARMIN-KIDS-01": "https://www.garmin.com/en-AU/c/171/pn/1107292/",
+  "GW-PIXBEE-KIDS-01": "https://pixbee.com.au/",
+  "GW-IMOO-KIDS-01": "https://imoo.com/",
+};
+
 export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   
   const { formatPrice } = useBrand();
   const hasCompareAt = product.originalPrice > product.price;
+  const officialUrl = OFFICIAL_URLS[product.sku ?? ""];
 
   return (
     <Card className="group overflow-visible hover-elevate" data-testid={`card-product-${product.id}`}>
@@ -82,12 +90,21 @@ export function ProductCard({ product }: ProductCardProps) {
             )}
           </div>
           <div className="flex gap-2 pt-2">
-            <Link href={`/product/${product.id}`} className="flex-1">
-              <Button variant="outline" className="w-full" data-testid={`button-view-${product.id}`}>
-                <Eye className="h-4 w-4 mr-2" />
-                View
-              </Button>
-            </Link>
+            {officialUrl ? (
+              <a href={officialUrl} target="_blank" rel="nofollow noopener noreferrer" className="flex-1" data-testid={`link-official-${product.id}`}>
+                <Button variant="outline" className="w-full">
+                  <Eye className="h-4 w-4 mr-2" />
+                  Official page
+                </Button>
+              </a>
+            ) : (
+              <Link href={`/product/${product.id}`} className="flex-1">
+                <Button variant="outline" className="w-full" data-testid={`button-view-${product.id}`}>
+                  <Eye className="h-4 w-4 mr-2" />
+                  View
+                </Button>
+              </Link>
+            )}
             <Button
               onClick={() => addItem(product.id)}
               disabled={!product.inStock}
@@ -96,6 +113,9 @@ export function ProductCard({ product }: ProductCardProps) {
               <ShoppingCart className="h-4 w-4" />
             </Button>
           </div>
+          {officialUrl ? null : product.price === 0 ? (
+            <p className="text-xs text-muted-foreground">Image shown is a neutral placeholder pending verification of the official device photo; Price TBC pending sourced listing. Check the comparison above.</p>
+          ) : null}
         </div>
       </CardContent>
     </Card>

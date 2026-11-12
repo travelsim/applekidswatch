@@ -128,11 +128,11 @@ const KIT_DEFS: KitDef[] = [
   },
   {
     sku: "GW-GARMIN-KIDS-01",
-    name: "Garmin Kids Wearable — Comparison Model",
+    name: "Garmin vívofit jr. 4 — Comparison Model",
     grade: "A",
     color: "Black",
     caseSpec: "Kids fit",
-    image: "/images/child_wearing_smartw_2324123a.jpg",
+    image: "/images/neutral-watch-placeholder.jpg",
     price: 0,
     compareAtPrice: 0,
     badge: "Price TBC",
@@ -143,7 +143,7 @@ const KIT_DEFS: KitDef[] = [
     grade: "A",
     color: "Blue",
     caseSpec: "Kids fit",
-    image: "/images/child_wearing_smartw_4ff9f4cf.jpg",
+    image: "/images/neutral-watch-placeholder.jpg",
     price: 0,
     compareAtPrice: 0,
     badge: "Price TBC",
@@ -154,29 +154,29 @@ const KIT_DEFS: KitDef[] = [
     grade: "A",
     color: "Pink",
     caseSpec: "Kids fit",
-    image: "/images/child_wearing_smartw_5f4b5187.jpg",
+    image: "/images/neutral-watch-placeholder.jpg",
     price: 0,
     compareAtPrice: 0,
     badge: "Price TBC",
   },
   {
     sku: "GW-SAFEOWL-KIDS-01",
-    name: "Safe Owl Kids Watch — Comparison Model",
+    name: "Safe Owl — Comparison Model (model TBC)",
     grade: "A",
     color: "Grey",
     caseSpec: "Kids fit",
-    image: "/images/child_playing_park_h_da9ed0cf.jpg",
+    image: "/images/neutral-watch-placeholder.jpg",
     price: 0,
     compareAtPrice: 0,
     badge: "Price TBC",
   },
   {
     sku: "GW-SPACETALK-KIDS-01",
-    name: "Spacetalk Kids Watch — Comparison Model",
+    name: "Spacetalk Adventurer 2 — Comparison Model",
     grade: "A",
     color: "Black",
     caseSpec: "Kids fit",
-    image: "/images/smartwatch_wearable__9b6a6b5a.jpg",
+    image: "/images/neutral-watch-placeholder.jpg",
     price: 0,
     compareAtPrice: 0,
     badge: "Price TBC",
@@ -335,7 +335,7 @@ const KIT_FEATURES = (k: KitDef) => {
 function kitDescription(k: KitDef): string {
   const isApple = k.sku.startsWith("AKW-");
   if (!isApple) {
-    return `${k.name}: independent comparison listing. Price and availability to be verified with a sourced listing before purchase. No stock or pricing claim is made here. Please see the comparison section on the home page for neutral, sourced-only attributes.`;
+    return `${k.name}: independent comparison listing. Image shown is a neutral placeholder pending verification of the official device photo — correct device image to be added when sourced. Price and availability to be verified with a sourced listing before purchase. No stock or pricing claim is made here. Please see the comparison section on the home page for neutral, sourced-only attributes.`;
   }
   return `${k.caseSpec.split(" / ")[0]} refurbished cellular Apple Watch, supplied as a complete kids kit: watch, bumper case, kid velcro sport loop, magnetic charging cable and a printed quickstart card. ${KIT_TAIL}`;
 }
