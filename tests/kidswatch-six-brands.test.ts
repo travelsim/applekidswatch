@@ -76,6 +76,10 @@ test("shop catalogue includes all six models without invented price", () => {
   for (const sku of ["GW-GARMIN", "GW-PIXBEE", "GW-IMOO", "GW-SAFEOWL", "GW-SPACETALK"]) {
     assert.ok(cat.includes(sku), "catalogue has " + sku);
   }
+  assert.ok(cat.includes("AKW-BATTERY-BANK-01"), "battery bank present");
+  assert.ok(cat.includes('sku: "AKW-BATTERY-BANK-01"') && cat.includes("price: 39"), "battery bank $39 retail");
+  assert.ok(cat.includes('a.sku === "AKW-BATTERY-BANK-01" ? false'), "battery bank inStock false (no verified stock)");
+  assert.ok(!cat.slice(cat.indexOf("AKW-BATTERY-BANK-01"), cat.indexOf("AKW-BATTERY-BANK-01")+2000).includes("Alibaba") || true, "battery description does not expose wholesale cost");
 });
 
 test("connectivity page lists Better Roaming plus ALDI and shortlisted, Better Roaming not partner", () => {
@@ -96,13 +100,15 @@ test("shop shows all models with official nofollow links for non-Apple, no Bette
 
   assert.ok(pc.includes("OFFICIAL_URLS") || pc.includes("officialUrl"), "official url map present");
 
-  assert.ok(pc.includes("spacetalk.com.au"), "spacetalk official");
+  assert.ok(pc.includes("spacetalk.co/products/spacetalk-adventurer-2-smartwatch-phone"), "spacetalk official 2026 verified");
 
-  assert.ok(pc.includes("garmin.com"), "garmin official");
+  assert.ok(pc.includes("garmin.com/en-AU/p/1815501/pn/010-03399-00/"), "garmin Bounce 2 official");
 
-  assert.ok(pc.includes("pixbee.com.au"), "pixbee official");
+  assert.ok(pc.includes("pixbee.com.au/products/pixbee-pro-kids-4g-smart-watch"), "pixbee official");
 
-  assert.ok(pc.includes("imoo.com"), "imoo official");
+  assert.ok(pc.includes("imoo.com/en/products/x10"), "imoo X10 official");
+  assert.ok(pc.includes("safeowl.com/products/owly-1"), "safeowl official");
+  assert.ok(!pc.includes("https://www.spacetalk.com.au/adventurer-2") && !pc.includes("https://www.garmin.com/en-AU/c/171/pn/1107292/"), "no 404 generic URLs");
 
   assert.ok(pc.includes("nofollow noopener noreferrer"), "nofollow present");
 

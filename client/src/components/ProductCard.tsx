@@ -25,10 +25,11 @@ const gradeLabels: Record<string, string> = {
 };
 
 const OFFICIAL_URLS: Record<string, string> = {
-  "GW-SPACETALK-KIDS-01": "https://www.spacetalk.com.au/adventurer-2",
-  "GW-GARMIN-KIDS-01": "https://www.garmin.com/en-AU/c/171/pn/1107292/",
-  "GW-PIXBEE-KIDS-01": "https://pixbee.com.au/",
-  "GW-IMOO-KIDS-01": "https://imoo.com/",
+  "GW-SPACETALK-KIDS-01": "https://spacetalk.co/products/spacetalk-adventurer-2-smartwatch-phone",
+  "GW-GARMIN-KIDS-01": "https://www.garmin.com/en-AU/p/1815501/pn/010-03399-00/",
+  "GW-PIXBEE-KIDS-01": "https://pixbee.com.au/products/pixbee-pro-kids-4g-smart-watch",
+  "GW-IMOO-KIDS-01": "https://www.imoo.com/en/products/x10",
+  "GW-SAFEOWL-KIDS-01": "https://safeowl.com/products/owly-1",
 };
 
 export function ProductCard({ product }: ProductCardProps) {
