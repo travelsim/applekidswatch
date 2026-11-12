@@ -521,6 +521,22 @@ ${urls
     }
   });
 
+  // One-off catalogue reseed — guarded by SERVER_SECRET when configured.
+  app.post("/api/seed", async (req, res) => {
+    const secret = process.env.SERVER_SECRET;
+    if (secret && req.headers["x-seed-secret"] !== secret) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+    if (!databaseConfigured) return res.status(503).json({ error: "Database not configured" });
+    try {
+      await storage.seedData();
+      return res.json({ ok: true, seeded: true });
+    } catch (e) {
+      console.error("Seed failed", e);
+      return res.status(500).json({ error: "Seed failed" });
+    }
+  });
+
   // Page view tracking endpoint (analytics)
   app.post("/api/analytics/pageview", async (req, res) => {
     try {
@@ -537,3 +553,4 @@ ${urls
 
 
 }
+
