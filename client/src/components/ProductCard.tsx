@@ -61,9 +61,13 @@ export function ProductCard({ product }: ProductCardProps) {
             </p>
           </div>
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-xl font-bold" data-testid={`text-product-price-${product.id}`}>
-              {formatPrice(product.price)}
-            </span>
+            {product.price === 0 ? (
+              <span className="text-xl font-bold" data-testid={`text-product-price-${product.id}`}>Price TBC</span>
+            ) : (
+              <span className="text-xl font-bold" data-testid={`text-product-price-${product.id}`}>
+                {formatPrice(product.price)}
+              </span>
+            )}
             {/* A plan or accessory has no new-hardware reference price, so a
                 strike-through and a savings figure would be a fabricated claim. */}
             {hasCompareAt && (

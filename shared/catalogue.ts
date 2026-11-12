@@ -126,6 +126,61 @@ const KIT_DEFS: KitDef[] = [
     price: 299,
     compareAtPrice: 529,
   },
+  {
+    sku: "GW-GARMIN-KIDS-01",
+    name: "Garmin Kids Wearable — Comparison Model",
+    grade: "A",
+    color: "Black",
+    caseSpec: "Kids fit",
+    image: "/images/child_wearing_smartw_2324123a.jpg",
+    price: 0,
+    compareAtPrice: 0,
+    badge: "Price TBC",
+  },
+  {
+    sku: "GW-PIXBEE-KIDS-01",
+    name: "Pixbee Kids Watch — Comparison Model",
+    grade: "A",
+    color: "Blue",
+    caseSpec: "Kids fit",
+    image: "/images/child_wearing_smartw_4ff9f4cf.jpg",
+    price: 0,
+    compareAtPrice: 0,
+    badge: "Price TBC",
+  },
+  {
+    sku: "GW-IMOO-KIDS-01",
+    name: "imoo Kids Watch — Comparison Model",
+    grade: "A",
+    color: "Pink",
+    caseSpec: "Kids fit",
+    image: "/images/child_wearing_smartw_5f4b5187.jpg",
+    price: 0,
+    compareAtPrice: 0,
+    badge: "Price TBC",
+  },
+  {
+    sku: "GW-SAFEOWL-KIDS-01",
+    name: "Safe Owl Kids Watch — Comparison Model",
+    grade: "A",
+    color: "Grey",
+    caseSpec: "Kids fit",
+    image: "/images/child_playing_park_h_da9ed0cf.jpg",
+    price: 0,
+    compareAtPrice: 0,
+    badge: "Price TBC",
+  },
+  {
+    sku: "GW-SPACETALK-KIDS-01",
+    name: "Spacetalk Kids Watch — Comparison Model",
+    grade: "A",
+    color: "Black",
+    caseSpec: "Kids fit",
+    image: "/images/smartwatch_wearable__9b6a6b5a.jpg",
+    price: 0,
+    compareAtPrice: 0,
+    badge: "Price TBC",
+  },
 ];
 
 interface PlanDef {
@@ -257,16 +312,31 @@ const TRAVEL_WATCH_PLANS: PlanDef[] = [
   { sku: "TRV-PLAN-AU-M", name: "Travel Watch Plan - Monthly (Australia)", market: "AU", price: 12, planTerm: "monthly" },
 ];
 
-const KIT_FEATURES = (k: KitDef) => [
-  ...HARDWARE_FEATURES,
-  `Case size ${k.caseSpec.split(" / ")[0]}`,
-  `Kid velcro sport loop included (${k.color})`,
-  "Rugged bumper case included",
-  "Magnetic charging cable included",
-  "Printed quickstart card included",
-];
+const KIT_FEATURES = (k: KitDef) => {
+  const isApple = k.sku.startsWith("AKW-");
+  if (!isApple) {
+    return [
+      "Kids-fit wearable for daily wear",
+      "GPS location features where supported",
+      "Parent-controlled contacts where supported",
+      "Price and availability to be verified with source — no stock or pricing claim made",
+    ];
+  }
+  return [
+    ...HARDWARE_FEATURES,
+    `Case size ${k.caseSpec.split(" / ")[0]}`,
+    `Kid velcro sport loop included (${k.color})`,
+    "Rugged bumper case included",
+    "Magnetic charging cable included",
+    "Printed quickstart card included",
+  ];
+};
 
 function kitDescription(k: KitDef): string {
+  const isApple = k.sku.startsWith("AKW-");
+  if (!isApple) {
+    return `${k.name}: independent comparison listing. Price and availability to be verified with a sourced listing before purchase. No stock or pricing claim is made here. Please see the comparison section on the home page for neutral, sourced-only attributes.`;
+  }
   return `${k.caseSpec.split(" / ")[0]} refurbished cellular Apple Watch, supplied as a complete kids kit: watch, bumper case, kid velcro sport loop, magnetic charging cable and a printed quickstart card. ${KIT_TAIL}`;
 }
 
@@ -336,6 +406,7 @@ export function catalogueFor(brand: BrandDefinition): CatalogueProduct[] {
   let order = 0;
 
   for (const k of KIT_DEFS) {
+    const isNonApple = !k.sku.startsWith("AKW-");
     out.push({
       sku: k.sku,
       name: k.name,
@@ -347,7 +418,7 @@ export function catalogueFor(brand: BrandDefinition): CatalogueProduct[] {
       caseSpec: k.caseSpec,
       image: k.image,
       features: KIT_FEATURES(k),
-      inStock: true,
+      inStock: isNonApple ? false : true,
       category: "Kids watch kits",
       planType: "hardware",
       planTerm: null,

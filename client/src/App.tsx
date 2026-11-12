@@ -19,6 +19,7 @@ import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 import Safety from "@/pages/Safety";
 import About from "@/pages/About";
+import Connectivity from "@/pages/Connectivity";
 import {
   LegalPage,
   EligibilityPage,
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/safety" component={Safety} />
       <Route path="/about" component={About} />
+      <Route path="/connectivity" component={Connectivity} />
       <Route path="/is-it-right-for-my-child" component={EligibilityPage} />
       <Route path="/why-no-telstra" component={NoTelstraPage} />
       <Route path="/setup" component={SetupPage} />

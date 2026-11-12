@@ -329,7 +329,7 @@ export default function ProductDetail() {
                 <div className="flex items-center gap-3">
                   <Globe className="h-6 w-6 text-secondary" />
                   <div>
-                    <p className="text-sm font-medium">Better Roaming Ready</p>
+                    <p className="text-sm font-medium">Connectivity ready</p>
                     <p className="text-xs text-muted-foreground">Kid-Safe Plans</p>
                   </div>
                 </div>

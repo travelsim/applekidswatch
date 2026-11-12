@@ -75,7 +75,7 @@ const additionalFeatures = [
   },
   {
     icon: Globe,
-    title: "Better Roaming",
+    title: "Connectivity",
     description: "Kid-safe cellular plans designed specifically for children's watches with parental controls.",
   },
 ];
@@ -123,7 +123,7 @@ export default function Safety() {
               answer: "Schooltime Mode limits the watch's features during school hours so kids can focus on learning. During this time, only the clock face and emergency calls are available."
             },
             {
-              question: "How does Better Roaming work with the Apple Watch SE?",
+              question: "How does standalone connectivity work with the Apple Watch?",
               answer: "Better Roaming provides kid-safe cellular plans designed specifically for children's watches. Plans start at $10/month and include parental controls, data usage limits, and coverage across major US networks."
             },
           ]),
@@ -149,7 +149,7 @@ export default function Safety() {
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
               Every feature of the Apple Watch SE is designed with your child's safety in mind. 
-              Combined with Better Roaming's kid-safe cellular plans, you get complete peace of mind.
+              Combined with standalone connectivity, you get complete peace of mind.
             </p>
             <Link href="/shop">
               <Button size="lg" className="text-base px-8 mt-4" data-testid="button-safety-shop">
@@ -174,7 +174,7 @@ export default function Safety() {
             </div>
             <div className="flex items-center gap-3">
               <Globe className="h-8 w-8 text-primary" />
-              <span className="font-medium">Better Roaming</span>
+              <span className="font-medium">Connectivity</span>
             </div>
             <div className="flex items-center gap-3">
               <Lock className="h-8 w-8 text-secondary" />
@@ -280,7 +280,7 @@ export default function Safety() {
                 Kid-Safe Cellular Plans
               </h2>
               <p className="text-lg text-white/90">
-                Our partnership with Better Roaming means your child's watch comes with 
+                Standalone connectivity means your child's watch comes with 
                 cellular connectivity designed specifically for kids. Parents have complete 
                 control over data usage, calling, and messaging.
               </p>
@@ -303,7 +303,7 @@ export default function Safety() {
               <Card className="bg-white/10 border-white/20">
                 <CardContent className="p-8 text-center space-y-4">
                   <Globe className="h-16 w-16 mx-auto" />
-                  <h3 className="text-2xl font-bold">Better Roaming</h3>
+                  <h3 className="text-2xl font-bold">Connectivity</h3>
                   <p className="text-white/80">
                     Kid-safe cellular plans starting at just $10/month
                   </p>

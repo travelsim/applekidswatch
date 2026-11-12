@@ -107,8 +107,8 @@ export default function About() {
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
               This shop started from a simple idea: every child deserves to stay connected 
-              with their family, safely. We combine quality refurbished Apple watches with 
-              Better Roaming's kid-safe cellular plans.
+              with their family, safely. We combine quality kid watches with 
+              standalone watch-plan connectivity.
             </p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export default function About() {
                 we're making it possible for more families to stay connected.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Our partnership with Better Roaming ensures that every watch comes with 
+                Standalone connectivity means every watch comes with 
                 kid-safe cellular connectivity, giving parents complete peace of mind 
                 while their children enjoy the freedom to explore.
               </p>
@@ -150,7 +150,7 @@ export default function About() {
                   "Refurbished and fully tested",
                   "Rigorous testing and quality control",
                   "Affordable pricing without compromise",
-                  "Kid-safe Better Roaming connectivity",
+                  "Connectivity that works without a phone",
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3">
                     <CheckCircle className="h-5 w-5 text-accent flex-shrink-0" />
@@ -220,10 +220,10 @@ export default function About() {
                 Our Partner
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold">
-                Powered by Better Roaming
+                Connectivity without a phone contract
               </h2>
               <p className="text-lg text-white/90">
-                Better Roaming is our trusted partner for cellular connectivity. Their kid-safe 
+                Connectivity is independent — no partner is implied. The watch plan kid-safe 
                 plans are designed specifically for children's devices, with built-in parental 
                 controls and transparent pricing.
               </p>
@@ -245,7 +245,7 @@ export default function About() {
               <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-white/10 mb-6">
                 <Globe className="h-16 w-16" />
               </div>
-              <h3 className="text-2xl font-bold">Better Roaming</h3>
+              <h3 className="text-2xl font-bold">Connectivity</h3>
               <p className="text-white/80 mt-2">Kid-Safe Connectivity Partner</p>
             </div>
           </div>

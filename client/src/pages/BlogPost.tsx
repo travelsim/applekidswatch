@@ -193,7 +193,7 @@ export default function BlogPostPage() {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-2xl font-bold mb-4">Keep Your Kids Safe Today</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Browse our collection of refurbished Apple SE watches with Better Roaming connectivity.
+            Browse our collection of refurbished Apple SE watches with Connectivity connectivity.
           </p>
           <Link href="/shop">
             <Button size="lg" data-testid="button-shop-cta">

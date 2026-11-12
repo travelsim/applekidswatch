@@ -162,7 +162,7 @@ export const KIDS_WATCH_APPLE_BRAND: BrandDefinition = {
   ...AU_APPLE_BRAND,
   domain: "apple.kidswat.ch",
   name: "Kids Watch",
-  metaTitle: "Kids' Apple Watch + Standalone eSIM Plan | Kids Watch Australia",
+  metaTitle: "Kids' Apple Watch + Standalone Plan | Kids Watch",
   // The subdomain has no MX, so hello@apple.kidswat.ch would bounce.
   supportEmail: "hello@kidswat.ch",
 };
@@ -180,7 +180,7 @@ export const KIDS_WATCH_PARENT_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "A first phone that's only a watch.",
   audience:
-    "Australian parents of 6-12 year olds choosing between refurbished Apple Watch and dedicated kids watches including Spacetalk, Garmin, Pixbee, imoo and Safe Owl.",
+    "Parents of 6-12 year olds choosing between refurbished Apple Watch and dedicated kids watches including Spacetalk, Garmin, Pixbee, imoo and Safe Owl.",
   heroHeadline: "Kids smartwatches, without the phone.",
   heroSub:
     "Compare Apple, Spacetalk, Garmin, Pixbee, imoo and Safe Owl side-by-side. GPS, calling and safety features, no telco contract.",
@@ -201,7 +201,7 @@ export const KIDS_WATCH_SPACETALK_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "Spacetalk, alongside Apple Watch.",
   audience:
-    "Australian parents of 6-12 year olds evaluating the Spacetalk Adventurer family alongside the refurbished Apple Watch alternative.",
+    "Parents of 6-12 year olds evaluating the Spacetalk Adventurer family alongside the refurbished Apple Watch alternative.",
   heroHeadline: "Spacetalk kids watch, plus the Apple Watch alternative.",
   heroSub:
     "The dedicated Spacetalk view, with the refurbished Apple Watch range shown for comparison. Independent comparison only.",
@@ -221,7 +221,7 @@ export const KIDS_WATCH_GARMIN_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "Garmin, alongside Apple and Spacetalk.",
   audience:
-    "Australian parents evaluating the Garmin wearable range for kids alongside Apple Watch and Spacetalk options.",
+    "Parents evaluating the Garmin wearable range for kids alongside Apple Watch and Spacetalk options.",
   heroHeadline: "Garmin wearable alongside the kids-watch options.",
   heroSub:
     "Garmin wearables shown alongside Apple Watch, Spacetalk and other kids-watch options for independent comparison.",
@@ -240,7 +240,7 @@ export const KIDS_WATCH_PIXBEE_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "Pixbee, alongside Apple and Spacetalk.",
   audience:
-    "Australian parents evaluating the Pixbee kids watch alongside Apple Watch, Spacetalk and other options.",
+    "Parents evaluating the Pixbee kids watch alongside Apple Watch, Spacetalk and other options.",
   heroHeadline: "Pixbee kids watch alongside the other options.",
   heroSub:
     "The dedicated Pixbee view, with Apple Watch, Spacetalk and other kids-watch options shown for independent comparison.",
@@ -259,7 +259,7 @@ export const KIDS_WATCH_IMOO_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "imoo, alongside Apple and Spacetalk.",
   audience:
-    "Australian parents evaluating the imoo kids watch alongside Apple Watch, Spacetalk and other options.",
+    "Parents evaluating the imoo kids watch alongside Apple Watch, Spacetalk and other options.",
   heroHeadline: "imoo kids watch alongside the other options.",
   heroSub:
     "The dedicated imoo view, with the other kids-watch ranges shown for independent comparison.",
@@ -280,7 +280,7 @@ export const KIDS_WATCH_SAFE_OWL_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "Safe Owl, alongside the other options.",
   audience:
-    "Australian parents evaluating Safe Owl and other kids-watch options on equal footing.",
+    "Parents evaluating Safe Owl and other kids-watch options on equal footing.",
   heroHeadline: "Safe Owl alongside the kids-watch options.",
   heroSub:
     "Safe Owl shown alongside Apple Watch, Spacetalk and other options for independent comparison.",

@@ -105,20 +105,20 @@ export function NoTelstraPage() {
       path="/why-no-telstra"
       title="Why You Don't Need Telstra"
       seoTitle={`Apple Watch Cellular Plan Without a Telco Contract | ${brand.name}`}
-      description="Keep your phone plan. Apple Watch Family Setup with a BetterRoaming kids plan works on any phone carrier, with no telco contract needed."
+      description="Keep your phone plan. Apple Watch Family Setup with a standalone watch plan works on any phone carrier, with no telco contract needed."
       intro="The watch has its own cellular plan, so the phone plan in your pocket doesn't matter."
       sections={[
         {
           heading: "Keep your phone plan",
           paragraphs: [
-            "Usually a cellular Apple Watch needs an add-on from your phone carrier. With a BetterRoaming kids plan set up through Apple's Family Setup, the watch gets its own line. Your child's watch works whether you are on Optus, Vodafone, Boost, Belong, Aldi, Amaysim, Telstra or any other carrier.",
+            "Usually a cellular watch needs an add-on from your phone carrier. With a BetterRoaming kids plan set up through Apple's Family Setup, the watch gets its own line. Your child's watch works whether you are on Optus, Vodafone, Boost, Belong, Aldi, Amaysim, Telstra or any other carrier.",
             "Keep the phone plan you already have. Nothing about it needs to change.",
           ],
         },
         {
           heading: "What the plan costs",
           paragraphs: [
-            "BetterRoaming Kids Plan, Australia: A$11.99 a month, or A$99 a year. For the annual plan that works out to about A$8.25 a month.",
+            "Standalone kids plan (Australia): example monthly or annual pricing shown at checkout. For the annual plan that works out to about A$8.25 a month.",
             "Pricing for other markets is shown on each product page.",
           ],
         },
@@ -154,7 +154,7 @@ export function SetupPage() {
           paragraphs: [
             "1. Charge the watch and turn it on.",
             "2. Pair it from your iPhone using Apple's Family Setup, following the prompts in the Apple Watch app.",
-            "3. Activate the BetterRoaming kids plan for your home market. Your activation instructions come with your order.",
+            "3. Activate the standalone kids plan for your home market. Your activation instructions come with your order.",
             "4. Choose approved contacts, and set Schooltime and other limits for your child.",
           ],
         },

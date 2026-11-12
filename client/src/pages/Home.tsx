@@ -26,7 +26,7 @@ import { useSeo } from "@/hooks/use-seo";
 import { useBrand } from "@/lib/brand";
 import { breadcrumbList } from "@/lib/structured-data";
 
-import heroImage from "@assets/stock_images/apple_watch_gps_feature.png";
+import heroImage from "@assets/stock_images/child_playing_park_h_612beb82.jpg";
 import safetyImage1 from "@assets/stock_images/apple_watch_silver.png";
 import safetyImage2 from "@assets/stock_images/apple_watch_pink.png";
 import safetyImage3 from "@assets/stock_images/apple_watch_space_gray.png";
@@ -65,7 +65,7 @@ const howItWorks = [
   {
     step: 2,
     title: "Choose Connectivity",
-    description: "Add a standalone watch plan that works on common AU networks. No phone contract needed.",
+    description: "Add a standalone watch plan. No phone contract needed.",
     icon: Globe,
   },
   {
@@ -121,7 +121,7 @@ export default function Home() {
         <div className="absolute inset-0">
           <img
             src={heroImage}
-            alt="Apple Watch SE with GPS tracking for kids safety"
+            alt="Child wearing a kids smartwatch in a playground"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -130,7 +130,7 @@ export default function Home() {
           <div className="max-w-2xl space-y-6">
             <Badge className="bg-accent text-accent-foreground" data-testid="badge-hero">
               <Zap className="h-3 w-3 mr-1" />
-              Refurbished, Not New
+              {isKidsWatchFamily ? "Kids smartwatches" : "Refurbished, Not New"}
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight" data-testid="text-hero-title">
               {heroTitle}
@@ -160,7 +160,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="flex items-center gap-3">
               <SiApple className="h-8 w-8 text-foreground" />
-              <span className="font-medium">Independently Refurbished</span>
+              <span className="font-medium">{isKidsWatchFamily ? "Independent comparison" : "Independently Refurbished"}</span>
             </div>
             <div className="flex items-center gap-3">
               <Shield className="h-8 w-8 text-accent" />
@@ -262,8 +262,8 @@ export default function Home() {
               <CardContent className="p-6 space-y-3">
                 <p className="text-sm font-semibold text-accent">Kids Watch</p>
                 <p className="text-sm text-muted-foreground">Refurbished Apple Watch SE + kids plan</p>
-                <p className="text-3xl font-bold">A$368</p>
-                <p className="text-sm text-muted-foreground">A$269 watch + A$99 annual plan</p>
+                <p className="text-3xl font-bold">$368</p>
+                <p className="text-sm text-muted-foreground">$269 watch + $99 annual plan</p>
                 <ul className="text-sm space-y-1">
                   <li>Full Apple Watch, Family Setup</li>
                   <li>No telco contract</li>
@@ -275,11 +275,11 @@ export default function Home() {
               <CardContent className="p-6 space-y-3">
                 <p className="text-sm font-semibold">Spacetalk Adventurer 2</p>
                 <p className="text-sm text-muted-foreground">Dedicated kids smartwatch</p>
-                <p className="text-3xl font-bold">A$514</p>
-                <p className="text-sm text-muted-foreground">A$349 watch + A$164.99 annual plan</p>
+                <p className="text-3xl font-bold">$514</p>
+                <p className="text-sm text-muted-foreground">$349 watch + $164.99 annual plan</p>
                 <ul className="text-sm space-y-1">
                   <li>Purpose-built kids device</li>
-                  <li>Australian support</li>
+                  <li>Regional support</li>
                   <li>2–3 day battery</li>
                 </ul>
               </CardContent>
@@ -288,7 +288,7 @@ export default function Home() {
               <CardContent className="p-6 space-y-3">
                 <p className="text-sm font-semibold">Apple Watch SE, new</p>
                 <p className="text-sm text-muted-foreground">Cellular model, plan extra</p>
-                <p className="text-3xl font-bold">A$489+</p>
+                <p className="text-3xl font-bold">$489+</p>
                 <p className="text-sm text-muted-foreground">Watch only, before any plan</p>
                 <ul className="text-sm space-y-1">
                   <li>New condition</li>

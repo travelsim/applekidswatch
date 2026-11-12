@@ -114,7 +114,7 @@ export default function Shop() {
           <div className="max-w-3xl">
             <Badge variant="outline" className="mb-4">Shop</Badge>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" data-testid="text-shop-title">
-              Buy Refurbished Apple Watch SE - From $99
+              Kids watches — Apple, Spacetalk, Garmin, Pixbee, imoo, Safe Owl
             </h1>
             <p className="text-lg text-muted-foreground">
               Refurbished Apple Watches with GPS + Cellular, standalone watch plans and accessories. 

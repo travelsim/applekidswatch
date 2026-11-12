@@ -49,3 +49,42 @@ test("commission factory verification preserved", () => {
     "commission meta present",
   );
 });
+
+
+test("playground wrist hero, no refurbished text, de-AUified KIDS_WATCH copy", () => {
+  const home = fs.readFileSync(new URL("../client/src/pages/Home.tsx", import.meta.url), "utf8");
+  assert.ok(home.includes("child_playing_park"), "hero uses playground image");
+  assert.ok(home.includes("Child wearing a kids smartwatch in a playground"), "hero alt is playground");
+  assert.ok(home.includes("Kids smartwatches"), "hero badge neutral for family");
+  const brands = fs.readFileSync(new URL("../shared/brands.ts", import.meta.url), "utf8");
+  assert.ok(brands.includes("Kids Smartwatches | Kids Watch"), "parent neutral");
+  const parentBlock = brands.slice(brands.indexOf("KIDS_WATCH_PARENT_BRAND"), brands.indexOf("KIDS_WATCH_SPACETALK_BRAND"));
+  assert.ok(!parentBlock.includes("Australian"), "parent de-AUified");
+});
+
+test("six-way comparison includes all six without unsourced pricing", () => {
+  const home = fs.readFileSync(new URL("../client/src/pages/Home.tsx", import.meta.url), "utf8");
+  for (const b of ["Apple", "Spacetalk", "Garmin", "Pixbee", "imoo", "Safe Owl"]) {
+    assert.ok(home.includes(b), "home has " + b);
+  }
+  assert.ok(home.includes("Six ways to choose") || home.includes("section-six-pillars"), "six section present");
+  assert.ok(home.includes("Not affiliated"), "non-affiliation covers Garmin");
+});
+
+test("shop catalogue includes all six models without invented price", () => {
+  const cat = fs.readFileSync(new URL("../shared/catalogue.ts", import.meta.url), "utf8");
+  for (const sku of ["GW-GARMIN", "GW-PIXBEE", "GW-IMOO", "GW-SAFEOWL", "GW-SPACETALK"]) {
+    assert.ok(cat.includes(sku), "catalogue has " + sku);
+  }
+});
+
+test("connectivity page lists Better Roaming plus ALDI and shortlisted, Better Roaming not partner", () => {
+  const conn = fs.readFileSync(new URL("../client/src/pages/Connectivity.tsx", import.meta.url), "utf8");
+  assert.ok(conn.includes("Better Roaming"), "lists Better Roaming");
+  assert.ok(conn.includes("ALDI"), "lists ALDI");
+  assert.ok(conn.includes("Optus") || conn.includes("Vodafone"), "shortlisted carriers present");
+  assert.ok(!conn.includes("Better Roaming Partner") && !conn.includes("trusted partner"), "Better Roaming not partner");
+  const about = fs.readFileSync(new URL("../client/src/pages/About.tsx", import.meta.url), "utf8");
+  const safety = fs.readFileSync(new URL("../client/src/pages/Safety.tsx", import.meta.url), "utf8");
+  assert.ok(!about.includes("Our partnership with Better Roaming") && !safety.includes("Our partnership with Better Roaming"), "partner language removed");
+});
