@@ -219,7 +219,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "accessory",
     description:
       "Two replacement velcro sport loops sized for a small wrist. Washable, and the easy swap means a wet or lost band never stops the watch working.",
-    image: "/images/apple_watch_activity.png",
+    image: "/images/band-apple-sport-loop.jpg",
   },
   {
     sku: "AKW-BUMPER-KID",
@@ -228,7 +228,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "accessory",
     description:
       "Raised-edge silicone bumper sized for the 40mm case. Takes the edge off drops onto concrete, which is where most kids' watches actually break.",
-    image: "/images/apple_watch_safety.png",
+    image: "/images/accessory-placeholder.jpg",
   },
   {
     sku: "AKW-SCREEN-3PK",
@@ -237,7 +237,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "accessory",
     description:
       "Three tempered glass protectors with an alignment tray. A cracked screen is the most common reason a kids' watch is returned, and this prevents most of them.",
-    image: "/images/apple_watch_gps_feature.png",
+    image: "/images/accessory-placeholder.jpg",
   },
   {
     sku: "AKW-CHARGE-1",
@@ -246,7 +246,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "accessory",
     description:
       "Replacement magnetic charging cable. Keep one at home and one in the school bag so a forgotten cable never becomes a dead watch by lunchtime.",
-    image: "/images/apple_watch_cellular.png",
+    image: "/images/accessory-placeholder.jpg",
   },
   {
     sku: "AKW-BATTERY-BANK-01",
@@ -255,7 +255,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "accessory",
     description:
       "Portable battery bank for Apple Watch charging away from home. Availability and specification to be verified with a sourced listing before purchase — no stock claim made here.",
-    image: "/images/apple_watch_cellular.png",
+    image: "/images/accessory-placeholder.jpg",
   },
   {
     sku: "AKW-GUARD-12",
@@ -264,7 +264,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "warranty",
     description:
       "One replacement watch within 12 months for accidental damage in normal use. Excludes cosmetic wear, liquid damage beyond the 50 metre rating, and loss or theft. An unclear guarantee is the top refund driver in this category, so the exclusions are stated here rather than buried.",
-    image: "/images/apple_watch_safety.png",
+    image: "/images/accessory-placeholder.jpg",
   },
   {
     sku: "AKW-CARE-36",
@@ -273,7 +273,7 @@ const ACCESSORY_DEFS: AccessoryDef[] = [
     planType: "warranty",
     description:
       "Three years of accidental damage cover with a 24-month replacement term. Excludes cosmetic wear, liquid damage beyond the 50 metre rating, and loss or theft. Does not cover battery wear below the 85% health floor we guarantee at dispatch.",
-    image: "/images/apple_watch_safety.png",
+    image: "/images/accessory-placeholder.jpg",
   },
 ];
 
