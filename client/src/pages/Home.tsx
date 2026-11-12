@@ -132,7 +132,7 @@ export default function Home() {
               <Zap className="h-3 w-3 mr-1" />
               {isKidsWatchFamily ? "Kids smartwatches" : "Refurbished, Not New"}
             </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight" data-testid="text-hero-title">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight playful-heading" data-testid="text-hero-title">
               {heroTitle}
             </h1>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
@@ -182,7 +182,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="outline" className="mb-4">Safety First</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 playful-heading">
               {safetyHeading}
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -220,7 +220,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="outline" className="mb-4">Simple Setup</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 playful-heading">
               How It Works
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -492,7 +492,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <Badge variant="outline" className="mb-4">Reviews</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 playful-heading">
               Customer reviews
             </h2>
             <p className="text-lg text-muted-foreground">

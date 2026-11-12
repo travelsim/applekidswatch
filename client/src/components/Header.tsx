@@ -35,10 +35,10 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2 hover-elevate rounded-md px-2 py-1" data-testid="link-home">
-            <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
-              <Watch className="h-5 w-5 text-primary-foreground" />
+            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 via-amber-500 to-pink-500 shadow-md">
+              <Watch className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold tracking-tight">{brand.name}</span>
+            <span className="text-xl font-bold tracking-tight playful-heading">{brand.name}</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -118,10 +118,10 @@ export function Header() {
               <SheetContent side="right" className="w-80">
                 <div className="flex flex-col gap-6 mt-8">
                   <div className="flex items-center gap-2">
-                    <div className="flex items-center justify-center w-9 h-9 rounded-md bg-primary">
-                      <Watch className="h-5 w-5 text-primary-foreground" />
+                    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 via-amber-500 to-pink-500 shadow-md">
+                      <Watch className="h-5 w-5 text-white" />
                     </div>
-                    <span className="text-xl font-bold">{brand.name}</span>
+                    <span className="text-xl font-bold playful-heading">{brand.name}</span>
                   </div>
                   <nav className="flex flex-col gap-2">
                     {navLinks.map((link) => (
