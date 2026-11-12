@@ -1,4 +1,4 @@
-// Four-brand portfolio definitions and host-based brand resolution.
+// Portfolio brand definitions and host-based brand resolution.
 // One codebase, one deployment: the requesting Host selects the brand.
 
 export type Currency = "AUD" | "EUR" | "GBP" | "USD";
@@ -180,10 +180,10 @@ export const KIDS_WATCH_PARENT_BRAND: BrandDefinition = {
   name: "Kids Watch",
   tagline: "A first phone that's only a watch.",
   audience:
-    "Australian parents of 6-12 year olds choosing between a refurbished Apple Watch and a dedicated kids watch, without social media or an open browser.",
+    "Australian parents of 6-12 year olds choosing between refurbished Apple Watch and dedicated kids watches including Spacetalk, Garmin, Pixbee, imoo and Safe Owl.",
   heroHeadline: "Kids smartwatches, without the phone.",
   heroSub:
-    "Compare the refurbished Apple Watch option and the dedicated Spacetalk option side-by-side. GPS, calling and safety features, no telco contract.",
+    "Compare Apple, Spacetalk, Garmin, Pixbee, imoo and Safe Owl side-by-side. GPS, calling and safety features, no telco contract.",
   metaTitle: "Kids Smartwatches | Kids Watch",
   metaDescription:
     "A parent-focused kids smartwatch shop, with an Apple Watch range and other models as they are verified.",
@@ -211,12 +211,95 @@ export const KIDS_WATCH_SPACETALK_BRAND: BrandDefinition = {
   supportEmail: "hello@kidswat.ch",
 };
 
+/**
+ * Garmin pillar — independent comparison only. No partnership or affiliation
+ * claim, no stock or pricing claim without a source. Reuses AU catalogue id.
+ */
+export const KIDS_WATCH_GARMIN_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "garmin.kidswat.ch",
+  name: "Kids Watch",
+  tagline: "Garmin, alongside Apple and Spacetalk.",
+  audience:
+    "Australian parents evaluating the Garmin wearable range for kids alongside Apple Watch and Spacetalk options.",
+  heroHeadline: "Garmin wearable alongside the kids-watch options.",
+  heroSub:
+    "Garmin wearables shown alongside Apple Watch, Spacetalk and other kids-watch options for independent comparison.",
+  metaTitle: "Garmin Kids Comparison | Kids Watch",
+  metaDescription:
+    "Independent Garmin comparison alongside refurbished Apple Watch and dedicated kids watches. Kids Watch, kidswat.ch.",
+  supportEmail: "hello@kidswat.ch",
+};
+
+/**
+ * Pixbee pillar — independent comparison only. No partnership claim.
+ */
+export const KIDS_WATCH_PIXBEE_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "pixbee.kidswat.ch",
+  name: "Kids Watch",
+  tagline: "Pixbee, alongside Apple and Spacetalk.",
+  audience:
+    "Australian parents evaluating the Pixbee kids watch alongside Apple Watch, Spacetalk and other options.",
+  heroHeadline: "Pixbee kids watch alongside the other options.",
+  heroSub:
+    "The dedicated Pixbee view, with Apple Watch, Spacetalk and other kids-watch options shown for independent comparison.",
+  metaTitle: "Pixbee Kids Watch | Kids Watch",
+  metaDescription:
+    "Independent Pixbee comparison with refurbished Apple Watch and other kids watches. Kids Watch, kidswat.ch.",
+  supportEmail: "hello@kidswat.ch",
+};
+
+/**
+ * imoo pillar — independent comparison only.
+ */
+export const KIDS_WATCH_IMOO_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "imoo.kidswat.ch",
+  name: "Kids Watch",
+  tagline: "imoo, alongside Apple and Spacetalk.",
+  audience:
+    "Australian parents evaluating the imoo kids watch alongside Apple Watch, Spacetalk and other options.",
+  heroHeadline: "imoo kids watch alongside the other options.",
+  heroSub:
+    "The dedicated imoo view, with the other kids-watch ranges shown for independent comparison.",
+  metaTitle: "imoo Kids Watch | Kids Watch",
+  metaDescription:
+    "Independent imoo comparison with refurbished Apple Watch and other kids watches. Kids Watch, kidswat.ch.",
+  supportEmail: "hello@kidswat.ch",
+};
+
+/**
+ * Safe Owl pillar — independent comparison only. If Safe Owl cannot be
+ * represented without an unsourced claim, this entry remains neutral and
+ * generic until a sourced product fact is available.
+ */
+export const KIDS_WATCH_SAFE_OWL_BRAND: BrandDefinition = {
+  ...AU_APPLE_BRAND,
+  domain: "safeowl.kidswat.ch",
+  name: "Kids Watch",
+  tagline: "Safe Owl, alongside the other options.",
+  audience:
+    "Australian parents evaluating Safe Owl and other kids-watch options on equal footing.",
+  heroHeadline: "Safe Owl alongside the kids-watch options.",
+  heroSub:
+    "Safe Owl shown alongside Apple Watch, Spacetalk and other options for independent comparison.",
+  metaTitle: "Safe Owl Comparison | Kids Watch",
+  metaDescription:
+    "Independent Safe Owl comparison alongside refurbished Apple Watch and other kids watches. Kids Watch, kidswat.ch.",
+  supportEmail: "hello@kidswat.ch",
+};
+
 export const DEFAULT_BRAND_ID = "applekidswatch";
 
 const BY_DOMAIN = new Map(BRANDS.map((b) => [b.domain, b]));
 BY_DOMAIN.set("apple.kidswat.ch", KIDS_WATCH_APPLE_BRAND);
 BY_DOMAIN.set("kidswat.ch", KIDS_WATCH_PARENT_BRAND);
 BY_DOMAIN.set("spacetalk.kidswat.ch", KIDS_WATCH_SPACETALK_BRAND);
+BY_DOMAIN.set("garmin.kidswat.ch", KIDS_WATCH_GARMIN_BRAND);
+BY_DOMAIN.set("pixbee.kidswat.ch", KIDS_WATCH_PIXBEE_BRAND);
+BY_DOMAIN.set("imoo.kidswat.ch", KIDS_WATCH_IMOO_BRAND);
+BY_DOMAIN.set("safeowl.kidswat.ch", KIDS_WATCH_SAFE_OWL_BRAND);
 const BY_ID = new Map(BRANDS.map((b) => [b.id, b]));
 
 export function getBrandById(id: string): BrandDefinition | undefined {

@@ -103,11 +103,11 @@ export default function Home() {
 
   const featuredProducts = products?.slice(0, 3);
   const featuredPosts = posts?.slice(0, 3);
-  const isKidsWatchFamily = brand.domain === "kidswat.ch" || brand.domain === "apple.kidswat.ch" || brand.domain === "spacetalk.kidswat.ch";
+  const isKidsWatchFamily = brand.domain === "kidswat.ch" || brand.domain.endsWith(".kidswat.ch");
   const heroTitle = isKidsWatchFamily ? brand.heroHeadline : "Buy Refurbished Apple Watch SE for Kids";
   const heroSub = isKidsWatchFamily ? brand.heroSub : "Refurbished Apple Watch kits with GPS tracking, Emergency SOS and Family Setup. No telco contract. Kid-safe cellular plans included. 30-day returns, and no telco contract.";
   const safetyHeading = isKidsWatchFamily ? "Kids watch safety features" : "Apple Watch SE Safety Features for Kids";
-  const safetyIntro = isKidsWatchFamily ? "The same core safety features whether you choose the refurbished Apple Watch or the dedicated Spacetalk. Compare both below." : "Every feature is designed with your child's safety in mind. Stay connected without compromise.";
+  const safetyIntro = isKidsWatchFamily ? "The same core safety features across Apple, Spacetalk, Garmin, Pixbee, imoo and Safe Owl. Compare all six below on equal footing." : "Every feature is designed with your child's safety in mind. Stay connected without compromise.";
 
   return (
     <div className="flex flex-col">
@@ -299,49 +299,93 @@ export default function Home() {
             </Card>
           </div>
           <p className="text-xs text-muted-foreground text-center mt-6 max-w-3xl mx-auto">
-            Independent comparison — not affiliated with, endorsed by or sponsored by Apple Inc. or Spacetalk. Retail prices from published recommended prices and provider plan pages, checked November 2026. Prices can change; always confirm at checkout.
+            Independent comparison — not affiliated with, endorsed by or sponsored by Apple Inc., Spacetalk Ltd, Garmin Ltd, Pixbee, imoo or Safe Owl. Prices shown are from published recommended prices and provider plan pages, checked November 2026; where no sourced price is available no price is shown below. Prices can change; always confirm at checkout.
           </p>
         </div>
       </section>
 
       {isKidsWatchFamily && (
-        <section className="py-16 md:py-24" data-testid="section-two-pillars">
+        <section className="py-16 md:py-24" data-testid="section-six-pillars">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center mb-10">
-              <Badge variant="outline">Two ways to choose</Badge>
+              <Badge variant="outline">Six ways to choose</Badge>
               <h2 className="text-3xl md:text-4xl font-bold mt-4">
-                Apple Watch or Spacetalk — both covered
+                Apple, Spacetalk, Garmin, Pixbee, imoo, Safe Owl — all covered
               </h2>
               <p className="text-lg text-muted-foreground mt-3">
-                We compare both options side-by-side. You decide which fits your family. Independent guidance only.
+                We compare all six options side-by-side. You decide which fits your family. Independent, neutral guidance only — no partnership, stock or unsourced pricing claims.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               <Card>
                 <CardContent className="p-6 space-y-3">
                   <p className="text-sm font-semibold">Apple Watch range</p>
-                  <p className="text-sm text-muted-foreground">Refurbished Apple Watch SE kits for kids, Family Setup ready.</p>
+                  <p className="text-sm text-muted-foreground">Refurbished Apple Watch SE kits for kids. Family Setup ready.</p>
                   <ul className="text-sm space-y-1 text-muted-foreground">
                     <li>Family Setup from a parent iPhone</li>
-                    <li>Full Apple Watch features</li>
-                    <li>Greater long-term resale value</li>
+                    <li>Full Apple Watch features, kid-armoured option</li>
+                    <li>Known resale market</li>
                   </ul>
                 </CardContent>
               </Card>
               <Card>
                 <CardContent className="p-6 space-y-3">
                   <p className="text-sm font-semibold">Spacetalk range</p>
-                  <p className="text-sm text-muted-foreground">Dedicated kids watch for GPS, calls and school-safe mode.</p>
+                  <p className="text-sm text-muted-foreground">Dedicated kids watch for GPS, calls and school-safe mode. Adventurer family as listed above.</p>
                   <ul className="text-sm space-y-1 text-muted-foreground">
                     <li>Purpose-built for 6–12 year olds</li>
-                    <li>Single-device setup, no iPhone needed</li>
+                    <li>Single-device setup, no iPhone required</li>
                     <li>Long battery for school days</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-3">
+                  <p className="text-sm font-semibold">Garmin range</p>
+                  <p className="text-sm text-muted-foreground">Garmin wearable assessed for kids use. GPS and activity features vary by model.</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>Widely available GPS wearable range</li>
+                    <li>Assessed on same safety criteria</li>
+                    <li>Parent-controlled setup where supported</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-3">
+                  <p className="text-sm font-semibold">Pixbee range</p>
+                  <p className="text-sm text-muted-foreground">Pixbee kids watch with GPS location and calling for younger children.</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>Kids-focused location and calling</li>
+                    <li>School-mode features where supported</li>
+                    <li>Compact fit for younger wrists</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-3">
+                  <p className="text-sm font-semibold">imoo range</p>
+                  <p className="text-sm text-muted-foreground">imoo kids watch with GPS, calling and parent controls.</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>Kids-focused GPS and two-way calling</li>
+                    <li>Parent app controls</li>
+                    <li>Consider battery and fit for age</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6 space-y-3">
+                  <p className="text-sm font-semibold">Safe Owl range</p>
+                  <p className="text-sm text-muted-foreground">Safe Owl shown on equal footing. Specific models are listed without stock or pricing claims until a sourced fact is available.</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li>Assessed on same neutral criteria</li>
+                    <li>No partnership or stock claim made</li>
+                    <li>Full specs to be verified with source</li>
                   </ul>
                 </CardContent>
               </Card>
             </div>
             <p className="text-xs text-muted-foreground text-center mt-6 max-w-3xl mx-auto">
-              Independent retailer. Not affiliated with Apple Inc. or Spacetalk. Apple and Apple Watch are trademarks of Apple Inc. Spacetalk is a trademark of Spacetalk Ltd.
+              Independent retailer. Not affiliated with, endorsed by or sponsored by Apple Inc., Spacetalk Ltd, Garmin Ltd, Pixbee, imoo or Safe Owl. Apple and Apple Watch are trademarks of Apple Inc. Spacetalk is a trademark of Spacetalk Ltd. Garmin is a trademark of Garmin Ltd. Pixbee, imoo and Safe Owl are trademarks of their respective owners. No partnership, stock or unsourced pricing claim is made above.
             </p>
           </div>
         </section>
