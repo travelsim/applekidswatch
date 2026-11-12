@@ -78,6 +78,9 @@ export function Footer() {
               <Link href="/shop?category=Protection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Protection
               </Link>
+              <Link href="/bands" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                Watch bands
+              </Link>
               <Link href="/connectivity" className="text-sm text-muted-foreground hover:text-foreground transition-colors" data-testid="footer-link-connectivity">
                 Connectivity options
               </Link>

@@ -128,7 +128,7 @@ const KIT_DEFS: KitDef[] = [
   },
   {
     sku: "GW-GARMIN-KIDS-01",
-    name: "Garmin Bounce 2 — Comparison Model",
+    name: "Garmin Bounce 2",
     grade: "A",
     color: "Slate Grey",
     caseSpec: "Kids fit",
@@ -139,7 +139,7 @@ const KIT_DEFS: KitDef[] = [
   },
   {
     sku: "GW-PIXBEE-KIDS-01",
-    name: "Pixbee Pro Gen 2 — Comparison Model",
+    name: "Pixbee Pro",
     grade: "A",
     color: "Black",
     caseSpec: "Kids fit",
@@ -150,7 +150,7 @@ const KIT_DEFS: KitDef[] = [
   },
   {
     sku: "GW-IMOO-KIDS-01",
-    name: "imoo X10 — Comparison Model",
+    name: "imoo Watch Phone X10",
     grade: "A",
     color: "Pink",
     caseSpec: "Kids fit",
@@ -161,7 +161,7 @@ const KIT_DEFS: KitDef[] = [
   },
   {
     sku: "GW-SAFEOWL-KIDS-01",
-    name: "Safe Owl OWLY 1 — Comparison Model",
+    name: "Safe Owl OWLY 1",
     grade: "A",
     color: "Grey",
     caseSpec: "Kids fit",
@@ -172,7 +172,7 @@ const KIT_DEFS: KitDef[] = [
   },
   {
     sku: "GW-SPACETALK-KIDS-01",
-    name: "Spacetalk Adventurer 2 — Comparison Model",
+    name: "Spacetalk Adventurer 2",
     grade: "A",
     color: "Black",
     caseSpec: "Kids fit",
@@ -341,15 +341,37 @@ const KIT_FEATURES = (k: KitDef) => {
   ];
 };
 
+const COMPARISON_COPY: Record<string, { description: string; source: string }> = {
+  "GW-SPACETALK-KIDS-01": {
+    description: "Kids smartwatch phone with 4G calling, GPS location, SOS, School Mode and trusted contacts. No web browser.",
+    source: "https://spacetalk.co/products/spacetalk-adventurer-2-smartwatch-phone",
+  },
+  "GW-GARMIN-KIDS-01": {
+    description: "Kids smartwatch with calling, texts, a colour display, real-time location and sports apps.",
+    source: "https://www.garmin.com/en-AU/p/1815501/pn/010-03399-00/",
+  },
+  "GW-PIXBEE-KIDS-01": {
+    description: "Kids 4G smartwatch with 5MP photos, GPS Safe Zones, SOS and Classroom mode.",
+    source: "https://pixbee.com.au/products/pixbee-pro-kids-4g-smart-watch",
+  },
+  "GW-IMOO-KIDS-01": {
+    description: "Kids watch phone with a detachable camera, real-time tracking, secure chats and sports tracking.",
+    source: "https://www.imoo.com/en/products/x10",
+  },
+  "GW-SAFEOWL-KIDS-01": {
+    description: "Kids 4G LTE watch with real-time GPS, HD voice and video calls, SOS, Safe Zones and no social media.",
+    source: "https://safeowl.com/products/owly-1",
+  },
+};
+
 function kitDescription(k: KitDef): string {
   const isApple = k.sku.startsWith("AKW-");
   if (!isApple) {
-    return `${k.name}: independent comparison listing. Image shown is a neutral placeholder pending verification of the official device photo — correct device image to be added when sourced. Price and availability to be verified with a sourced listing before purchase. No stock or pricing claim is made here. Please see the comparison section on the home page for neutral, sourced-only attributes.`;
+    const copy = COMPARISON_COPY[k.sku];
+    return `${copy.description} Independent comparison listing: described from the manufacturer page at ${copy.source}. Price and availability to be verified with a sourced listing before purchase. No stock or pricing claim is made here.`;
   }
-  return `${k.caseSpec.split(" / ")[0]} refurbished cellular Apple Watch, supplied as a complete kids kit: watch, bumper case, kid velcro sport loop, magnetic charging cable and a printed quickstart card. ${KIT_TAIL}`;
-}
-
-const MARKET_NAMES: Record<string, string> = {
+  return `${k.caseSpec.split(" / ")[0]} refurbished cellular Apple Watch, supplied as a complete kids kit: watch, bumper case, kid velcro sport loop, magnetic charging cable and a printed quickstart card. Compatibility: Series 4 or later, or SE with cellular, watchOS 7 or later, paired with an iPhone 6s or later on iOS 14 or later (apple.com/au/apple-watch-for-your-kids). ${KIT_TAIL}`;
+}const MARKET_NAMES: Record<string, string> = {
   AU: "Australia",
   UK: "the United Kingdom",
   EU: "France, Germany, the Netherlands, Poland or Spain",

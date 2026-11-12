@@ -139,11 +139,11 @@ test("shop images are distinct lifestyle for competitors, no Apple-for-competito
 
   assert.ok(!gwSection.includes("/images/apple_watch_"), "no apple image for competitor");
 
-  // alt text via ProductCard uses product.name, which is correct; description notes placeholder
+  // alt text via ProductCard uses product.name, which is correct; comparison note states the listing is independent
 
   const pc = fs.readFileSync(new URL("../client/src/components/ProductCard.tsx", import.meta.url), "utf8");
 
-  assert.ok(pc.includes("Image shown is a neutral placeholder") || pc.includes("neutral placeholder"), "placeholder disclaimer present");
+  assert.ok(pc.includes("Independent comparison listing"), "comparison listing note present");
 
 });
 

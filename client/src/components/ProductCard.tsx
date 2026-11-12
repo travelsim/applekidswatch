@@ -55,8 +55,8 @@ export function ProductCard({ product }: ProductCardProps) {
             {gradeLabels[product.grade]}
           </Badge>
           {!product.inStock && (
-            <div className="absolute inset-0 bg-background/80 flex items-center justify-center">
-              <span className="text-lg font-semibold">Out of Stock</span>
+            <div className="absolute bottom-3 left-3 rounded-md bg-background/90 px-3 py-1 shadow-md">
+              <span className="text-lg font-semibold">{product.price === 0 ? "Price TBC" : "Out of Stock"}</span>
             </div>
           )}
         </div>
@@ -115,7 +115,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </Button>
           </div>
           {officialUrl ? null : product.price === 0 ? (
-            <p className="text-xs text-muted-foreground">Image shown is a neutral placeholder pending verification of the official device photo; Price TBC pending sourced listing. Check the comparison above.</p>
+            <p className="text-xs text-muted-foreground">Independent comparison listing. Price TBC pending sourced listing. Check the comparison above.</p>
           ) : null}
         </div>
       </CardContent>

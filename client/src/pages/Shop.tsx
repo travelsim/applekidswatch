@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { ProductCard } from "@/components/ProductCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -126,6 +127,9 @@ export default function Shop() {
             <p className="text-lg text-muted-foreground">
               Refurbished Apple Watches with GPS + Cellular, standalone watch plans and accessories. 
               Every watch is thoroughly tested and comes with a 30-day money-back guarantee. Shipping rates are shown before you pay.
+            </p>
+            <p className="mt-4">
+              <Link href="/bands" className="underline font-medium">Watch bands for Apple Watch and Spacetalk</Link>
             </p>
           </div>
         </div>
